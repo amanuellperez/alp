@@ -1,0 +1,16 @@
+Formato: Los números entre paréntesis son las veces que se me ha ocurrido que
+esta mejora puede estar bien. A mayor número, más veces que he necesitado
+esto.
+
+- getopts: 
+  - (1) A veces puede ser interesante pasar una opción que tenga opcional el
+    argumento. Por ejemplo, al hacer smooth:
+    > smooth --3R pru.txt   # ejecuta 3R en pru
+    > smooth --3R 10 pru.txt	# ejecuta 3R máximo 10 veces
+
+  - (1) ¿Merece la pena pasar números negativos como argumentos a las
+    opciones? Ahora no funcionan cosas del tipo:
+    > xx -n 10   # OK: argumento de n es 10
+    > xx -n -1	 # ERROR: -1 no es un argumento de n, es una opción!!!
+
+

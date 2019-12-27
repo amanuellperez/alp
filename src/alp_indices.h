@@ -1,0 +1,749 @@
+// Copyright (C) 2019-2020 A.Manuel L.Perez
+//
+// This file is part of the ALP Library.
+//
+// ALP Library is a free library: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#pragma once
+
+#ifndef __ALP_INDICES_H__
+#define __ALP_INDICES_H__
+/****************************************************************************
+ *
+ *   - DESCRIPCION: Rangos de índices
+ *
+ *   - COMENTARIOS: 
+ *
+ *   TODO: revisar Posicion y Segmento1D. Proceden de la primera versión. 
+ *   Seguramente sobren cosas (y cambiar nombre a Segmento1D)
+ *
+ *   - HISTORIA:
+ *           A.Manuel Lopez - 27/02/2019 Escrito
+ *
+ ****************************************************************************/
+
+#include <iostream>
+
+
+namespace alp{
+
+/***************************************************************************
+ *			    SEGMENTO DE ÍNDICES
+ ***************************************************************************/
+/*!
+ *  \brief  Intervalo cerrado de números naturales o enteros [a, b]
+ *
+ *  DUDA: ¿Qué otro nombre se podría elegir? 
+ *		1. CRango_i???		[i0, i1]
+ *		2. Closed_range_i ???	[i0, i1]
+ *		3. RangoC_i
+ *
+ *	  ¿Merece la pena crear esta clase o dejarlo como funciones sueltas?
+ */
+template <typename Int>
+// requires: is_integral(Ind)
+struct Segmento1D{
+    Int a, b;
+ 
+    constexpr Segmento1D(Int a0, Int b0)
+	:a{a0}, b{b0} 
+    {}
+
+    /// Devuelve el número de pasos que hay que dar para ir de 'a' a 'b'.
+    /// postcondicion: b = a + num_pasos
+    constexpr Int num_pasos()
+    {
+	if constexpr (std::is_signed_v<Int>)
+	    return std::abs(a - b);
+	else 
+	    return a > b? a - b: b - a;
+
+    }
+
+    /// Devuelve la longitud del segmento [a, b]. Esto es, el número de puntos
+    /// que tiene el intervalo [a, b]
+    constexpr Int longitud()
+    {
+	return num_pasos() + Int{1};
+    }
+};
+
+
+
+
+
+/***************************************************************************
+ *				POSICION
+ ***************************************************************************/
+/*!
+ *  \brief  Posición de un punto dentro de un contenedor bidimensional.
+ *
+ *  Esto es más genérico. No tiene nada que ver con contenedores
+ *  bidimensionales. Es un punto en un plano de coordenadas (i, j).
+ *  
+ */
+template <typename Int>
+// requires: is_integer(Int) and is_signed(Int)
+//	     Int = tipo del índice usado en el contenedor bidimensional
+struct Posicion_ij{
+    // tipos
+    using Ind  = Int;
+
+    // Características
+    Int i;
+    Int j;
+
+    // Construcción
+    constexpr Posicion_ij():i{0}, j{0} {}
+    constexpr Posicion_ij(Int i0, Int j0):i{i0}, j{j0} {}
+
+    constexpr Posicion_ij& operator+=(const Posicion_ij& b)
+    {
+	i += b.i;
+	j += b.j;
+
+	return *this;
+    }
+
+    constexpr Posicion_ij& operator-=(const Posicion_ij& b)
+    {
+	i -= b.i;
+	j -= b.j;
+
+	return *this;
+    }
+
+
+    // forma genérica de hablar
+    bool esta_a_la_dcha_de(const Posicion_ij& b) const
+    {return j >= b.j;}
+
+    bool esta_a_la_izda_de(const Posicion_ij& b) const
+    {return j <= b.j;}
+
+    bool esta_encima_de(const Posicion_ij& b) const
+    {return i <= b.i;}
+    
+    bool esta_debajo_de(const Posicion_ij& b) const
+    {return i >= b.i;}
+
+};
+
+
+template<typename Int>
+inline bool operator==(const Posicion_ij<Int>& p1, const Posicion_ij<Int>& p2)
+{ return p1.i == p2.i and p1.j == p2.j; }
+
+template<typename Int>
+inline bool operator!=(const Posicion_ij<Int>& p1, const Posicion_ij<Int>& p2)
+{return !(p1 == p2);}
+
+
+template<typename Int>
+inline std::ostream& operator<<(std::ostream& out, const Posicion_ij<Int>& p)
+{
+    out << '(' << p.i << ", " << p.j << ')';
+    return out;
+}
+
+
+template<typename Int>
+std::istream& operator>>(std::istream& input, Posicion_ij<Int>& p)
+{
+    char c;
+    input >> c >> p.i >> c >> c >> p.j >> c;
+    return input;
+}
+
+
+// En principio no tiene ningún sentido sumar posiciones. Pero como antes
+// usaba vector hay código que las suma. Migrarlo poco a poco y borrar esta
+// función cuando todo esté migrado
+template<typename Int>
+inline Posicion_ij<Int> operator+(const Posicion_ij<Int>& a, const Posicion_ij<Int>& b)
+{
+    auto c = a;
+    return c += b;
+}
+
+template<typename Int>
+inline Posicion_ij<Int> operator-(const Posicion_ij<Int>& a, const Posicion_ij<Int>& b)
+{
+    auto c = a;
+    return c -= b;
+}
+
+
+/// Partiendo de p nos movemos num_pasos a la derecha
+template<typename Int>
+inline Posicion_ij<Int> a_la_dcha_de(const Posicion_ij<Int>& p, Int num_pasos)
+{ return {p.i, p.j + num_pasos}; }
+
+/// Devuelve el punto que se encuentra num_pasos a la derecha de p,
+/// sin sobrepasar tope
+template <typename Int>
+inline Posicion_ij<Int> a_la_dcha_de(const Posicion_ij<Int>& p,
+                                     Int num_pasos,
+                                     const Posicion_ij<Int>& tope)
+{ 
+    if (p.j + num_pasos > tope.j) return {p.i, tope.j};
+
+    return {p.i, p.j + num_pasos};
+}
+
+
+
+/// Partiendo de p nos movemos num_pasos a la izquierda
+template<typename Int>
+inline Posicion_ij<Int> a_la_izda_de(const Posicion_ij<Int>& p, Int num_pasos)
+{ return {p.i, p.j - num_pasos}; }
+
+
+/// Devuelve el punto que se encuentra num_pasos a la izquierda de p,
+/// sin sobrepasar tope.
+// Observar que no resto en la comprobación. Int puede ser unsigned
+// y la resta podría dar underflow
+template <typename Int>
+inline Posicion_ij<Int> a_la_izda_de(const Posicion_ij<Int>& p,
+                                     Int num_pasos,
+                                     const Posicion_ij<Int>& tope)
+{ 
+    if (p.j < tope.j + num_pasos) return {p.i, tope.j};
+
+    return {p.i, p.j - num_pasos};
+}
+
+
+
+/// Partiendo de p nos movemos num_pasos hacia arriba
+template<typename Int>
+inline Posicion_ij<Int> arriba_de(const Posicion_ij<Int>& p, Int num_pasos)
+{ return Posicion_ij<Int>{p.i - num_pasos, p.j}; }
+
+
+
+/// Devuelve el punto que se encuentra num_pasos arriba de p,
+/// sin sobrepasar tope
+template <typename Int>
+inline Posicion_ij<Int> arriba_de(const Posicion_ij<Int>& p,
+                                     Int num_pasos,
+                                     const Posicion_ij<Int>& tope)
+{ 
+    if (p.i < num_pasos + tope.j) return {tope.i, p.j};
+
+    return {p.i - num_pasos, p.j};
+}
+
+
+/// Partiendo de p nos movemos num_pasos hacia abajo
+template<typename Int>
+inline Posicion_ij<Int> abajo_de(const Posicion_ij<Int>& p, Int num_pasos) 
+{ return Posicion_ij<Int>{p.i + num_pasos, p.j}; }
+
+
+/// Devuelve el punto que se encuentra num_pasos abajo de p,
+/// sin sobrepasar tope
+template <typename Int>
+inline Posicion_ij<Int> abajo_de(const Posicion_ij<Int>& p,
+                                     Int num_pasos,
+                                     const Posicion_ij<Int>& tope)
+{ 
+    if (p.i + num_pasos > tope.j) return {tope.i, p.j};
+
+    return {p.i + num_pasos, p.j};
+}
+
+
+/// Intercambiamos las coordenadas horizontales
+template <typename Int>
+constexpr void swap_h(Posicion_ij<Int>& a, Posicion_ij<Int>& b)
+{std::swap(a.j, b.j);}
+
+/// Intercambiamos las coordenadas horizontales
+template <typename Int>
+constexpr void swap_v(Posicion_ij<Int>& a, Posicion_ij<Int>& b)
+{std::swap(a.i, b.i);}
+
+
+
+/// Devuelve la longitud del segmento [a_h, b_h]
+template <typename Int>
+constexpr Int longitud_segmento_h(const Posicion_ij<Int>& a,
+                               const Posicion_ij<Int>& b)
+{ return Segmento1D<Int>{a.j, b.j}.longitud(); }
+
+
+/// Devuelve la longitud del segmento [a_v, b_v]
+template <typename Int>
+constexpr Int longitud_segmento_v(const Posicion_ij<Int>& a, const Posicion_ij<Int>& b)
+{ return Segmento1D<Int>{a.i, b.i}.longitud(); }
+
+/// Devuelve el número de puntos que hay para ir de 'a' a 'b' horizontalmente
+/// Para ir de a_x a b_x
+/// Se cumple: b_x = a_x + num_pasos
+template <typename Int>
+constexpr Int num_pasos_h(const Posicion_ij<Int>& a, const Posicion_ij<Int>& b)
+{return Segmento1D<Int>{a.j, b.j}.num_pasos();}
+
+/// Devuelve el número de pasos que hay dar ir de 'a' a 'b' verticalmente
+template <typename Int>
+constexpr Int num_pasos_v(const Posicion_ij<Int>& a, const Posicion_ij<Int>& b)
+{return Segmento1D<Int>{a.i, b.i}.num_pasos();}
+
+
+
+/***************************************************************************
+ *				SIZE
+ ***************************************************************************/
+
+/// Size que define un rectángulo cuando usamos coordenadas (i,j)
+template <typename Int>
+struct Size_ij 
+{
+    using Ind = Int;
+    Int rows, cols;
+};
+
+template <typename Int>
+bool operator==(const Size_ij<Int>& s1, const Size_ij<int>& s2)
+{
+    return s1.rows == s2.rows and s1.cols == s2.cols;
+}
+
+/***************************************************************************
+ *			    RANGOS DE INDICES
+ ***************************************************************************/
+/*!
+ *  \brief  Rango unidimensional de índices.
+ *
+ *  Un rango es un intervalo semiabierto [i0, ie).
+ *
+ *  El rango no garantiza que i0 <= ie. Para garantizarlo suministra
+ *  la función ordena_indices (llamarla antes de crear el rango)
+ *
+ */
+template <typename Int>
+struct Rango_i{
+    using Ind = Int;
+
+    Ind i0, ie;
+
+    /// Número de índices que hay en [i0, ie)
+    constexpr Ind size() const {return ie - i0;}
+
+    /// Ordena los índices
+    constexpr void ordena_indices()
+    {
+	if (ie < i0)
+	    std::swap(i0, ie);
+    }
+};
+
+
+/*!
+ *  \brief  Rango bidimensional de índices: [i0, ie) x [j0, je)
+ *
+ *  El rango no garantiza que i0 <= ie. Para garantizarlo suministra
+ *  la función ordena_indices (llamarla antes de crear el rango)
+ */
+template <typename Int>
+struct Rango_ij{
+    using Ind      = Int;
+    using Posicion = Posicion_ij<Int>;
+    using Size2D   = Size_ij<Int>;
+
+    Ind i0, ie;
+    Ind j0, je;
+
+    /// Creamos un rango vacío
+    constexpr Rango_ij():Rango_ij{0,0,0,0}{}
+
+    /// Creamos el rango [i0, ie) x [j0, je)
+    constexpr Rango_ij(Int i00, Int ie0, Int j00, Int je0)
+	:i0{i00}, ie{ie0}, j0{j00}, je{je0} 
+    {
+	ordena_indices();
+    }
+
+    /// Creamos el rango ri x rj = [i0, ie)  x [j0, je)
+    constexpr Rango_ij(const Rango_i<Int>& ri, const Rango_i<Int>& rj)
+	:Rango_ij{ri.i0, ri.ie, rj.i0, rj.ie} {}
+
+    /// Rango [p0, p1]
+    constexpr Rango_ij(const Posicion& p0, const Posicion& p1)
+	:Rango_ij{p0.i, p1.i + Ind{1}, p0.j, p1.j + Ind{1}} {}
+
+    /// Rango (p0, sz)
+    constexpr Rango_ij(const Posicion& p0, const Size2D& sz)
+	:Rango_ij{p0.i, p0.i + sz.rows, p0.j, p0.j + sz.cols} {}
+
+
+
+    // Características
+    // ---------------
+    /// Número de filas del rango
+    constexpr Int rows() const {return ie - i0;}
+
+    /// Número de columnas del rango
+    constexpr Int cols() const {return je - j0;}
+
+    /// Size 2D del rango
+    constexpr Size2D size() const {return {rows(), cols()};}
+
+    /// Esquina superior izquierda
+    constexpr Posicion p0() const {return Posicion{i0, j0};}
+
+    /// Esquina inferior derecha 
+    /// Cuidado: para que p1 sea válido, el rango no puede estar vacío
+    constexpr Posicion p1() const {return Posicion{ie - Ind{1}, je - Ind{1}};}
+
+
+    /// Definimos la esquina superior izquierda
+    constexpr void p0(const Posicion& p) { *this = Rango_ij{p, p1()}; }
+
+    /// Definimos la esquina inferior derecha
+    constexpr void p1(const Posicion& p) { *this = Rango_ij{p0(), p}; }
+
+    /// ¿Es un rango vacío?
+    constexpr bool empty() const {return (i0 == ie) or (j0 == je);}
+
+    // Funciones auxiliares
+    constexpr void ordena_indices()
+    {
+	if (ie < i0) std::swap(i0, ie);
+	if (je < j0) std::swap(j0, je);
+    }
+
+};
+
+template <typename Int>
+inline std::ostream& operator<<(std::ostream& out, const Rango_ij<Int>& rg)
+{
+    return out	<< '[' << rg.i0 << ", " << rg.ie << ") x [" 
+		       << rg.j0 << ", " << rg.je << ')';
+}
+
+
+
+
+// Relación: rg1 es subconjunto de rg2
+// Idioma: if (es_subconjunto(rg1).de(rg2)) ...
+// Observar que esta es una relación definida entre rangos. Tiene total
+// sentido!!!
+template <typename Int>
+struct Rango_ij_ser_subconjunto_de{
+    using Rango_ij = alp::Rango_ij<Int>;
+    constexpr Rango_ij_ser_subconjunto_de(const Rango_ij& rg10):rg1{rg10}{}
+
+    // ¿rg1 es subconjunto de rg2?
+    constexpr bool de(const Rango_ij& rg2){
+	return  (rg2.i0 <= rg1.i0 and rg1.ie <= rg2.ie)
+	    and (rg2.j0 <= rg1.j0 and rg1.je <= rg2.je);
+    }
+
+    const Rango_ij& rg1;
+};
+
+/// Idioma: if (es_subconjunto(rg1).de(rg2)) ...
+template <typename Int>
+constexpr Rango_ij_ser_subconjunto_de<Int> es_subconjunto(const Rango_ij<Int>& rg)
+{return Rango_ij_ser_subconjunto_de<Int>{rg};}
+
+template <typename Int>
+constexpr Rango_ij_ser_subconjunto_de<Int> esta_dentro(const Rango_ij<Int>& rg)
+{return es_subconjunto(rg);}
+
+
+/*!
+ *  \brief  Rango bidimensional acotado por otro rango
+ *
+ *  Al estar acotado garantizamos que no nos podemos salir del rango.
+ *
+ *  Invariante:
+ *	El rango siempre estará dentro de cota.
+ *	Los índices de los rangos están ordenados (i0 <= ie, j0 <= je)
+ */
+// No me funciona bien la herencia con templates, asi que no heredo de 
+// Rango_ij (¿por qué? Los iostream funcionan perfectamente!!!)
+template <typename Int>
+struct Rango_acotado_ij{
+    using Ind      = Int;
+    using Rango2D  = alp::Rango_ij<Int>;
+    using Posicion = alp::Posicion_ij<Int>;
+    using Size2D   = Size_ij<Int>;
+
+    Ind i0, ie;	
+    Ind j0, je;	
+
+    Rango2D cota;	// cota del rango. Este rango no se saldrá de cota.
+
+    // Conversión por defecto
+    operator Rango2D() const {return Rango2D{i0, ie, j0, je};}
+
+
+    // Construcción
+    // ------------
+    /// Creamos un rango vacío
+    constexpr Rango_acotado_ij():i0{0}, ie{i0}, j0{0}, je{j0} {}
+
+    /// Creamos un rango rg acotado por cota0.
+    /// Esta función garantiza que el rango queda bien creado, con los
+    /// índices ordenados. 
+    /// En imágenes cuando se selecciona una región los índices no tienen
+    /// por qué quedar bien ordenados. Por eso los ordeno aquí.
+    constexpr Rango_acotado_ij(const Rango2D& rg, const Rango2D cota0)
+	:cota{cota0} 
+    {
+	cota.ordena_indices();
+	extension(rg);
+    }
+
+
+    // Características
+    // ---------------
+    /// Número de filas del rango
+    constexpr Int rows() const { return ie - i0; }
+
+    /// Número de columnas del rango
+    constexpr Int cols() const { return je - j0; }
+
+    /// Size 2D del rango
+    constexpr Size2D size() const { return {rows(), cols()}; }
+
+    /// Esquina superior izquierda
+    constexpr Posicion p0() const {return Posicion{i0, j0};}
+
+    /// Esquina inferior derecha 
+    /// Cuidado: para que p1 sea válido, el rango no puede estar vacío
+    constexpr Posicion p1() const {return Posicion{ie - Ind{1}, je - Ind{1}};}
+
+    constexpr void p0(const Posicion& p)
+    { extension(Rango2D{p, p1()}); }
+
+    constexpr void p1(const Posicion& p)
+    { extension(Rango2D{p0(), p}); }
+
+
+    /// ¿Es un rango vacío?
+    constexpr bool empty() const {return (i0 == ie) or (j0 == je);}
+
+
+    /// Devuelve la extensión del rango. La extensión es el rango 
+    /// propiamente dicho
+    Rango2D extension() const { return Rango2D{i0, ie, j0, je}; }
+
+    /// Definimos la extensión que tiene este rango
+    void extension(Rango2D rg)
+    {
+	rg.ordena_indices();
+	
+	rg = rango_dentro_de_la_cota(rg);
+
+	i0 = rg.i0; ie = rg.ie;
+	j0 = rg.j0; je = rg.je;
+    }
+
+    /// Definimos la extensión que tiene este rango
+    void extension(const Posicion& p0, const Posicion& p1)
+    { extension(Rango2D{p0, p1}); }
+
+    // Operaciones
+    // -----------
+    /// Mueve el rango x indices a la derecha.
+    /// Si es signed esta función se puede usar con números negativos
+    void muevete_a_la_dcha(Ind x) { mueve_mas_j(x); }
+
+    /// Mueve el rango x pixeles a la izquierda.
+    void muevete_a_la_izda(Ind x){ mueve_menos_j(x); }
+
+    /// Mueve el rango x indices hacia abajo.
+    /// Si es signed esta función se puede usar con números negativos
+    void muevete_abajo(Ind x) { mueve_mas_i(x);}
+
+    /// Mueve el rango x indices hacia arriba.
+    void muevete_arriba(Ind x) { mueve_menos_i(x);}
+
+    void mueve_lado_dcho_a_la_dcha(Ind x)
+    {je = mueve_sentido_mas(je, x, cota.je);}
+
+    void mueve_lado_dcho_a_la_izda(Ind x)
+    {je = mueve_sentido_menos(je, x, j0);}
+
+    void mueve_lado_izdo_a_la_dcha(Ind x)
+    {j0 = mueve_sentido_mas(j0, x, je);}
+
+    void mueve_lado_izdo_a_la_izda(Ind x)
+    {j0 = mueve_sentido_menos(j0, x, cota.j0);}
+
+    void mueve_lado_superior_arriba(Ind x)
+    {i0 = mueve_sentido_mas(i0, x, cota.i0);}
+
+    void mueve_lado_superior_abajo(Ind x)
+    {ie = mueve_sentido_menos(ie, x, ie);}
+
+    void mueve_lado_inferior_arriba(Ind x)
+    {ie = mueve_sentido_mas(ie, x, i0);}
+
+    void mueve_lado_inferior_abajo(Ind x)
+    {ie = mueve_sentido_menos(ie, x, cota.ie);}
+
+
+    // Funciones auxiliares
+    constexpr void ordena_indices()
+    {
+	if (ie < i0) std::swap(i0, ie);
+	if (je < j0) std::swap(j0, je);
+    }
+
+
+private:
+    // Es necesario definir operaciones mas_i/menos_i ya que Int puede ser
+    // unsigned: ¡No se le puede pasar un incr_i negativo!!! ya que no existen
+    // números negativos unsigned!!!
+    void mueve_mas_i(Ind incr_i)
+    {
+	if constexpr (std::is_signed_v<Ind>){
+	    if (incr_i < 0){
+		mueve_menos_i(-incr_i);
+		return;
+	    }
+	}
+
+	Ind di = std::min(incr_i, cota.ie - ie);
+	i0 += di;
+	ie += di;
+    }
+
+    // precondition: incr_i >= 0
+    void mueve_menos_i(Ind incr_i)
+    {
+	if constexpr (std::is_signed_v<Ind>){
+	    if (incr_i < 0){
+		mueve_mas_i(-incr_i);
+		return;
+	    }
+	}
+
+	Ind di = std::min(incr_i, i0 - cota.i0);
+	i0 -= di;
+	ie -= di;
+    }
+
+    void mueve_mas_j(Ind incr_j)
+    {
+	if constexpr (std::is_signed_v<Ind>){
+	    if (incr_j < 0){
+		mueve_menos_j(-incr_j);
+		return;
+	    }
+	}
+
+	Ind dj = std::min(incr_j, cota.je - je);
+	j0 += dj;
+	je += dj;
+    }
+
+    // precondition: incr_j >= 0
+    void mueve_menos_j(Ind incr_j)
+    {
+	if constexpr (std::is_signed_v<Ind>){
+	    if (incr_j < 0){
+		mueve_mas_j(-incr_j);
+		return;
+	    }
+	}
+
+	Ind dj = std::min(incr_j, j0 - cota.j0);
+	j0 -= dj;
+	je -= dj;
+    }
+
+    // mueve el índice i en el sentido + sin sobrepasar i_max
+    Ind mueve_sentido_mas(Ind i, Ind incr_i, Ind i_max)
+    {
+	if (i + incr_i > i_max) return i_max;
+	
+	return i + incr_i;
+    }
+
+
+    // mueve el índice i en el sentido - sin sobrepasar i_min
+    Ind mueve_sentido_menos(Ind i, Ind incr_i, Ind i_min)
+    {
+	if (i < i_min + incr_i) return i_min;
+	
+	return i - incr_i;
+    }
+
+
+    // Devuelve el rango rg dentro de la cota del rango acotado
+    // Garantiza que el rango devuelto esté dentro de la cota (del terreno)
+    Rango2D rango_dentro_de_la_cota(Rango2D rg)
+    {
+	if (	rg.i0 > cota.ie or rg.ie < cota.i0
+	    or  rg.j0 > cota.je or rg.je < cota.j0){
+	    std::cerr << "\n\nERROR: Rango_acotado_ij::rango_dentro_de_la_cota: "
+			 "el rango está fuera de la cota. Defino el "
+			 "rango a toda la cota\n";
+	    return cota;
+	}
+
+	if (rg.i0 < cota.i0)	rg.i0 = cota.i0;
+	if (rg.ie > cota.ie)	rg.ie = cota.ie;
+
+	if (rg.j0 < cota.j0)	rg.j0 = cota.j0;
+	if (rg.je > cota.je)	rg.je = cota.je;
+
+	return rg;
+    }
+};
+
+template <typename Int>
+inline std::ostream& operator<<(std::ostream& out,
+                                const Rango_acotado_ij<Int>& rg)
+{
+    return out	<< '[' << rg.i0 << ", " << rg.ie << ") x [" 
+		       << rg.j0 << ", " << rg.je << ')';
+}
+
+
+/***************************************************************************
+ *				RELACIONES
+ ***************************************************************************/
+// Relación: Posicion pertenece a ...
+// Idioma: if (pertence(p).a(rg)) ...
+template <typename Int>
+struct Posicion_ij_pertenece_a{
+    constexpr Posicion_ij_pertenece_a(const Posicion_ij<Int>& p0):p{p0}{}
+
+    // ¿pertenece p al rango rg?
+    constexpr bool a(const Rango_ij<Int>& rg){
+	return  (rg.i0 <= p.i  and p.i < rg.ie) 
+	    and (rg.j0 <= p.j  and p.j < rg.je);
+    }
+
+    const Posicion_ij<Int>& p;
+};
+
+// Idioma: if (pertence(p).a(rg)) ...
+template <typename Int>
+constexpr Posicion_ij_pertenece_a<Int> pertenece(const Posicion_ij<Int>& p)
+{return Posicion_ij_pertenece_a<Int>{p};}
+
+
+
+}// namespace
+
+#endif
+

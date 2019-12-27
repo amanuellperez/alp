@@ -1,0 +1,1044 @@
+Archive member included to satisfy reference by file (symbol)
+
+/home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                              main.o (_ZN3avr11LCD_HD4478017set_ddram_addressEh)
+/home/alp/root/lib/avrgcc/libstd.a(std_basic_ios.o)
+                              main.o (_ZNSt9basic_ios4initEPSt9streambuf)
+/home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+                              main.o (_ZNSt9streambuf5uflowEv)
+/home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+                              main.o (_ZNSt7istream3getEv)
+/home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+                              /home/alp/root/lib/avrgcc/libstd.a(std_istream.o) (_ZNSt7ostream5flushEv)
+/home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_mulsi3.o)
+                              /home/alp/root/lib/avrgcc/libstd.a(std_istream.o) (__mulsi3)
+/home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_exit.o)
+                              /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/crtatmega328p.o (exit)
+/home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_copy_data.o)
+                              main.o (__do_copy_data)
+/home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muluhisi3.o)
+                              /home/alp/root/lib/avrgcc/libstd.a(std_istream.o) (__muluhisi3)
+/home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3.o)
+                              /home/alp/root/lib/avrgcc/libstd.a(std_istream.o) (__muldi3)
+/home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3_6.o)
+                              /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3.o) (__muldi3_6)
+/home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_adddi3.o)
+                              /home/alp/root/lib/avrgcc/libstd.a(std_istream.o) (__adddi3)
+/home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_umulhisi3.o)
+                              /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muluhisi3.o) (__umulhisi3)
+/home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/libc.a(memcpy.o)
+                              /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o) (memcpy)
+
+Discarded input sections
+
+ .data          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/crtatmega328p.o
+ .bss           0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/crtatmega328p.o
+ .group         0x0000000000000000        0x8 main.o
+ .group         0x0000000000000000        0x8 main.o
+ .group         0x0000000000000000        0x8 main.o
+ .group         0x0000000000000000        0x8 main.o
+ .group         0x0000000000000000        0x8 main.o
+ .group         0x0000000000000000        0x8 main.o
+ .group         0x0000000000000000        0x8 main.o
+ .group         0x0000000000000000        0xc main.o
+ .group         0x0000000000000000        0xc main.o
+ .group         0x0000000000000000        0xc main.o
+ .group         0x0000000000000000        0xc main.o
+ .group         0x0000000000000000        0xc main.o
+ .group         0x0000000000000000       0x14 main.o
+ .group         0x0000000000000000       0x14 main.o
+ .group         0x0000000000000000       0x14 main.o
+ .group         0x0000000000000000        0xc main.o
+ .group         0x0000000000000000        0xc main.o
+ .group         0x0000000000000000       0x14 main.o
+ .group         0x0000000000000000       0x14 main.o
+ .group         0x0000000000000000        0xc main.o
+ .group         0x0000000000000000        0xc main.o
+ .group         0x0000000000000000        0xc main.o
+ .group         0x0000000000000000        0xc main.o
+ .group         0x0000000000000000        0xc main.o
+ .group         0x0000000000000000       0x10 main.o
+ .group         0x0000000000000000       0x10 main.o
+ .group         0x0000000000000000       0x18 main.o
+ .group         0x0000000000000000        0xc main.o
+ .group         0x0000000000000000       0x1c main.o
+ .group         0x0000000000000000        0xc main.o
+ .group         0x0000000000000000       0x14 main.o
+ .text          0x0000000000000000        0x0 main.o
+ .data          0x0000000000000000        0x0 main.o
+ .bss           0x0000000000000000        0x0 main.o
+ .group         0x0000000000000000        0xc /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .group         0x0000000000000000        0x8 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .group         0x0000000000000000        0x8 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .group         0x0000000000000000        0x8 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .group         0x0000000000000000        0x8 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .group         0x0000000000000000        0xc /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .group         0x0000000000000000        0xc /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .text          0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .data          0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .bss           0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .text._ZN3avr11LCD_HD4478023cursor_or_display_shiftEbb
+                0x0000000000000000       0x2c /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .text._ZN3avr11LCD_HD4478015display_controlEbbb
+                0x0000000000000000       0x30 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .text._ZN3avr11LCD_HD4478010entry_modeEbb
+                0x0000000000000000       0x2c /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .text._ZN3avr11LCD_HD4478012function_setEbbb
+                0x0000000000000000       0x30 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .text._ZN3avr11LCD_HD4478011return_homeEv
+                0x0000000000000000       0x1a /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .text          0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libstd.a(std_basic_ios.o)
+ .data          0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libstd.a(std_basic_ios.o)
+ .bss           0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libstd.a(std_basic_ios.o)
+ .text._ZNSt9basic_ios5rdbufEPSt9streambuf
+                0x0000000000000000       0x1e /home/alp/root/lib/avrgcc/libstd.a(std_basic_ios.o)
+ .text._ZNSt9basic_ios3tieEPSt7ostream
+                0x0000000000000000        0xc /home/alp/root/lib/avrgcc/libstd.a(std_basic_ios.o)
+ .text._ZNSt9basic_ios4fillEc
+                0x0000000000000000        0x8 /home/alp/root/lib/avrgcc/libstd.a(std_basic_ios.o)
+ .group         0x0000000000000000        0x8 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .group         0x0000000000000000        0x8 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .group         0x0000000000000000        0x8 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .group         0x0000000000000000        0x8 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .group         0x0000000000000000        0x8 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .group         0x0000000000000000        0xc /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .text          0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .data          0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .bss           0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .text._ZNSt9streambuf4syncEv
+                0x0000000000000000        0x6 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .text._ZNSt9streambuf9showmanycEv
+                0x0000000000000000        0x6 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .text._ZNSt9streambuf9underflowEv
+                0x0000000000000000        0x6 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .text._ZNSt9streambuf9pbackfailEi
+                0x0000000000000000        0x6 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .text._ZNSt9streambuf8overflowEi
+                0x0000000000000000        0x6 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .text._ZNSt9streambuf8in_availEv
+                0x0000000000000000       0x28 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .text._ZNSt9streambuf9sputbackcEc
+                0x0000000000000000       0x3c /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .text._ZNSt9streambuf7sungetcEv
+                0x0000000000000000       0x38 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .text._ZNSt9streambuf14llena_put_areaEPKci
+                0x0000000000000000       0x44 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .text._ZNSt9streambuf6xsputnEPKci
+                0x0000000000000000       0x72 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .rodata._ZTVSt9streambuf
+                0x0000000000000000       0x14 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .group         0x0000000000000000        0xc /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .group         0x0000000000000000        0xc /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .group         0x0000000000000000        0xc /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .group         0x0000000000000000        0xc /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .group         0x0000000000000000        0xc /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .group         0x0000000000000000        0xc /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text          0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .data          0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .bss           0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istream8is_digitEi
+                0x0000000000000000       0x12 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istream13get_unguardedEPcic
+                0x0000000000000000       0xca /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istream3getERc
+                0x0000000000000000       0x26 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istream3getEPcic
+                0x0000000000000000       0x82 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istream7getlineEPcic
+                0x0000000000000000       0xc2 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istream6ignoreEii
+                0x0000000000000000       0xda /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istream4readEPci
+                0x0000000000000000       0x98 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istream4readIlEET_v
+                0x0000000000000000      0x13a /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istreamrsERi
+                0x0000000000000000       0x9a /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istreamrsERl
+                0x0000000000000000       0x4a /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istream4readIxEET_v
+                0x0000000000000000      0x222 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istreamrsERx
+                0x0000000000000000       0x52 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istream13read_unsignedImEET_v
+                0x0000000000000000       0xfe /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istreamrsERj
+                0x0000000000000000       0x6e /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istreamrsERm
+                0x0000000000000000       0x4a /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istream13read_unsignedIyEET_v
+                0x0000000000000000      0x1a8 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .text._ZNSt7istreamrsERy
+                0x0000000000000000       0x52 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .group         0x0000000000000000        0xc /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+ .text          0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+ .data          0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+ .bss           0x0000000000000000        0x0 /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+ .text._ZNSt9basic_ios8setstateESt8_Iostate
+                0x0000000000000000        0xe /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+ .text._ZNSt7ostream5writeEPKci
+                0x0000000000000000       0x94 /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+ .text          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_mulsi3.o)
+ .data          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_mulsi3.o)
+ .bss           0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_mulsi3.o)
+ .stab          0x0000000000000000      0x114 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_mulsi3.o)
+ .text.libgcc.mul
+                0x0000000000000000       0x20 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_mulsi3.o)
+ .text.libgcc.div
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_mulsi3.o)
+ .text.libgcc   0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_mulsi3.o)
+ .text.libgcc.prologue
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_mulsi3.o)
+ .text.libgcc.builtins
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_mulsi3.o)
+ .text.libgcc.fmul
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_mulsi3.o)
+ .text.libgcc.fixed
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_mulsi3.o)
+ .text          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_exit.o)
+ .data          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_exit.o)
+ .bss           0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_exit.o)
+ .text.libgcc.mul
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_exit.o)
+ .text.libgcc.div
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_exit.o)
+ .text.libgcc   0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_exit.o)
+ .text.libgcc.prologue
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_exit.o)
+ .text.libgcc.builtins
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_exit.o)
+ .text.libgcc.fmul
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_exit.o)
+ .text.libgcc.fixed
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_exit.o)
+ .text          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_copy_data.o)
+ .data          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_copy_data.o)
+ .bss           0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_copy_data.o)
+ .text.libgcc.mul
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_copy_data.o)
+ .text.libgcc.div
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_copy_data.o)
+ .text.libgcc   0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_copy_data.o)
+ .text.libgcc.prologue
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_copy_data.o)
+ .text.libgcc.builtins
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_copy_data.o)
+ .text.libgcc.fmul
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_copy_data.o)
+ .text.libgcc.fixed
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_copy_data.o)
+ .text          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muluhisi3.o)
+ .data          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muluhisi3.o)
+ .bss           0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muluhisi3.o)
+ .stab          0x0000000000000000       0xcc /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muluhisi3.o)
+                                         0xd8 (size before relaxing)
+ .text.libgcc.mul
+                0x0000000000000000       0x16 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muluhisi3.o)
+ .text.libgcc.div
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muluhisi3.o)
+ .text.libgcc   0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muluhisi3.o)
+ .text.libgcc.prologue
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muluhisi3.o)
+ .text.libgcc.builtins
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muluhisi3.o)
+ .text.libgcc.fmul
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muluhisi3.o)
+ .text.libgcc.fixed
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muluhisi3.o)
+ .text          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3.o)
+ .data          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3.o)
+ .bss           0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3.o)
+ .stab          0x0000000000000000      0x288 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3.o)
+                                        0x294 (size before relaxing)
+ .text.libgcc.mul
+                0x0000000000000000       0x9e /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3.o)
+ .text.libgcc.div
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3.o)
+ .text.libgcc   0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3.o)
+ .text.libgcc.prologue
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3.o)
+ .text.libgcc.builtins
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3.o)
+ .text.libgcc.fmul
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3.o)
+ .text.libgcc.fixed
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3.o)
+ .text          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3_6.o)
+ .data          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3_6.o)
+ .bss           0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3_6.o)
+ .stab          0x0000000000000000       0xb4 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3_6.o)
+                                         0xc0 (size before relaxing)
+ .text.libgcc.mul
+                0x0000000000000000       0x12 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3_6.o)
+ .text.libgcc.div
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3_6.o)
+ .text.libgcc   0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3_6.o)
+ .text.libgcc.prologue
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3_6.o)
+ .text.libgcc.builtins
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3_6.o)
+ .text.libgcc.fmul
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3_6.o)
+ .text.libgcc.fixed
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_muldi3_6.o)
+ .text          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_adddi3.o)
+ .data          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_adddi3.o)
+ .bss           0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_adddi3.o)
+ .stab          0x0000000000000000       0x78 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_adddi3.o)
+                                         0x84 (size before relaxing)
+ .text.libgcc.mul
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_adddi3.o)
+ .text.libgcc.div
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_adddi3.o)
+ .text.libgcc   0x0000000000000000       0x12 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_adddi3.o)
+ .text.libgcc.prologue
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_adddi3.o)
+ .text.libgcc.builtins
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_adddi3.o)
+ .text.libgcc.fmul
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_adddi3.o)
+ .text.libgcc.fixed
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_adddi3.o)
+ .text          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_umulhisi3.o)
+ .data          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_umulhisi3.o)
+ .bss           0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_umulhisi3.o)
+ .stab          0x0000000000000000      0x108 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_umulhisi3.o)
+                                        0x114 (size before relaxing)
+ .text.libgcc.mul
+                0x0000000000000000       0x1e /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_umulhisi3.o)
+ .text.libgcc.div
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_umulhisi3.o)
+ .text.libgcc   0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_umulhisi3.o)
+ .text.libgcc.prologue
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_umulhisi3.o)
+ .text.libgcc.builtins
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_umulhisi3.o)
+ .text.libgcc.fmul
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_umulhisi3.o)
+ .text.libgcc.fixed
+                0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_umulhisi3.o)
+ .text          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/libc.a(memcpy.o)
+ .data          0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/libc.a(memcpy.o)
+ .bss           0x0000000000000000        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/libc.a(memcpy.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+text             0x0000000000000000 0x0000000000020000 xr
+data             0x0000000000800060 0x000000000000ffa0 rw !x
+eeprom           0x0000000000810000 0x0000000000010000 rw !x
+fuse             0x0000000000820000 0x0000000000000400 rw !x
+lock             0x0000000000830000 0x0000000000000400 rw !x
+signature        0x0000000000840000 0x0000000000000400 rw !x
+user_signatures  0x0000000000850000 0x0000000000000400 rw !x
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+Address of section .data set to 0x800100
+LOAD /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/crtatmega328p.o
+LOAD main.o
+LOAD /home/alp/root/lib/avrgcc/libdebug_1000000UL.a
+LOAD /home/alp/root/lib/avrgcc/libdev_1000000UL.a
+LOAD /home/alp/root/lib/avrgcc/libavr_1000000UL.a
+LOAD /home/alp/root/lib/avrgcc/libatd.a
+LOAD /home/alp/root/lib/avrgcc/libstd.a
+LOAD /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a
+LOAD /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/libm.a
+START GROUP
+LOAD /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a
+LOAD /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/libm.a
+LOAD /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/libc.a
+LOAD /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/libatmega328p.a
+END GROUP
+                0x0000000000020000                __TEXT_REGION_LENGTH__ = DEFINED (__TEXT_REGION_LENGTH__)?__TEXT_REGION_LENGTH__:0x20000
+                0x000000000000ffa0                __DATA_REGION_LENGTH__ = DEFINED (__DATA_REGION_LENGTH__)?__DATA_REGION_LENGTH__:0xffa0
+                0x0000000000010000                __EEPROM_REGION_LENGTH__ = DEFINED (__EEPROM_REGION_LENGTH__)?__EEPROM_REGION_LENGTH__:0x10000
+                0x0000000000000400                __FUSE_REGION_LENGTH__ = DEFINED (__FUSE_REGION_LENGTH__)?__FUSE_REGION_LENGTH__:0x400
+                0x0000000000000400                __LOCK_REGION_LENGTH__ = DEFINED (__LOCK_REGION_LENGTH__)?__LOCK_REGION_LENGTH__:0x400
+                0x0000000000000400                __SIGNATURE_REGION_LENGTH__ = DEFINED (__SIGNATURE_REGION_LENGTH__)?__SIGNATURE_REGION_LENGTH__:0x400
+                0x0000000000000400                __USER_SIGNATURE_REGION_LENGTH__ = DEFINED (__USER_SIGNATURE_REGION_LENGTH__)?__USER_SIGNATURE_REGION_LENGTH__:0x400
+
+.hash
+ *(.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rel.init
+ *(.rel.init)
+
+.rela.init
+ *(.rela.init)
+
+.rel.text
+ *(.rel.text)
+ *(.rel.text.*)
+ *(.rel.gnu.linkonce.t*)
+
+.rela.text
+ *(.rela.text)
+ *(.rela.text.*)
+ *(.rela.gnu.linkonce.t*)
+
+.rel.fini
+ *(.rel.fini)
+
+.rela.fini
+ *(.rela.fini)
+
+.rel.rodata
+ *(.rel.rodata)
+ *(.rel.rodata.*)
+ *(.rel.gnu.linkonce.r*)
+
+.rela.rodata
+ *(.rela.rodata)
+ *(.rela.rodata.*)
+ *(.rela.gnu.linkonce.r*)
+
+.rel.data
+ *(.rel.data)
+ *(.rel.data.*)
+ *(.rel.gnu.linkonce.d*)
+
+.rela.data
+ *(.rela.data)
+ *(.rela.data.*)
+ *(.rela.gnu.linkonce.d*)
+
+.rel.ctors
+ *(.rel.ctors)
+
+.rela.ctors
+ *(.rela.ctors)
+
+.rel.dtors
+ *(.rel.dtors)
+
+.rela.dtors
+ *(.rela.dtors)
+
+.rel.got
+ *(.rel.got)
+
+.rela.got
+ *(.rela.got)
+
+.rel.bss
+ *(.rel.bss)
+
+.rela.bss
+ *(.rela.bss)
+
+.rel.plt
+ *(.rel.plt)
+
+.rela.plt
+ *(.rela.plt)
+
+.text           0x0000000000000000     0x18ce
+ *(.vectors)
+ .vectors       0x0000000000000000       0x68 /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/crtatmega328p.o
+                0x0000000000000000                __vectors
+                0x0000000000000000                __vector_default
+ *(.vectors)
+ *(.progmem.gcc*)
+                0x0000000000000068                . = ALIGN (0x2)
+                0x0000000000000068                __trampolines_start = .
+ *(.trampolines)
+ .trampolines   0x0000000000000068        0x0 linker stubs
+ *(.trampolines*)
+                0x0000000000000068                __trampolines_end = .
+ *libprintf_flt.a:*(.progmem.data)
+ *libc.a:*(.progmem.data)
+ *(.progmem.*)
+                0x0000000000000068                . = ALIGN (0x2)
+ *(.lowtext)
+ *(.lowtext*)
+                0x0000000000000068                __ctors_start = .
+ *(.ctors)
+                0x0000000000000068                __ctors_end = .
+                0x0000000000000068                __dtors_start = .
+ *(.dtors)
+                0x0000000000000068                __dtors_end = .
+ SORT_BY_NAME(*)(.ctors)
+ SORT_BY_NAME(*)(.dtors)
+ *(.init0)
+ .init0         0x0000000000000068        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/crtatmega328p.o
+                0x0000000000000068                __init
+ *(.init0)
+ *(.init1)
+ *(.init1)
+ *(.init2)
+ .init2         0x0000000000000068        0xc /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/crtatmega328p.o
+ *(.init2)
+ *(.init3)
+ *(.init3)
+ *(.init4)
+ .init4         0x0000000000000074       0x16 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_copy_data.o)
+                0x0000000000000074                __do_copy_data
+ *(.init4)
+ *(.init5)
+ *(.init5)
+ *(.init6)
+ *(.init6)
+ *(.init7)
+ *(.init7)
+ *(.init8)
+ *(.init8)
+ *(.init9)
+ .init9         0x000000000000008a        0x8 /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/crtatmega328p.o
+ *(.init9)
+ *(.text)
+ .text          0x0000000000000092        0x4 /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/crtatmega328p.o
+                0x0000000000000092                __vector_22
+                0x0000000000000092                __vector_1
+                0x0000000000000092                __vector_24
+                0x0000000000000092                __vector_12
+                0x0000000000000092                __bad_interrupt
+                0x0000000000000092                __vector_6
+                0x0000000000000092                __vector_3
+                0x0000000000000092                __vector_23
+                0x0000000000000092                __vector_25
+                0x0000000000000092                __vector_11
+                0x0000000000000092                __vector_13
+                0x0000000000000092                __vector_17
+                0x0000000000000092                __vector_19
+                0x0000000000000092                __vector_7
+                0x0000000000000092                __vector_5
+                0x0000000000000092                __vector_4
+                0x0000000000000092                __vector_9
+                0x0000000000000092                __vector_2
+                0x0000000000000092                __vector_21
+                0x0000000000000092                __vector_15
+                0x0000000000000092                __vector_8
+                0x0000000000000092                __vector_14
+                0x0000000000000092                __vector_10
+                0x0000000000000092                __vector_16
+                0x0000000000000092                __vector_18
+                0x0000000000000092                __vector_20
+                0x0000000000000096                . = ALIGN (0x2)
+ *(.text.*)
+ .text._ZNSt9streambuf4syncEv
+                0x0000000000000096        0x6 main.o
+                0x0000000000000096                _ZNSt9streambuf4syncEv
+ .text._ZNSt9streambuf9showmanycEv
+                0x000000000000009c        0x6 main.o
+                0x000000000000009c                _ZNSt9streambuf9showmanycEv
+ .text._ZNSt9streambuf9underflowEv
+                0x00000000000000a2        0x6 main.o
+                0x00000000000000a2                _ZNSt9streambuf9underflowEv
+ .text._ZNSt9streambuf9pbackfailEi
+                0x00000000000000a8        0x6 main.o
+                0x00000000000000a8                _ZNSt9streambuf9pbackfailEi
+ .text._ZN3avr25UART_streambuf_unbuffered4syncEv
+                0x00000000000000ae        0x6 main.o
+                0x00000000000000ae                _ZN3avr25UART_streambuf_unbuffered4syncEv
+ .text._ZN3avr25UART_streambuf_unbuffered9showmanycEv
+                0x00000000000000b4        0x6 main.o
+                0x00000000000000b4                _ZN3avr25UART_streambuf_unbuffered9showmanycEv
+ .text._ZN3avr25UART_streambuf_unbuffered9pbackfailEi
+                0x00000000000000ba        0x6 main.o
+                0x00000000000000ba                _ZN3avr25UART_streambuf_unbuffered9pbackfailEi
+ .text._ZN3avr25UART_streambuf_unbuffered12receive_byteEv.isra.4
+                0x00000000000000c0       0x24 main.o
+ .text._ZN3avr25UART_streambuf_unbuffered5uflowEv
+                0x00000000000000e4       0x24 main.o
+                0x00000000000000e4                _ZN3avr25UART_streambuf_unbuffered5uflowEv
+ .text._ZN3avr25UART_streambuf_unbuffered9underflowEv
+                0x0000000000000108       0x28 main.o
+                0x0000000000000108                _ZN3avr25UART_streambuf_unbuffered9underflowEv
+ .text._ZN3avr25UART_streambuf_unbuffered6xsgetnEPci
+                0x0000000000000130       0x4e main.o
+                0x0000000000000130                _ZN3avr25UART_streambuf_unbuffered6xsgetnEPci
+ .text._ZN3avr25UART_streambuf_unbuffered13put_unguardedEc.isra.5
+                0x000000000000017e        0xe main.o
+ .text._ZN3avr25UART_streambuf_unbuffered8overflowEi
+                0x000000000000018c       0x26 main.o
+                0x000000000000018c                _ZN3avr25UART_streambuf_unbuffered8overflowEi
+ .text._ZN3avr25UART_streambuf_unbuffered6xsputnEPKci
+                0x00000000000001b2       0x54 main.o
+                0x00000000000001b2                _ZN3avr25UART_streambuf_unbuffered6xsputnEPKci
+ .text._ZNSt7ostreamC2EPSt9streambuf
+                0x0000000000000206       0x20 main.o
+                0x0000000000000206                _ZNSt7ostreamC2EPSt9streambuf
+ .text._ZNSt7ostreamC1EPSt9streambuf
+                0x0000000000000226       0x28 main.o
+                0x0000000000000226                _ZNSt7ostreamC1EPSt9streambuf
+ .text._ZNSt7istreamC2EPSt9streambuf
+                0x000000000000024e       0x24 main.o
+                0x000000000000024e                _ZNSt7istreamC2EPSt9streambuf
+ .text._ZNSt7istreamC1EPSt9streambuf
+                0x0000000000000272       0x2e main.o
+                0x0000000000000272                _ZNSt7istreamC1EPSt9streambuf
+ .text._ZNSt8iostreamC2EPSt9streambuf
+                0x00000000000002a0       0x4a main.o
+                0x00000000000002a0                _ZNSt8iostreamC2EPSt9streambuf
+ .text._ZNSt8iostreamC1EPSt9streambuf
+                0x00000000000002ea       0x58 main.o
+                0x00000000000002ea                _ZNSt8iostreamC1EPSt9streambuf
+ .text._ZN3avr25UART_streambuf_unbufferedC2Ev
+                0x0000000000000342       0x38 main.o
+                0x0000000000000342                _ZN3avr25UART_streambuf_unbufferedC1Ev
+                0x0000000000000342                _ZN3avr25UART_streambuf_unbufferedC2Ev
+ .text._ZN3avr25UART_streambuf_unbuffered2onEv
+                0x000000000000037a       0x26 main.o
+                0x000000000000037a                _ZN3avr25UART_streambuf_unbuffered2onEv
+ .text._ZN3avr13UART_iostreamC2Ev
+                0x00000000000003a0       0x48 main.o
+                0x00000000000003a0                _ZN3avr13UART_iostreamC2Ev
+ .text._ZN3avr13UART_iostreamC1Ev
+                0x00000000000003e8       0x52 main.o
+                0x00000000000003e8                _ZN3avr13UART_iostreamC1Ev
+ .text._ZN3avr19LCD_HD44780_ostreamILh16ELh2EEC2ENS_11LCD_HD447807DPin_RSENS2_7DPin_RWENS2_6DPin_EERKNS2_7DPin_D4E
+                0x000000000000043a       0x98 main.o
+                0x000000000000043a                _ZN3avr19LCD_HD44780_ostreamILh16ELh2EEC2ENS_11LCD_HD447807DPin_RSENS2_7DPin_RWENS2_6DPin_EERKNS2_7DPin_D4E
+ .text._ZN3avr19LCD_HD44780_ostreamILh16ELh2EEC1ENS_11LCD_HD447807DPin_RSENS2_7DPin_RWENS2_6DPin_EERKNS2_7DPin_D4E
+                0x00000000000004d2       0xa2 main.o
+                0x00000000000004d2                _ZN3avr19LCD_HD44780_ostreamILh16ELh2EEC1ENS_11LCD_HD447807DPin_RSENS2_7DPin_RWENS2_6DPin_EERKNS2_7DPin_D4E
+ .text._Z11solo_recivev
+                0x0000000000000574      0x126 main.o
+                0x0000000000000574                _Z11solo_recivev
+ .text.startup.main
+                0x000000000000069a        0x4 main.o
+                0x000000000000069a                main
+ .text._ZN3avr18LCD_HD44780_screenILh16ELh2EE10cursor_posEhh
+                0x000000000000069e       0x46 main.o
+                0x000000000000069e                _ZN3avr18LCD_HD44780_screenILh16ELh2EE10cursor_posEhh
+ .text._ZN3avr18LCD_HD44780_screenILh16ELh2EE14scroll_text_upEv
+                0x00000000000006e4       0xf4 main.o
+                0x00000000000006e4                _ZN3avr18LCD_HD44780_screenILh16ELh2EE14scroll_text_upEv
+ .text._ZN3avr18LCD_HD44780_screenILh16ELh2EE12print_returnEv
+                0x00000000000007d8       0x38 main.o
+                0x00000000000007d8                _ZN3avr18LCD_HD44780_screenILh16ELh2EE12print_returnEv
+ .text._ZN3avr21LCD_HD44780_streambufILh16ELh2EE8overflowEi
+                0x0000000000000810       0x52 main.o
+                0x0000000000000810                _ZN3avr21LCD_HD44780_streambufILh16ELh2EE8overflowEi
+ .text._ZN3avr21LCD_HD44780_streambufILh16ELh2EE6xsputnEPKci
+                0x0000000000000862       0xa0 main.o
+                0x0000000000000862                _ZN3avr21LCD_HD44780_streambufILh16ELh2EE6xsputnEPKci
+ .text._ZN3avr4DPinC2Eh
+                0x0000000000000902       0x42 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000902                _ZN3avr4DPinC2Eh
+                0x0000000000000902                _ZN3avr4DPinC1Eh
+ .text._ZN3avr4DPin9de_salidaEv
+                0x0000000000000944       0x16 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000944                _ZN3avr4DPin9de_salidaEv
+ .text._ZN3avr4DPin21de_entrada_sin_pullupEv
+                0x000000000000095a       0x20 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x000000000000095a                _ZN3avr4DPin21de_entrada_sin_pullupEv
+ .text._ZN3avr4DPin9write_oneEv
+                0x000000000000097a       0x16 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x000000000000097a                _ZN3avr4DPin9write_oneEv
+ .text._ZN3avr4DPin10write_zeroEv
+                0x0000000000000990       0x18 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000990                _ZN3avr4DPin10write_zeroEv
+ .text._ZN3avr4DPin5writeEh
+                0x00000000000009a8        0xa /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x00000000000009a8                _ZN3avr4DPin5writeEh
+ .text._ZN3avr11LCD_HD4478013esta_ocupado8Ev
+                0x00000000000009b2       0x66 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x00000000000009b2                _ZN3avr11LCD_HD4478013esta_ocupado8Ev
+ .text._ZN3avr11LCD_HD4478013esta_ocupado4Ev
+                0x0000000000000a18       0xa2 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000a18                _ZN3avr11LCD_HD4478013esta_ocupado4Ev
+ .text._ZN3avr11LCD_HD447807read_d4Ev
+                0x0000000000000aba      0x16a /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000aba                _ZN3avr11LCD_HD447807read_d4Ev
+ .text._ZN3avr11LCD_HD4478010setup_pinsEv
+                0x0000000000000c24       0x84 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000c24                _ZN3avr11LCD_HD4478010setup_pinsEv
+ .text._ZN3avr11LCD_HD447807pulso_EEv
+                0x0000000000000ca8       0x1a /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000ca8                _ZN3avr11LCD_HD447807pulso_EEv
+ .text._ZN3avr11LCD_HD4478011write_d4_d7Ehhh
+                0x0000000000000cc2       0x70 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000cc2                _ZN3avr11LCD_HD4478011write_d4_d7Ehhh
+ .text._ZN3avr11LCD_HD447805init4Ev
+                0x0000000000000d32       0xee /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000d32                _ZN3avr11LCD_HD447805init4Ev
+ .text._ZN3avr11LCD_HD447808write_d8Ehhh
+                0x0000000000000e20       0x5a /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000e20                _ZN3avr11LCD_HD447808write_d8Ehhh
+ .text._ZN3avr11LCD_HD447808write_d4Ehhh
+                0x0000000000000e7a       0x8e /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000e7a                _ZN3avr11LCD_HD447808write_d4Ehhh
+ .text._ZN3avr11LCD_HD447807write_dEhhh
+                0x0000000000000f08       0x14 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000f08                _ZN3avr11LCD_HD447807write_dEhhh
+ .text._ZN3avr11LCD_HD447805init8Ev
+                0x0000000000000f1c       0x7c /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000f1c                _ZN3avr11LCD_HD447805init8Ev
+ .text._ZN3avr11LCD_HD4478012esta_ocupadoEv
+                0x0000000000000f98       0x14 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000f98                _ZN3avr11LCD_HD4478012esta_ocupadoEv
+ .text._ZN3avr11LCD_HD4478023espera_estar_disponibleEv
+                0x0000000000000fac       0x16 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000fac                _ZN3avr11LCD_HD4478023espera_estar_disponibleEv
+ .text._ZN3avr11LCD_HD4478017set_ddram_addressEh
+                0x0000000000000fc2       0x22 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000fc2                _ZN3avr11LCD_HD4478017set_ddram_addressEh
+ .text._ZN3avr11LCD_HD4478025write_data_to_CG_or_DDRAMEc
+                0x0000000000000fe4       0x20 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000000fe4                _ZN3avr11LCD_HD4478025write_data_to_CG_or_DDRAMEc
+ .text._ZN3avr11LCD_HD4478026read_data_from_CG_or_DDRAMEv
+                0x0000000000001004       0x14 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000001004                _ZN3avr11LCD_HD4478026read_data_from_CG_or_DDRAMEv
+ .text._ZN3avr11LCD_HD447804initEv
+                0x0000000000001018       0x2c /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000001018                _ZN3avr11LCD_HD447804initEv
+ .text._ZN3avr11LCD_HD447805setupEv
+                0x0000000000001044       0x14 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000001044                _ZN3avr11LCD_HD447805setupEv
+ .text._ZN3avr11LCD_HD44780C2ENS0_7DPin_RSENS0_7DPin_RWENS0_6DPin_EERKNS0_7DPin_D4E
+                0x0000000000001058       0xa4 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x0000000000001058                _ZN3avr11LCD_HD44780C2ENS0_7DPin_RSENS0_7DPin_RWENS0_6DPin_EERKNS0_7DPin_D4E
+                0x0000000000001058                _ZN3avr11LCD_HD44780C1ENS0_7DPin_RSENS0_7DPin_RWENS0_6DPin_EERKNS0_7DPin_D4E
+ .text._ZN3avr11LCD_HD4478013clear_displayEv
+                0x00000000000010fc       0x1a /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+                0x00000000000010fc                _ZN3avr11LCD_HD4478013clear_displayEv
+ .text._ZNSt9basic_ios4initEPSt9streambuf
+                0x0000000000001116       0x30 /home/alp/root/lib/avrgcc/libstd.a(std_basic_ios.o)
+                0x0000000000001116                _ZNSt9basic_ios4initEPSt9streambuf
+ .text._ZNSt9basic_ios5clearESt8_Iostate
+                0x0000000000001146       0x14 /home/alp/root/lib/avrgcc/libstd.a(std_basic_ios.o)
+                0x0000000000001146                _ZNSt9basic_ios5clearESt8_Iostate
+ .text._ZNKSt9basic_ios3tieEv
+                0x000000000000115a        0x8 /home/alp/root/lib/avrgcc/libstd.a(std_basic_ios.o)
+                0x000000000000115a                _ZNKSt9basic_ios3tieEv
+ .text._ZNSt9streambuf5uflowEv
+                0x0000000000001162       0x2a /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+                0x0000000000001162                _ZNSt9streambuf5uflowEv
+ .text._ZNSt9streambuf6sbumpcEv
+                0x000000000000118c       0x36 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+                0x000000000000118c                _ZNSt9streambuf6sbumpcEv
+ .text._ZNSt9streambuf5sgetcEv
+                0x00000000000011c2       0x2a /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+                0x00000000000011c2                _ZNSt9streambuf5sgetcEv
+ .text._ZNSt9streambuf6snextcEv
+                0x00000000000011ec       0x22 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+                0x00000000000011ec                _ZNSt9streambuf6snextcEv
+ .text._ZNSt9streambuf5sputcEc
+                0x000000000000120e       0x46 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+                0x000000000000120e                _ZNSt9streambuf5sputcEc
+ .text._ZNSt9streambuf14vacia_get_areaEPci
+                0x0000000000001254       0x46 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+                0x0000000000001254                _ZNSt9streambuf14vacia_get_areaEPci
+ .text._ZNSt9streambuf6xsgetnEPci
+                0x000000000000129a       0x64 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+                0x000000000000129a                _ZNSt9streambuf6xsgetnEPci
+ .text._ZNSt9basic_ios8setstateESt8_Iostate
+                0x00000000000012fe        0xe /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+                0x00000000000012fe                _ZNSt9basic_ios8setstateESt8_Iostate
+ .text._ZNSt7istream6sentry13is_whitespaceEi
+                0x000000000000130c       0x14 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+                0x000000000000130c                _ZNSt7istream6sentry13is_whitespaceEi
+ .text._ZNSt7istream6sentry10discard_wsERS_
+                0x0000000000001320       0x78 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+                0x0000000000001320                _ZNSt7istream6sentry10discard_wsERS_
+ .text._ZNSt7istream6sentryC2ERS_b
+                0x0000000000001398       0x92 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+                0x0000000000001398                _ZNSt7istream6sentryC1ERS_b
+                0x0000000000001398                _ZNSt7istream6sentryC2ERS_b
+ .text._ZNSt7istream3getEv
+                0x000000000000142a       0xb0 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+                0x000000000000142a                _ZNSt7istream3getEv
+ .text._ZNSt7ostream6sentryD2Ev
+                0x00000000000014da       0x74 /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+                0x00000000000014da                _ZNSt7ostream6sentryD2Ev
+                0x00000000000014da                _ZNSt7ostream6sentryD1Ev
+ .text._ZNSt7ostream5flushEv
+                0x000000000000154e       0x7a /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+                0x000000000000154e                _ZNSt7ostream5flushEv
+ .text._ZNSt7ostream6sentryC2ERS_
+                0x00000000000015c8       0x7c /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+                0x00000000000015c8                _ZNSt7ostream6sentryC2ERS_
+                0x00000000000015c8                _ZNSt7ostream6sentryC1ERS_
+ .text._ZNSt7ostream15print_fill_charEi
+                0x0000000000001644       0x68 /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+                0x0000000000001644                _ZNSt7ostream15print_fill_charEi
+ .text._ZNSt7ostream5printEPKc
+                0x00000000000016ac       0x58 /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+                0x00000000000016ac                _ZNSt7ostream5printEPKc
+ .text._ZNSt7ostream10print_leftEPKc
+                0x0000000000001704       0x5a /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+                0x0000000000001704                _ZNSt7ostream10print_leftEPKc
+ .text._ZNSt7ostream11print_rightEPKc
+                0x000000000000175e       0x5c /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+                0x000000000000175e                _ZNSt7ostream11print_rightEPKc
+ .text._ZNSt7ostream18print_with_paddingEPKc
+                0x00000000000017ba       0x5a /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+                0x00000000000017ba                _ZNSt7ostream18print_with_paddingEPKc
+ .text._ZNSt7ostream3putEc
+                0x0000000000001814       0x58 /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+                0x0000000000001814                _ZNSt7ostream3putEc
+ .text._ZStlsRSt7ostreamPKc
+                0x000000000000186c       0x4c /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+                0x000000000000186c                _ZStlsRSt7ostreamPKc
+ .text.avr-libc
+                0x00000000000018b8       0x12 /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/libc.a(memcpy.o)
+                0x00000000000018b8                memcpy
+                0x00000000000018ca                . = ALIGN (0x2)
+ *(.fini9)
+ .fini9         0x00000000000018ca        0x0 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_exit.o)
+                0x00000000000018ca                exit
+                0x00000000000018ca                _exit
+ *(.fini9)
+ *(.fini8)
+ *(.fini8)
+ *(.fini7)
+ *(.fini7)
+ *(.fini6)
+ *(.fini6)
+ *(.fini5)
+ *(.fini5)
+ *(.fini4)
+ *(.fini4)
+ *(.fini3)
+ *(.fini3)
+ *(.fini2)
+ *(.fini2)
+ *(.fini1)
+ *(.fini1)
+ *(.fini0)
+ .fini0         0x00000000000018ca        0x4 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_exit.o)
+ *(.fini0)
+ *(.hightext)
+ *(.hightext*)
+ *(.progmemx.*)
+                0x00000000000018ce                . = ALIGN (0x2)
+ *(.jumptables)
+ *(.jumptables*)
+                0x00000000000018ce                _etext = .
+
+.data           0x0000000000800100      0x172 load address 0x00000000000018ce
+                0x0000000000800100                PROVIDE (__data_start = .)
+ *(.data)
+ *(.data*)
+ *(.gnu.linkonce.d*)
+ *(.rodata)
+ .rodata        0x0000000000800100        0x4 main.o
+ *(.rodata*)
+ .rodata._Z11solo_recivev.str1.1
+                0x0000000000800104        0xb main.o
+ .rodata._ZTTSt7ostream
+                0x000000000080010f        0x2 main.o
+                0x000000000080010f                _ZTTSt7ostream
+ .rodata._ZTVSt7ostream
+                0x0000000000800111        0x6 main.o
+                0x0000000000800111                _ZTVSt7ostream
+ .rodata._ZTTSt7istream
+                0x0000000000800117        0x2 main.o
+                0x0000000000800117                _ZTTSt7istream
+ .rodata._ZTVSt7istream
+                0x0000000000800119        0x6 main.o
+                0x0000000000800119                _ZTVSt7istream
+ .rodata._ZTCSt8iostream4_St7ostream
+                0x000000000080011f        0x6 main.o
+                0x000000000080011f                _ZTCSt8iostream4_St7ostream
+ .rodata._ZTCSt8iostream0_St7istream
+                0x0000000000800125        0x6 main.o
+                0x0000000000800125                _ZTCSt8iostream0_St7istream
+ .rodata._ZTTSt8iostream
+                0x000000000080012b        0x8 main.o
+                0x000000000080012b                _ZTTSt8iostream
+ .rodata._ZTVSt8iostream
+                0x0000000000800133        0xc main.o
+                0x0000000000800133                _ZTVSt8iostream
+ .rodata._ZTVN3avr25UART_streambuf_unbufferedE
+                0x000000000080013f       0x14 main.o
+                0x000000000080013f                _ZTVN3avr25UART_streambuf_unbufferedE
+ .rodata._ZTCN3avr13UART_iostreamE4_St7ostream
+                0x0000000000800153        0x6 main.o
+                0x0000000000800153                _ZTCN3avr13UART_iostreamE4_St7ostream
+ .rodata._ZTCN3avr13UART_iostreamE0_St7istream
+                0x0000000000800159        0x6 main.o
+                0x0000000000800159                _ZTCN3avr13UART_iostreamE0_St7istream
+ .rodata._ZTCN3avr13UART_iostreamE0_St8iostream
+                0x000000000080015f        0xc main.o
+                0x000000000080015f                _ZTCN3avr13UART_iostreamE0_St8iostream
+ .rodata._ZTTN3avr13UART_iostreamE
+                0x000000000080016b        0xc main.o
+                0x000000000080016b                _ZTTN3avr13UART_iostreamE
+ .rodata._ZTVN3avr13UART_iostreamE
+                0x0000000000800177        0xc main.o
+                0x0000000000800177                _ZTVN3avr13UART_iostreamE
+ .rodata._ZTVN3avr21LCD_HD44780_streambufILh16ELh2EEE
+                0x0000000000800183       0x14 main.o
+                0x0000000000800183                _ZTVN3avr21LCD_HD44780_streambufILh16ELh2EEE
+ .rodata._ZTCN3avr19LCD_HD44780_ostreamILh16ELh2EEE0_St7ostream
+                0x0000000000800197        0x6 main.o
+                0x0000000000800197                _ZTCN3avr19LCD_HD44780_ostreamILh16ELh2EEE0_St7ostream
+ .rodata._ZTTN3avr19LCD_HD44780_ostreamILh16ELh2EEE
+                0x000000000080019d        0x4 main.o
+                0x000000000080019d                _ZTTN3avr19LCD_HD44780_ostreamILh16ELh2EEE
+ .rodata._ZTVN3avr19LCD_HD44780_ostreamILh16ELh2EEE
+                0x00000000008001a1        0x6 main.o
+                0x00000000008001a1                _ZTVN3avr19LCD_HD44780_ostreamILh16ELh2EEE
+ .rodata._ZN3avrL8BIT_MASKE
+                0x00000000008001a7       0x1d /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .rodata._ZN3avrL3PINE
+                0x00000000008001c4       0x3a /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .rodata._ZN3avrL4PORTE
+                0x00000000008001fe       0x3a /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .rodata._ZN3avrL3DDRE
+                0x0000000000800238       0x3a /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ *(.gnu.linkonce.r*)
+                0x0000000000800272                . = ALIGN (0x2)
+                0x0000000000800272                _edata = .
+                0x0000000000800272                PROVIDE (__data_end = .)
+
+.bss            0x0000000000800272        0x0
+                [!provide]                        PROVIDE (__bss_start = .)
+ *(.bss)
+ *(.bss*)
+ *(COMMON)
+                [!provide]                        PROVIDE (__bss_end = .)
+                0x00000000000018ce                __data_load_start = LOADADDR (.data)
+                0x0000000000001a40                __data_load_end = (__data_load_start + SIZEOF (.data))
+
+.noinit         0x0000000000800272        0x0
+                [!provide]                        PROVIDE (__noinit_start = .)
+ *(.noinit*)
+                [!provide]                        PROVIDE (__noinit_end = .)
+                0x0000000000800272                _end = .
+                [!provide]                        PROVIDE (__heap_start = .)
+
+.eeprom         0x0000000000810000        0x0
+ *(.eeprom*)
+                0x0000000000810000                __eeprom_end = .
+
+.fuse
+ *(.fuse)
+ *(.lfuse)
+ *(.hfuse)
+ *(.efuse)
+
+.lock
+ *(.lock*)
+
+.signature
+ *(.signature*)
+
+.stab           0x0000000000000000      0x144
+ *(.stab)
+ .stab          0x0000000000000000       0x6c /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_exit.o)
+                                         0x78 (size before relaxing)
+ .stab          0x000000000000006c       0xd8 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_copy_data.o)
+                                         0xe4 (size before relaxing)
+
+.stabstr        0x0000000000000000      0x120
+ *(.stabstr)
+ .stabstr       0x0000000000000000      0x120 /home/alp/bin/avr/lib/gcc/avr/7.4.0/avr5/libgcc.a(_mulsi3.o)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x0000000000000000       0x11
+ *(.comment)
+ .comment       0x0000000000000000       0x11 main.o
+                                         0x12 (size before relaxing)
+ .comment       0x0000000000000011       0x12 /home/alp/root/lib/avrgcc/libdev_1000000UL.a(dev_LCD_HD44780_tr.o)
+ .comment       0x0000000000000011       0x12 /home/alp/root/lib/avrgcc/libstd.a(std_basic_ios.o)
+ .comment       0x0000000000000011       0x12 /home/alp/root/lib/avrgcc/libstd.a(std_streambuf.o)
+ .comment       0x0000000000000011       0x12 /home/alp/root/lib/avrgcc/libstd.a(std_istream.o)
+ .comment       0x0000000000000011       0x12 /home/alp/root/lib/avrgcc/libstd.a(std_ostream.o)
+
+.note.gnu.avr.deviceinfo
+                0x0000000000000000       0x40
+ .note.gnu.avr.deviceinfo
+                0x0000000000000000       0x40 /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/crtatmega328p.o
+
+.note.gnu.build-id
+ *(.note.gnu.build-id)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges
+ *(.debug_aranges)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x0000000000000000      0x5f4
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x0000000000000000      0x5f4 /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/crtatmega328p.o
+
+.debug_abbrev   0x0000000000000000      0x5a2
+ *(.debug_abbrev)
+ .debug_abbrev  0x0000000000000000      0x5a2 /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/crtatmega328p.o
+
+.debug_line     0x0000000000000000       0x1d
+ *(.debug_line .debug_line.* .debug_line_end)
+ .debug_line    0x0000000000000000       0x1d /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/crtatmega328p.o
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str      0x0000000000000000      0x208
+ *(.debug_str)
+ .debug_str     0x0000000000000000      0x208 /home/alp/bin/avr/lib/gcc/avr/7.4.0/../../../../avr/lib/avr5/crtatmega328p.o
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.debug_pubtypes
+ *(.debug_pubtypes)
+
+.debug_ranges
+ *(.debug_ranges)
+
+.debug_macro
+ *(.debug_macro)
+
+.debug_addr
+ *(.debug_addr)
+OUTPUT(xx.elf elf32-avr)
+LOAD linker stubs
