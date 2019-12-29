@@ -5,7 +5,7 @@ SOURCES= main.cpp \
 
 BIN = xx
 
-USER_LDFLAGS=-L/usr/local/lib64 -lstdc++
+#USER_LDFLAGS=-L/usr/local/lib64 -lstdc++
 
 include $(ALP_COMPRULES)
 
