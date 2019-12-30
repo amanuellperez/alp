@@ -1,7 +1,7 @@
 # -------------------------
 # Estructura de directorios
 # -------------------------
-ALP_ROOT=${MY_HOME}/prj/cpp/git/alp		; export ALP_ROOT
+ALP_ROOT=${MY_HOME}/prj/git/alp		; export ALP_ROOT
 ALP_SRC=${ALP_ROOT}/src				; export ALP_SRC
 ALP_MK=${ALP_ROOT}/mk	    ; export ALP_MK
 
