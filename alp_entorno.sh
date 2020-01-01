@@ -26,7 +26,7 @@ ALP_COMPRULES=${ALP_MK}/alp.mk	; export ALP_COMPRULES
 
 
 # Alias
-alias alp='cd ${ALP_SRC}'
+alias s='cd ${ALP_SRC}'
 
 # Habilitamos los cores
 #ulimit -c unlimited

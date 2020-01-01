@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2020 A.Manuel L.Perez
+// Copyright (C) 2019-2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
 //
 // This file is part of the ALP Library.
 //
@@ -24,7 +24,7 @@
  *   - DESCRIPCION: Funciones para generar cosas aleatorias
  *
  *   - HISTORIA:
- *           A.Manuel Lopez- 07/04/2019 Escrito
+ *           A.Manuel L.Perez- 07/04/2019 Escrito
  *
  ****************************************************************************/
 #include <random>

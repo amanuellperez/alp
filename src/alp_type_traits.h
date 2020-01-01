@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2020 A.Manuel L.Perez
+// Copyright (C) 2019-2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
 //
 // This file is part of the ALP Library.
 //
@@ -27,7 +27,7 @@
  *   - COMENTARIOS: 
  *
  *   - HISTORIA:
- *           A.Manuel Lopez - 13/10/2017 Reestructurado.
+ *           A.Manuel L.Perez - 13/10/2017 Reestructurado.
  *
  ****************************************************************************/
 #include <type_traits>

@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2020 A.Manuel L.Perez
+// Copyright (C) 2019-2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
 //
 // This file is part of the ALP Library.
 //
@@ -26,7 +26,7 @@
  *   - COMENIntARIOS: Son las funciones usadas en avr.
  *
  *   - HISIntORIA:
- *           A.Manuel Lopez- 23/04/2019 Escrito
+ *           A.Manuel L.Perez- 23/04/2019 Escrito
  *
  ****************************************************************************/
 namespace alp{

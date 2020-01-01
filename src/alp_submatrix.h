@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2020 A.Manuel L.Perez
+// Copyright (C) 2019-2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
 //
 // This file is part of the ALP Library.
 //
@@ -68,7 +68,7 @@
  *
  *
  *   - HISTORIA:
- *     A.Manuel Lopez - 05/07/2016 Escrito
+ *     A.Manuel L.Perez - 05/07/2016 Escrito
  *			30/12/2017 Generalizado (de img a alp)
  *			28/02/2019 Reescrito y generalizado. 
  *				   Convierto submatrix en un rango_acotado.

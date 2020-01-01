@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2020 A.Manuel L.Perez
+// Copyright (C) 2019-2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
 //
 // This file is part of the ALP Library.
 //
@@ -24,6 +24,8 @@
  *   - DESCRIPCION: Funciones básicas del paquete alp.
  *
  *   - COMENTARIOS: 
+ *
+ *  TODO: obsoleto: recolocar o eliminar???
  *
  *   - HISTORIA:
  *           alp  - 18/03/2017 Escrito
@@ -61,27 +63,6 @@ public:
 private:
     T v_;
 };
-
-
-
-
-
-//// imprimimos un contenedor separado por comas (¿la coma se puede pasar
-//// como parámetro a la plantilla y así elegir el tipo de impresión?)
-//template<typename It>
-//inline std::ostream& print_contenedor(std::ostream& out, It begin, It end
-//		, const std::string separador = ", ") // separador entre cada elemento 
-//{
-//    std::string coma = "";
-//    for(auto x = begin; x != end; ++x) 
-//    {
-//	out << coma << *x;
-//	coma = separador;
-//    }
-//
-//    return out;
-//}
-
 
 
 
