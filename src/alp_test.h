@@ -20,12 +20,14 @@
 #define __ALP_TEST_H__
 /****************************************************************************
  *
- *   - DESCRIPCION: Funciones para probar programas.
+ *  - DESCRIPCION: Funciones para probar programas.
  *
- *   - COMENTARIOS: 
+ *  - COMENTARIOS: 
  *
- *   - HISTORIA:
- *           alp  - 06/05/2017 Escrito
+ *  - HISTORIA:
+ *    A.Manuel L.Perez
+ *    06/05/2017 Escrito
+ *    02/04/2020 CHECK_STDOUT
  *
  ****************************************************************************/
 #include <string>
@@ -141,6 +143,13 @@ inline void check_false(bool condicion, const std::string& prueba)
 	    {test::Datos::file_error = __FILE__; \
 	    test::Datos::line_error = __LINE__; \
 	    check_false((condicion), (prueba));}
+
+
+// Algunas prueba no sé cómo hacerlas automáticamente. Lo que hago es las
+// imprimo en pantalla mostrando el resultado que tendría que tener y con un
+// script hacemos la comprobación.
+#define CHECK_STDOUT(res, res_ok) \\
+	(std::cout << "check: " << res << " =? " << res_ok << '\n')
 
 
 /*!

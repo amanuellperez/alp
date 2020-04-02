@@ -36,6 +36,8 @@ namespace alp{
  *  Util, por ejemplo, para generar infinitos colores a partir de solo 10 y
  *  marcar zonas de intensidad.
  */
+// TODO: cambiarle el nombre, se confunde con un "buffer circular" que es otra
+// cosa.
 template<typename T, std::size_t N>
 struct Array_circular:public std::array<T, N>{
     using reference = typename std::array<T,N>::reference;

@@ -34,16 +34,17 @@
 #include <cstddef>   // std::size_t, ptrdiff_t
 #include <vector>
 #include <string>
-
+#include <atd_type_traits.h>
 
 namespace alp{
-// Tipo que permite hacer:
-// static_assert(always_false<T>::value, "aqui no debe de llegar");
-template <typename T>
-struct always_false_type : std::false_type { };
-
-template <typename T>
-inline constexpr bool always_false_v = always_false_type<T>::value;
+// MOVIDO A atd
+//// Tipo que permite hacer:
+//// static_assert(always_false<T>::value, "aqui no debe de llegar");
+//template <typename T>
+//struct always_false_type : std::false_type { };
+//
+//template <typename T>
+//inline constexpr bool always_false_v = always_false_type<T>::value;
 
 
 /***************************************************************************
@@ -300,13 +301,13 @@ constexpr decltype(auto) iterator_to_iterator()
                                           It>)
             return typename std::string::iterator();
 
-	else static_assert(always_false_v<It>,
+	else static_assert(atd::always_false_v<It>,
                                "El tipo tiene value_type. Si es un "
                                "iterador es de un contenedor que todavía no he "
                                "implementado la conversión. Implementarla.");
     }
     else 
-	static_assert(always_false_v<It>,
+	static_assert(atd::always_false_v<It>,
             "Falta implementar este caso o no es un iterador lo pasado");
 }
 
@@ -348,14 +349,14 @@ constexpr decltype(auto) iterator_to_const_iterator()
         else if constexpr (std::is_same_v<typename std::string::const_iterator, It>)
             return typename std::string::const_iterator();
 
-	else static_assert(always_false_v<It>,
+	else static_assert(atd::always_false_v<It>,
                                "Error: el tipo tiene value_type. Si es un "
                                "iterador es de un contenedor que todavía no he "
                                "implementado la conversión. Implementarla.");
 
     }
     else 
-	static_assert(always_false_v<It>,
+	static_assert(atd::always_false_v<It>,
             "Error: falta implementar este caso o no es un iterador lo pasado");
 }
 

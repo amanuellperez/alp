@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-// Conectar el avr al usb via uart y que envía texto. Este programa lo lee y
-// lo va mostrando en pantalla.
 #include "../../../alp_termios_cfg.h"
 #include "../../../alp_exception.h"
 #include "../../../alp_string.h"

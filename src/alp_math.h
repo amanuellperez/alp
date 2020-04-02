@@ -32,7 +32,7 @@
 #include <algorithm>
 #include <iostream>
 #include <cmath>
-#include <cstdlib>  // std::div
+//#include <cstdlib>  // std::div
 #include <limits>
 
 #include "alp_exception.h"
@@ -252,13 +252,14 @@ inline constexpr int resto(int D, int d)
  *	auto [q, r] = alp::div(20, 3);	// q = 6; r = 2
  *  \endcode
  */
-template <typename Int>
-// requires: is_integer(Int)
-std::pair<Int, Int> div(Int D, Int d)
-{
-    auto res = std::div(D, d);
-    return {res.quot, res.rem};
-}
+// MOVIDO A atd. Borrarlo de aqui.
+//template <typename Int>
+//// requires: is_integer(Int)
+//std::pair<Int, Int> div(Int D, Int d)
+//{
+//    auto res = std::div(D, d);
+//    return {res.quot, res.rem};
+//}
 
 
 

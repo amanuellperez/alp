@@ -42,9 +42,6 @@ void test_type_traits()
                    "Iterator_type(const)");
     }
     {
-        static_assert(!alp::always_false_v<int>,
-                      "Esto siempre tiene que dar error al compilar");
-
 	static_assert(!alp::is_iterator_v<int>);
 	static_assert(alp::is_iterator_v<int*>);
 	static_assert(alp::is_iterator_v<std::vector<int>::iterator>);
