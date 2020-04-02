@@ -148,7 +148,7 @@ inline void check_false(bool condicion, const std::string& prueba)
 // Algunas prueba no sé cómo hacerlas automáticamente. Lo que hago es las
 // imprimo en pantalla mostrando el resultado que tendría que tener y con un
 // script hacemos la comprobación.
-#define CHECK_STDOUT(res, res_ok) \\
+#define CHECK_STDOUT(res, res_ok) \
 	(std::cout << "check: " << res << " =? " << res_ok << '\n')
 
 
