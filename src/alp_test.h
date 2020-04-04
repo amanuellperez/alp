@@ -149,7 +149,7 @@ inline void check_false(bool condicion, const std::string& prueba)
 // imprimo en pantalla mostrando el resultado que tendría que tener y con un
 // script hacemos la comprobación.
 #define CHECK_STDOUT(res, res_ok) \
-	(std::cout << "check: " << res << " =? " << res_ok << '\n')
+	(std::cout << "check[" << __FILE__ << '-' << __LINE__ <<"]: " << res << " =? " << res_ok << '\n')
 
 
 /*!
