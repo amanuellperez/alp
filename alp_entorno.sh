@@ -9,6 +9,13 @@ ALP_MK=${ALP_ROOT}/mk	    ; export ALP_MK
 # Reglas de compilación de alp
 ALP_COMPRULES=${ALP_MK}/alp.mk	; export ALP_COMPRULES
 
+# Reglas genéricas para compilar atd.
+# Aunque en principio atd es otro proyecto, en la realidad atd y alp son
+# el mismo entorno. La diferencia es que todo lo que está dentro de atd
+# tiene que poder compilar para microcontroladores (no usa excepciones ni
+# memoria dinámica) mientras que alp usa toda la std.
+ATD_GENRULES=${ALP_COMPRULES}	; export ATD_GENRULES
+
 # ------------------------------------------------------
 # CPATH = es donde busca g++ los archivos .h (opción -I)
 # ------------------------------------------------------
