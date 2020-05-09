@@ -137,12 +137,12 @@ inline void check_false(bool condicion, const std::string& prueba)
 #define CHECK_TRUE(condicion, prueba) \
 	    {test::Datos::file_error = __FILE__; \
 	    test::Datos::line_error = __LINE__; \
-	    check_true((condicion), (prueba));}
+	    test::check_true((condicion), (prueba));}
 
 #define CHECK_FALSE(condicion, prueba) \
 	    {test::Datos::file_error = __FILE__; \
 	    test::Datos::line_error = __LINE__; \
-	    check_false((condicion), (prueba));}
+	    test::check_false((condicion), (prueba));}
 
 
 // Algunas prueba no sé cómo hacerlas automáticamente. Lo que hago es las
@@ -215,13 +215,13 @@ inline void check_equal_containers(const Cont1& c1,
 #define CHECK_EQUAL_CONTAINERS(in0, ine, out0, oute, prueba) \
 	    {test::Datos::file_error = __FILE__; \
 	    test::Datos::line_error = __LINE__; \
-	    check_equal_containers((in0), (ine), (out0), (oute), (prueba));}
+	    test::check_equal_containers((in0), (ine), (out0), (oute), (prueba));}
 
 
 #define CHECK_EQUAL_CONTAINERS_C(cont1, cont2,  prueba) \
 	    {test::Datos::file_error = __FILE__; \
 	    test::Datos::line_error = __LINE__; \
-	    check_equal_containers((cont1), (cont2), (prueba));}
+	    test::check_equal_containers((cont1), (cont2), (prueba));}
 
 
 /// Comprueba que la órbita de f es igual a [p0, pe).

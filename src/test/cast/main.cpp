@@ -68,10 +68,8 @@ try{
     test_narrow_cast();
     test_char2int();
 
-}catch(std::exception& e)
-{
+}catch(std::exception& e){
     std::cerr << e.what() << endl;
     return 1;
 }
-    return 0;
 }

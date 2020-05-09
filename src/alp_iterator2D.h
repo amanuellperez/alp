@@ -36,6 +36,8 @@
 #include <iterator>
 #include <type_traits>
 
+#include <atd_math.h>
+
 #include "alp_type_traits.h"
 #include "alp_iterator.h"
 #include "alp_subcontainer.h"
@@ -392,7 +394,7 @@ struct Gap_iterator_base{
     {
 	auto size = je - j0;
 
-	auto [q, r] = alp::div(incr, size);
+	auto [q, r] = atd::div(incr, size);
 	p0 += q*cols + r;
     }
 
@@ -605,7 +607,7 @@ struct Transpose_iterator_base{
     //	    n + incr = (j + incr_j)* rows + (i + incr_i)
     void operator+=(difference_type incr) 
     {
-	auto [incr_j, incr_i] = alp::div(incr, rows);
+	auto [incr_j, incr_i] = atd::div(incr, rows);
 	i += incr_i;
 	j += incr_j;
     }

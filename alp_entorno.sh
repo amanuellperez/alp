@@ -16,6 +16,9 @@ ALP_COMPRULES=${ALP_MK}/alp.mk	; export ALP_COMPRULES
 # memoria dinámica) mientras que alp usa toda la std.
 ATD_GENRULES=${ALP_COMPRULES}	; export ATD_GENRULES
 
+# PATH
+PATH=${PATH}:{ALP_ROOT}/bin ;	export PATH
+
 # ------------------------------------------------------
 # CPATH = es donde busca g++ los archivos .h (opción -I)
 # ------------------------------------------------------
