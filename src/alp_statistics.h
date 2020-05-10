@@ -26,31 +26,42 @@
  *   - COMENTARIOS: 
  *
  *   - HISTORIA:
- *           alp  - 19/09/2017 Escrito
+ *    A.Manuel L.Perez
+ *	19/09/2017 Escrito
  *
  ****************************************************************************/
 #include <iostream>
 #include <map>
 #include <algorithm>
 
-// namespace Estadistica{ ¿¿¿Mejor Estadistica???
 namespace alp{
 
 /// Devuelve la mediana de los 3 números a, b y c.
 template <typename Int>
-Int mediana(Int a, Int b, Int c)
+inline Int median(const Int& a, const Int& b, const Int& c)
 {
-    if (a <= b){
-	if (b <= c) return b;
-	else if (c <= a) return a;
-	else return c;
+    if (a <= b){ // ab
+	if (c <= a) // cab
+	    return a;
+
+	if (b <= c) // abc
+	    return b;
+
+	return c;   // acb
     }
-    else{// b < a
-	if (a <= c) return a;
-	else if (b <= c) return c;
-	else return b;
+    else{ // ba
+	if (a <= c) // bac
+	    return a;
+
+	if (b <= c) // bca
+	    return c;
+
+	return b;   // cba
     }
 }
+
+
+
 
 /*!
  *  \brief  Tabla de frecuencias

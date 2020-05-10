@@ -25,7 +25,7 @@ INCS= alp_alg.h 		\
 	alp_cast.h 			\
 	alp_cerror.h 		\
 	alp_concepts.h 		\
-	alp_estadistica.h 	\
+	alp_statistics.h 	\
 	alp_exception.h 	\
 	alp_filesystem.h 	\
 	alp_find.h 			\
@@ -45,7 +45,6 @@ INCS= alp_alg.h 		\
 	alp_rels.h 			\
 	alp_stdio.h 		\
 	alp_string.h 		\
-	alp_smooth.h		\
 	alp_subcontainer.h 	\
 	alp_submatrix.h 	\
 	alp_test.h 			\
