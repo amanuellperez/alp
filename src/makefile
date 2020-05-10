@@ -21,7 +21,6 @@ INCS= alp_alg.h 		\
 	alp_array.h			\
 	alp_avr.h 			\
 	alp_base.h 			\
-	alp_bit.h 			\
 	alp_cast.h 			\
 	alp_cerror.h 		\
 	alp_concepts.h 		\
@@ -42,7 +41,6 @@ INCS= alp_alg.h 		\
 	alp_matrix.h 		\
 	alp_matrix_view.h 	\
 	alp_random.h 		\
-	alp_rels.h 			\
 	alp_stdio.h 		\
 	alp_string.h 		\
 	alp_subcontainer.h 	\
@@ -65,3 +63,4 @@ LIB=alp
 include $(ALP_COMPRULES)
 
 
+#	alp_rels.h 			\
