@@ -7,10 +7,13 @@ hoy lo que parece ser que tiende a ser estable son los siguientes:
 ## Matrices
 Paquete para operar con matrices. En principio una matriz no es más que un
 contenedor bidimensional. No tiene definido el álgebra de matrices así que
-realmente no se debería de llamar matrices. Tienen la reestricción de que son
+realmente no se debería de llamar matrices (std::vector realmente es un
+contenedor unidimensional pero se llama vector; el nombre va en esta línea).
+Tienen la reestricción de que son
 de tamaño fijo, no pudiendo redimensionar. 
 
 ### Ejemplos
+Si alguno no funciona mira los tests, todos deberían de funcionar.
 
 #### Iteración como contenedor unidimensional
 * Método básico:
@@ -25,7 +28,6 @@ for (auto x: m)
 Matrix<int> m{4, 4};
 for (auto p = m.begin(); p != m.end(); ++p)
    cout << *p << '\n';
-   cout << x << '\n';
 ```
 
 #### Iteración como contenedor bidimensional
@@ -37,6 +39,7 @@ for(auto f = m.row_begin(); f != m.row_end(); ++f){
    for(auto x: *f)
       cout << x << ' ';
    cout << '\n';
+}
 ```
 
 * Con índices:
@@ -73,5 +76,13 @@ TODO
 * `../bin`: scripts para hacer tests automáticos.
 
 
+## Gestión de parámetros a programas: getopts
+TODO
 
-alp_getopts.h
+### Ejemplos
+TODO
+
+### Ficheros
+* `alp_getopts.h`
+
+
