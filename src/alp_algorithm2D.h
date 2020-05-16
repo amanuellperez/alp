@@ -33,7 +33,7 @@
 #include "alp_matrix.h"
 #include "alp_submatrix.h"
 
-#include "alp_alg.h"
+#include "alp_algorithm.h"
 #include "alp_math.h"	// punto_medio
 #include "alp_type_traits.h"
 

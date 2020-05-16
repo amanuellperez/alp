@@ -41,92 +41,6 @@
 namespace alp{
 
 
-/*****************************************************************************
- * 
- *   - CLASE: IntervaloC
- *
- *   - DESCRIPCIÓN: Intervalo cerrado.
- *   - TODO: Generalizar a abierto, cerrado y semiabierto:
- *	+ ¿con templates? Intervalo<Cerrado> I;
- *			  Intervalo<Abierto> I;
- *
- *	+ ¿con parámetros? Intervalo I{2,3,abierto};?
- *
- ***************************************************************************/
-//class IntervaloC{
-//public:
-//    IntervaloC(int a = 0, int b = 0):a_{a}, b_{b}{}
-//
-//    int a() const {return a_;}
-//    int b() const {return b_;}
-//
-//    IntervaloC& amplia(int x);
-//
-//private:
-//    int a_, b_;
-//};
-//
-//inline int longitud(IntervaloC I) {return abs(I.b()-I.a()); } 
-//
-// Idea: modificar para poder escribir: if (pertenece(x).a(I)) ...
-// Problema: tengo muchas funciones pertenece:
-//  ¿pertenece un elemento a un vector?	    pertenece(x).a(vector)
-//  ¿pertenece un elemento a un intervalo?  pertenece(x).a(intervalo)
-//  ¿pertenece un punto a una region?	    pertenece(x).a(region)
-//
-// Pero no puedo sobrecargar pertenece(x). Debería de escribir al reves:
-//	pertenece_al(vector).el_elemento(x);
-//	pertenece_al(intervalo).el_elemento(x);
-//	pertenece_al(region).el_elemento(x);
-//
-//  pero esto es confuso.
-//
-//  Otra forma sería modifica el lenguaje y que admitiese cosas del tipo:
-//	    pertenece(x)_a(vector); ---> pertenece_a(x, vector);
-//
-//inline bool pertenece(int x, IntervaloC I) 
-//{return esta_entre(x, I.a(), I.b());}
-//
-//// si x no pertenece al intervalo I, lo ampliamos para que sea uno de sus
-//// extremos.
-//inline IntervaloC& IntervaloC::amplia(int x)
-//{
-//    if(!pertenece(x, *this))
-//	x < a_? a_ = x: b_ = x;
-//
-//    return *this;
-//}
-//
-//
-//
-//
-//
-//
-//// ordenamos los intervalos por a
-////inline bool operator<(const IntervaloC& I1, const IntervaloC& I2)
-////{ return (I1.a() < I2.a()); }
-//
-//
-//inline std::ostream& operator<<(std::ostream& out, const IntervaloC& I)
-//{
-//    out << '[' << I.a() << ", " << I.b() << ']';
-//
-//    return out;
-//}
-
-
-
-
-//// copiamos solo el color indicado: [p0, pe) -> [q0, qe)
-//template<typename ColorFunc, typename const_It, typename It>
-//It copia(const_It p0, const_It pe, It q)
-//{
-//    ColorFunc color;
-//    for(auto x = p0; x != pe; ++x, ++q)
-//	color(*q, color(*x));
-//
-//    return q;
-//}
 
 /*****************************************************************************
  * 
@@ -172,12 +86,12 @@ inline  std::ostream& operator<<(std::ostream& out, flag f)
  *	    if(!existe(Fichero{"03.jpg"})) ...
  *
  ****************************************************************************/
-class Fichero:public Nombre<std::string>{ public: using Nombre::Nombre; };
-
+//class Fichero:public Nombre<std::string>{ public: using Nombre::Nombre; };
+using Fichero = std::string;
 
 inline bool existe(Fichero f)
 {
-    std::ifstream in{f()};
+    std::ifstream in{f};
     if(in) return true;
     else return false;
 }

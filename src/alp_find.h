@@ -50,11 +50,11 @@
  *	   inverso.
  *
  *   - HISTORIA:
- *           alp  - 13/10/2017 Escrito. Basado en xp1.
- *		    28/02/2018 Reestructurado y ampliado.
- *		    16/02/2019 Traigo los finds de visar. 
- *			       TODO: revisar, están duplicados con diferentes
- *				     argumentos!!!
+ *    A.Manuel L.Perez
+ *	13/10/2017 Escrito. Basado en xp1.
+ *	28/02/2018 Reestructurado y ampliado.
+ *	16/02/2019 Traigo los finds de visar. 
+ *		 TODO: revisar, están duplicados con diferentes argumentos!!!
  *
  ****************************************************************************/
 #include <alp_concepts.h>

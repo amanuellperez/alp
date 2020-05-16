@@ -15,12 +15,9 @@ SOURCES=alp_cast.cpp 	\
 	alp_test.cpp
 
 
-INCS= alp_alg.h 		\
-	alp_algorithm2D.h 	\
+INCS= alp_algorithm2D.h 	\
 	alp_algorithm.h 	\
 	alp_array.h			\
-	alp_avr.h 			\
-	alp_base.h 			\
 	alp_cast.h 			\
 	alp_cerror.h 		\
 	alp_concepts.h 		\

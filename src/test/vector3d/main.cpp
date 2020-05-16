@@ -19,7 +19,6 @@
 #include "../../alp_vector3D.h"
 #include "../../alp_math.h"
 
-#include "../../alp_base.h"
 #include "../../alp_exception.h"
 #include "../../alp_test.h"
 
