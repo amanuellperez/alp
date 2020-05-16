@@ -17,19 +17,19 @@
 
 #pragma once
 
-#ifndef __ALP_ITERATOR2D_H__
-#define __ALP_ITERATOR2D_H__
+#ifndef __ALP_MATRIX_ITERATOR_H__
+#define __ALP_MATRIX_ITERATOR_H__
 /****************************************************************************
  *
- *   - DESCRIPCION: Iteradores usados para acceder a contenedores
- *   bidimensionales.
+ *  - DESCRIPCION: Iteradores usados para acceder a contenedores
+ *  bidimensionales.
  *
- *   - COMENTARIOS: 
  *
- *   - HISTORIA:
- *           alp  - 05/07/2016 Escrito
- *		    30/12/2017 Generalizado (de img a alp)
- *		    10/03/2019 Reescrito.
+ *  - HISTORIA:
+ *    A.Manuel L.Perez
+ *       05/07/2016 Escrito
+ *	 30/12/2017 Generalizado (de img a alp)
+ *	 10/03/2019 Reescrito.
  *
  ****************************************************************************/
 

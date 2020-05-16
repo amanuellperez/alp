@@ -3,7 +3,6 @@ SOURCES=alp_cast.cpp 	\
 	alp_exception.cpp 	\
 	alp_getopts.cpp		\
 	alp_filesystem.cpp 	\
-	alp_latex.cpp 		\
 	alp_stdio.cpp 		\
 	alp_string.cpp		\
 	alp_termios_avr.cpp 		\
@@ -15,8 +14,7 @@ SOURCES=alp_cast.cpp 	\
 	alp_test.cpp
 
 
-INCS= alp_algorithm2D.h 	\
-	alp_algorithm.h 	\
+INCS= alp_algorithm.h 	\
 	alp_array.h			\
 	alp_cast.h 			\
 	alp_cerror.h 		\
@@ -30,18 +28,18 @@ INCS= alp_algorithm2D.h 	\
 	alp_geo_types.h 	\
 	alp_getopts.h		\
 	alp_indices.h 		\
-	alp_iterator2D.h 	\
 	alp_iterator.h 		\
-	alp_latex.h 		\
 	alp_math_efunc.h 	\
 	alp_math.h 			\
-	alp_matrix.h 		\
-	alp_matrix_view.h 	\
+	matrix/alp_matrix.h 		\
+	matrix/alp_matrix_view.h 	\
+	matrix/alp_matrix_algorithm.h 	\
+	matrix/alp_matrix_iterator.h 	\
+	matrix/alp_submatrix.h 	\
 	alp_random.h 		\
 	alp_stdio.h 		\
 	alp_string.h 		\
 	alp_subcontainer.h 	\
-	alp_submatrix.h 	\
 	alp_test.h 			\
 	alp_termios_avr.h 		\
 	alp_termios_cfg.h 		\

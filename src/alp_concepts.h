@@ -27,10 +27,12 @@
  *	 Usar nombres largos para los defines, para evitar colisiones
  *	 de nombres.
  *
- *   - HISTORIA:
- *           alp  - 13/10/2017 Escrito
+ *  - HISTORIA:
+ *    A.Manuel L.Perez
+ *	13/10/2017 Escrito
  *
  ****************************************************************************/
+
 // Container
 // ---------
 #define Contenedor_unidimensional typename

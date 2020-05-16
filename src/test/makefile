@@ -1,10 +1,13 @@
+# Todos los tests tienen que estar juntos para poder recompilarlos
+# y hacer las pruebas automáticas. No meterlos en directorios diferentes.
+# EJ: no crear alp/matrix/test <-- no se compilaría de forma automática
+# al modificar alp.
 DIRS = cast \
 	container \
 	exception \
 	functional \
 	geo_types \
 	iterator \
-	iterator2D \
 	math \
 	matrix \
 	time \

@@ -74,7 +74,7 @@
  *				   Convierto submatrix en un rango_acotado.
  *
  ****************************************************************************/
-#include "alp_iterator2D.h"
+#include "alp_matrix_iterator.h"
 #include "alp_indices.h"
 
 #include <type_traits>	// remove_const

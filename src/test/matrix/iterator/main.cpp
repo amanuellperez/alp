@@ -16,9 +16,9 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-#include "../../alp_iterator2D.h"
+#include "../../../alp_matrix_iterator.h"
 
-#include "../../alp_test.h"
+#include "../../../alp_test.h"
 
 #include <iostream>
 #include <fstream>

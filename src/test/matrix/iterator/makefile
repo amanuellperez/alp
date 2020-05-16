@@ -1,8 +1,8 @@
 
 SOURCES= main.cpp	\
-		 ../../alp_test.cpp	\
-		 ../../alp_cast.cpp	\
-		 ../../alp_exception.cpp
+		 ../../../alp_test.cpp	\
+		 ../../../alp_cast.cpp	\
+		 ../../../alp_exception.cpp
 
 BIN = xx
 

@@ -17,23 +17,27 @@
 
 #pragma once
 
-#ifndef __ALP_ALGORITHM2D_H__
-#define __ALP_ALGORITHM2D_H__
+#ifndef __ALP_MATRIX_ALGORITHM_H__
+#define __ALP_MATRIX_ALGORITHM_H__
 /****************************************************************************
  *
- *   - DESCRIPCION: Algoritmos para usar con matrices.
+ *  - DESCRIPCION: Algoritmos para usar con matrices.
  *
- *   - COMENTARIOS: Son algoritmos que operan en contenedores bidimensionales
- *	y no en matrices.
+ *  - COMENTARIOS: Son algoritmos que operan en contenedores bidimensionales
+ *	y no en matrices. Commo al final llamo 'matriz' a los contenedores 
+ *	bidimensionales ahora diré: son algoritmos para operar en las
+ *	matrices.
  *
- *   - HISTORIA:
- *           alp  - 28/09/2017 Escrito
+ *  - HISTORIA:
+ *    A.Manuel L.Perez
+ *       28/09/2017 Escrito
+ *       16/06/2020 Reestructurado.
  *
  ****************************************************************************/
+
 #include "alp_matrix.h"
 #include "alp_submatrix.h"
 
-#include "alp_algorithm.h"
 #include "alp_math.h"	// punto_medio
 #include "alp_type_traits.h"
 
@@ -43,10 +47,9 @@
 #include <numeric>
 
 namespace alp{
-/***************************************************************************
- *			    FUNCIONES BÁSICAS
- ***************************************************************************/
 /// Devuelve la posición que ocupa el centro de la matrix
+// TODO: esto solo depende de rows y cols!!! está definido sobre un
+// rectángulo!
 template <typename C>
 // requires: Contenedor_bidimensional(Container)
 inline typename C::Posicion posicion_del_centro(const C& c)
@@ -77,17 +80,32 @@ void copia_dentro  ( const Container2D& m0    // copiamos m0 en
 }
 
 
+/// Convierte un vector 'v' en una Matrix de 'rows x cols' dimensiones.
+/// Precondicion: v.size() = rows * cols;
+template <typename Int>
+Matrix<Int> vector2matrix(std::vector<Int>& v, size_t rows)
+{
+    Matrix<Int> m{rows, v.size()/rows};
+
+    std::copy(v.begin(), v.end(), m.begin());
+
+    return m;
+}
+
+
 
 /***************************************************************************
- *			ALGUNOS ALGORITMOS BÁSICOS
+ *			    LECTURA/ESCRITURA
  ***************************************************************************/
-// template <typename T, typename S, typename F>
-template <typename Container2D, typename F>
+// El operator func sirve para si se trata de una matriz de vectores imprimir
+// solo ciertos campos. 
+// Ejemplo: en una imagen solo quiero ver el color red, o la intensidad.
+template <typename T, typename F>
 // requires: Contenedor_bidimensional(Container2D)
 // F: opera sobre los elementos de la matrix T: F(x) con T x;
-inline std::ostream& print2D(std::ostream& out, const Container2D& m, F func)
+inline std::ostream& print(std::ostream& out, const Matrix<T>& m, F func)
 {
-    using size_type = typename Container2D::Ind;
+    using size_type = typename Matrix<T>::Ind;
 
     for (size_type i = 0; i < m.rows(); ++i){
 	for (size_type j = 0; j < m.cols(); ++j)
@@ -100,93 +118,76 @@ inline std::ostream& print2D(std::ostream& out, const Container2D& m, F func)
 }
 
 
-template <typename Container>
-inline std::ostream& print2D(std::ostream& out, const Container& m)
+template <typename T>
+inline std::ostream& print(std::ostream& out, const Matrix<T>& m)
 {
-    using T = Value_type<Container>;
-    return print2D(out, m, Identidad<T>{});
+    using V = Value_type<Matrix<T>>;
+    return print(out, m, Identidad<V>{});
 }
+
+template <typename T>
+inline std::ostream& operator<<(std::ostream& out, const Matrix<T>& m)
+{ return print(out, m); }
+
 
 
 // Versiones para grabar en un fichero
-//template <typename T, typename S, typename F>
-template <typename Container, typename F>
+template <typename T, typename F>
 // F: opera sobre los elementos de la matrix T: F(x) con T x;
-inline void print2D(const std::string& nom_fichero, const Container& m,
+inline void print(const std::string& nom_fichero, const Matrix<T>& m,
                     F func)
 {
     std::ofstream out{nom_fichero};
     if (!out)
 	throw File_cant_write(nom_fichero);
 
-    print2D(out, m, func);
+    print(out, m, func);
 }
 
-template <typename Container>
-inline void print2D(const std::string& nom_fichero, const Container& m)
+template <typename T>
+inline void print(const std::string& fname, const Matrix<T>& m)
 {
-    std::ofstream out{nom_fichero};
+    std::ofstream out{fname};
     if (!out)
-	throw File_cant_write(nom_fichero);
+	throw File_cant_write(fname);
 
-    print2D(out, m);
+    print(out, m);
 }
 
 
 
-/***************************************************************************
- *			    read_matrix<int>()
- ***************************************************************************/
-// Responsable de implementar la función read_matrix<int>
+
+
+/// Lee una matriz de Ints desde un flujo.
+// El problema es que cuando vamos a leer una matriz de un flujo a priori
+// no conocemos sus dimensiones. 
+// Solución 1: cargar todo el fichero en un vector calculando el número de
+// filas y columnas y luego convertirlo en matriz.
+// Por este mismo motivo no podemos definirlo como:
+//	    read(in, matrix); // de qué dimensiones matrix??? 
 template <typename Int>
-class Read_matrix{
-public:
-    Matrix<Int> read(std::istream& in);
-
-private:
-    // convierte una matrix unidimensional v, en una Matrix de 'rows' filas.
-    Matrix<Int> to_matrix(std::vector<std::string>& v, size_t rows)
-    {
-	Matrix<Int> m{rows, v.size()/rows};
-
-	auto ma = m.begin();
-	for (auto p = v.begin(); p != v.end(); ++p, ++ma)
-	    *ma = to<Int>(*p);
-
-	return m;
-    }
-};
-
-
-template <typename Int>
-Matrix<Int> Read_matrix<Int>::read(std::istream& in)
+Matrix<Int> read_matrix(std::istream& in)
 {
-    std::vector<std::string> file;
+    std::vector<Int> file;
     
     std::size_t rows = 0;
 
     std::string line;
     while (std::getline(in, line)){
 	++rows;
-	std::istringstream iss{line};
-	copy(std::istream_iterator<std::string>(iss), std::istream_iterator<std::string>()
-		, back_inserter(file));
+	std::istringstream str{line};
+	Int tmp;
+	while (str >> tmp)
+	    file.push_back(tmp);
     }
 
-    return to_matrix(file, rows);
+    return vector2matrix(file, rows);
 }
 
 
 
-/// Lee una matrix de tipo Int. 
-template <typename Int>
-inline Matrix<Int> read_matrix(std::istream& in)
-{
-    Read_matrix<Int> r;
-    return r.read(in);
-}
 
-
+/// Lee una matriz de Ints desde un fichero.
 template <typename Int>
 inline Matrix<Int> read_matrix(const std::string& nom_fichero)
 {

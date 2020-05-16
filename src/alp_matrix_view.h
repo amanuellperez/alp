@@ -32,7 +32,7 @@
 #include "alp_iterator.h"
 #include "alp_indices.h"
 #include "alp_subcontainer.h"
-#include "alp_iterator2D.h"
+#include "alp_matrix_iterator.h"
 #include "alp_type_traits.h"
 
 namespace alp{
