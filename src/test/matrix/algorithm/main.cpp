@@ -70,7 +70,8 @@ void test_print_matrix()
 			      5, 6};
 
 	auto m = alp::vector2matrix(v, 3);
-	std::cout << m << '\n';
+	alp::print(std::cout, m);
+	std::cout << '\n';
     }
 }
 

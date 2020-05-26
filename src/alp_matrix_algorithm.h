@@ -31,7 +31,8 @@
  *  - HISTORIA:
  *    A.Manuel L.Perez
  *       28/09/2017 Escrito
- *       16/06/2020 Reestructurado.
+ *       16/03/2020 Reestructurado.
+ *       26/05/2020 transform1D/2D.
  *
  ****************************************************************************/
 
@@ -100,12 +101,15 @@ Matrix<Int> vector2matrix(std::vector<Int>& v, size_t rows)
 // El operator func sirve para si se trata de una matriz de vectores imprimir
 // solo ciertos campos. 
 // Ejemplo: en una imagen solo quiero ver el color red, o la intensidad.
-template <typename T, typename F>
-// requires: Contenedor_bidimensional(Container2D)
+//
+// OJO: tiene que poder funcionar con Matrix y con Matrix_view y con
+// Submatrix... Esto es, opera sobre contenedores bidimensionales!!!
+template <typename M, typename F>
+// requires: Contenedor_bidimensional(M)
 // F: opera sobre los elementos de la matrix T: F(x) con T x;
-inline std::ostream& print(std::ostream& out, const Matrix<T>& m, F func)
+inline std::ostream& print(std::ostream& out, const M& m, F func)
 {
-    using size_type = typename Matrix<T>::Ind;
+    using size_type = typename M::Ind;
 
     for (size_type i = 0; i < m.rows(); ++i){
 	for (size_type j = 0; j < m.cols(); ++j)
@@ -118,23 +122,19 @@ inline std::ostream& print(std::ostream& out, const Matrix<T>& m, F func)
 }
 
 
-template <typename T>
-inline std::ostream& print(std::ostream& out, const Matrix<T>& m)
+template <typename M>
+inline std::ostream& print(std::ostream& out, const M& m)
 {
-    using V = Value_type<Matrix<T>>;
+    using V = Value_type<M>;
     return print(out, m, Identidad<V>{});
 }
-
-template <typename T>
-inline std::ostream& operator<<(std::ostream& out, const Matrix<T>& m)
-{ return print(out, m); }
 
 
 
 // Versiones para grabar en un fichero
-template <typename T, typename F>
+template <typename M, typename F>
 // F: opera sobre los elementos de la matrix T: F(x) con T x;
-inline void print(const std::string& nom_fichero, const Matrix<T>& m,
+inline void print(const std::string& nom_fichero, const M& m,
                     F func)
 {
     std::ofstream out{nom_fichero};
@@ -144,8 +144,8 @@ inline void print(const std::string& nom_fichero, const Matrix<T>& m,
     print(out, m, func);
 }
 
-template <typename T>
-inline void print(const std::string& fname, const Matrix<T>& m)
+template <typename M>
+inline void print(const std::string& fname, const M& m)
 {
     std::ofstream out{fname};
     if (!out)
@@ -454,7 +454,63 @@ void for_each2D_alrededor_diagonal(const Img& img1, Funcion func)
     }
 }
 
+/***************************************************************************
+ *			    TRANSFORM
+ ***************************************************************************/
+// Mismos convenios de notación que para los foreach.
+// F = función transformadora. q1 = F(p1, p2);
+template <typename I, typename S, typename F>
+alp::Matrix<I,S> transform1D_adelante(const alp::Matrix<I,S>& x, F transf)
+{
+    alp::Matrix<I,S> y{x.rows(), x.cols()};
 
+    auto f = x.row_begin();
+    auto g = y.row_begin();
+    for (; f != x.row_end(); ++f, ++g){
+	auto p1 = f->begin();
+	auto p2 = std::next(p1);
+	auto q1 = g->begin();
+
+	for (; p2 != f->end(); ++p1, ++p2, ++q1){
+	    *q1 = transf(*p1, *p2);
+	}
+
+	*q1 = img::ColorRGB::negro();
+    }
+
+
+    return y;
+}
+
+
+// F = función transformadora. q1 = F(xp1, xp2, xq1); <--- cuidado con el orden.
+template <typename I, typename S, typename F>
+alp::Matrix<I,S> transform2D_adelante(const alp::Matrix<I,S>& x, F transf)
+{
+    alp::Matrix<I,S> y{x.rows(), x.cols()};
+
+    auto f1 = x.row_begin();
+    auto f2 = std::next(f1);
+    auto g = y.row_begin();
+
+    for (; f2 != x.row_end(); ++f1, ++f2, ++g){
+	auto xp1 = f1->begin();
+	auto xp2 = std::next(xp1);
+	auto xq1 = f2->begin();
+
+	auto yp1 = g->begin();
+
+	for (; xp1 != f1->end(); ++xp1, ++xp2, ++xq1, ++yp1){
+	    *yp1 = transf(*xp1, *xp2, *xq1);
+	}
+
+	*yp1 = img::ColorRGB::negro();
+    }
+
+
+
+    return y;
+}
 }// namespace
 
 

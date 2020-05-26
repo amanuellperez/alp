@@ -31,11 +31,11 @@ INCS= alp_algorithm.h 	\
 	alp_iterator.h 		\
 	alp_math_efunc.h 	\
 	alp_math.h 			\
-	matrix/alp_matrix.h 		\
-	matrix/alp_matrix_view.h 	\
-	matrix/alp_matrix_algorithm.h 	\
-	matrix/alp_matrix_iterator.h 	\
-	matrix/alp_submatrix.h 	\
+	alp_matrix.h 		\
+	alp_matrix_view.h 	\
+	alp_matrix_algorithm.h 	\
+	alp_matrix_iterator.h 	\
+	alp_submatrix.h 	\
 	alp_random.h 		\
 	alp_stdio.h 		\
 	alp_string.h 		\

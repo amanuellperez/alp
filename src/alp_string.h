@@ -268,7 +268,9 @@ constexpr char path_separador = '/';
 std::string basename(const std::string& path, char sep = path_separador);
    
 /// Devuelve el nombre del fichero sin la extensión correspondiente.
+// esta es: std::filesystem::path::replace_extension();
 std::string nombre_sin_extension(const std::string& nom_fichero);
+
 
 /// Devuelve el directorio de este path.
 /// 

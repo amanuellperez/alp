@@ -54,13 +54,13 @@ for (size_t i = 0; i < m.rows(); ++i)
 
 ### Ficheros
 * `alp_indices.h`
-* `alp_iterator2D.h`
 * `alp_iterator.h`
+* `alp_matrix_iterator.h`
 * `alp_subcontainer.h`
 * `alp_matrix.h`: Definición de la clase `Matrix`.
 * `alp_matrix_view.h`
 * `alp_submatrix.h`: Obsoleto. Usar `Matrix_view`.
-* `alp_algorithm2D.h`: Algoritmos que operan en matrices.
+* `alp_matrix_algorithm.h`: Algoritmos que operan en matrices.
 
 
 
