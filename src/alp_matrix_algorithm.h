@@ -459,8 +459,10 @@ void for_each2D_alrededor_diagonal(const Img& img1, Funcion func)
  ***************************************************************************/
 // Mismos convenios de notación que para los foreach.
 // F = función transformadora. q1 = F(p1, p2);
-template <typename I, typename S, typename F>
-alp::Matrix<I,S> transform1D_adelante(const alp::Matrix<I,S>& x, F transf)
+// x0 = valor usado para rellenar 'y' en los puntos que no se sabe cómo
+// rellenar.
+template <typename I, typename S, typename F, typename V>
+alp::Matrix<I,S> transform1D_adelante(const alp::Matrix<I,S>& x, const V& x0, F transf)
 {
     alp::Matrix<I,S> y{x.rows(), x.cols()};
 
@@ -475,7 +477,7 @@ alp::Matrix<I,S> transform1D_adelante(const alp::Matrix<I,S>& x, F transf)
 	    *q1 = transf(*p1, *p2);
 	}
 
-	*q1 = img::ColorRGB::negro();
+	*q1 = x0;
     }
 
 
@@ -484,8 +486,10 @@ alp::Matrix<I,S> transform1D_adelante(const alp::Matrix<I,S>& x, F transf)
 
 
 // F = función transformadora. q1 = F(xp1, xp2, xq1); <--- cuidado con el orden.
-template <typename I, typename S, typename F>
-alp::Matrix<I,S> transform2D_adelante(const alp::Matrix<I,S>& x, F transf)
+// x0 = valor usado para rellenar 'y' en los puntos que no se sabe cómo
+// rellenar.
+template <typename I, typename S, typename F, typename V>
+alp::Matrix<I,S> transform2D_adelante(const alp::Matrix<I,S>& x, const V& x0, F transf)
 {
     alp::Matrix<I,S> y{x.rows(), x.cols()};
 
@@ -504,13 +508,81 @@ alp::Matrix<I,S> transform2D_adelante(const alp::Matrix<I,S>& x, F transf)
 	    *yp1 = transf(*xp1, *xp2, *xq1);
 	}
 
-	*yp1 = img::ColorRGB::negro();
+	*yp1 = x0;
     }
 
 
 
     return y;
 }
+
+
+// F = función transformadora. 
+// q1 = F(xo0, xo1, xo2,
+//        xp0, xp1, xp2,
+//        xq0, xq1, xq2);
+template <typename I, typename S, typename V, typename F>
+alp::Matrix<I,S> transform2D_alrededor(const alp::Matrix<I,S>& x, const V& x0, F transf)
+{
+    alp::precondicion(x.rows() >= 3 and x.cols() >= 3
+	    , __FILE__, __LINE__, "transform_alrededor"
+	    , "Imagen con menos de 3 filas ó 3 columnas");
+
+    alp::Matrix<I,S> y{x.rows(), x.cols()};
+
+    auto f0 = x.row_begin();
+    auto f1 = std::next(f0);
+    auto f2 = std::next(f1);
+    
+    auto g1 = y.row_begin();
+
+    // copiamos la primera fila sin hacer nada
+//    std::copy(f0->begin(), f0->end(), g1->begin());
+    std::fill(g1->begin(), g1->end(), x0);
+
+    ++g1;
+    for(; f2 != x.row_end(); ++f0, ++f1, ++f2, ++g1){
+	auto xo0 = f0->begin();
+	auto xo1 = std::next(xo0);
+	auto xo2 = std::next(xo1);
+
+	auto xp0 = f1->begin();
+        auto xp1 = std::next(xp0);
+        auto xp2 = std::next(xp1);
+
+	auto xq0 = f2->begin();
+	auto xq1 = std::next(xq0);
+	auto xq2 = std::next(xq1);
+    
+	auto yp1 = g1->begin();
+	*yp1 = x0;
+	++yp1;
+
+	while (xp2 != f1->end()){
+	    *yp1 = transf(*xo0, *xo1, *xo2,
+		          *xp0, *xp1, *xp2, 
+			  *xq0, *xq1, *xq2);
+
+	    ++xo0; ++xo1; ++xo2;
+	    ++xp0; ++xp1; ++xp2;
+	    ++xq0; ++xq1; ++xq2;
+
+	    ++yp1;
+
+	}
+
+	*yp1 = x0;
+    }
+
+    // copiamos la última fila
+    // std::copy(f2->begin(), f2->end(), g1->begin());
+    std::fill(g1->begin(), g1->end(), x0);
+
+    return y;
+}
+
+
+
 }// namespace
 
 

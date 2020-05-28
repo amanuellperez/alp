@@ -169,6 +169,38 @@ void test_algorithm()
     }
 }
 
+void test_transform2D()
+{
+    test::interfaz("transform_2D_alrededor");
+
+    {
+	std::vector<int> vx = {1,2,3,4,5,
+	                       2,1,2,1,2,
+			       1,2,2,2,1,
+			       5,4,3,2,1};
+	alp::Matrix<int> x{5,4};
+	std::copy(vx.begin(), vx.end(), x.begin());
+
+	auto y = alp::transform2D_alrededor(x, 47, 
+		[](int o0, int o1, int o2,
+		   int p0, int p1, int p2,
+		   int q0, int q1, int q2){
+	std::cout << "Copiando " << o0 << " -> " << p1 << " -> " << q2 << '\n';
+		    if (p1 == 1)
+			return 10;
+		    else
+			return 33;
+		});
+
+        CHECK_TRUE(y.rows() == x.rows() and y.cols() == x.cols(),
+                   "transform2D_alrededor:rows x cols");
+	std::cerr << "TODO: NO ES AUTOMATICA\n";
+        print(std::cout, y);
+
+    }
+
+}
+
 
 int main()
 {
@@ -180,9 +212,10 @@ try{
     test_diferencias();
     test_diferencias2();
     test_algorithm();
+    test_transform2D();
 
 }catch(std::exception& e){
-    std::cerr << "EXCEPTION: " << e.what() << std::endl;
+    std::cerr << e.what() << std::endl;
     return 1;
 }
     return 0;
