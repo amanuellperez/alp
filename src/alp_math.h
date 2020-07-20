@@ -23,16 +23,16 @@
  *
  *   - DESCRIPCION: Funciones matemáticas
  *
- *   - COMENTARIOS: 
- *
  *   - HISTORIA:
- *           alp  - 12/03/2017 Escrito
+ *    A.Manuel L.Perez
+ *      12/03/2017 Escrito
+ *      28/05/2020 Aproximado
  *
  ****************************************************************************/
+
 #include <algorithm>
 #include <iostream>
 #include <cmath>
-//#include <cstdlib>  // std::div
 #include <limits>
 
 #include "alp_exception.h"
@@ -296,7 +296,7 @@ inline constexpr double grado2radian(double g) { return (g*pi/180.0); }
 /// Devuelve el coseno. El ángulo está en grados.
 /// Copio esta notación de Octave. ¿Sería mejor cos_en_grados?
 // TODO: g son grados. Cuando hay varias formas de medir un número hay que 
-// usar cosd(Grados{20}) ó cosd(20_grados) <--- cosas así!!!
+// usar cosd(Grados{20})  <-- ya está definido en atd::Magnitude!!!
 inline double cosd(double g) { return cos(grado2radian(g)); }
 
 /// Devuelve el seno. El ángulo está en grados.
@@ -414,6 +414,24 @@ constexpr inline Int_es_multiplo_de<Int> es_multiplo(Int m)
 { return Int_es_multiplo_de<Int>{m}; }
 
 
+
+/*!
+ *  \brief  ¿Dos números son aproximados?
+ *
+ * TODO: En inglés, ¿cómo sería? Aproximate??? @_@
+ *
+ */
+template <typename Int>
+struct Aproximado{
+    Int eps;
+
+    Aproximado(Int eps0) :eps{eps0} { }
+
+    bool operator()(Int x, Int y)
+    {
+	return -eps < (x-y) and (x-y) < eps;
+    }
+};
 
 
 }// namespace alp

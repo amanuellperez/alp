@@ -458,7 +458,7 @@ void for_each2D_alrededor_diagonal(const Img& img1, Funcion func)
  *			    TRANSFORM
  ***************************************************************************/
 // Mismos convenios de notación que para los foreach.
-// F = función transformadora. q1 = F(p1, p2);
+// F = función transformadora. q1 = F(p1, p2); Elige q1 a partir de p1 y p2.
 // x0 = valor usado para rellenar 'y' en los puntos que no se sabe cómo
 // rellenar.
 template <typename I, typename S, typename F, typename V>
@@ -483,6 +483,33 @@ alp::Matrix<I,S> transform1D_adelante(const alp::Matrix<I,S>& x, const V& x0, F 
 
     return y;
 }
+
+
+// Mismos convenios de notación que para los foreach.
+// F = función transformadora. q2 = F(p1, p2); Elige q2 a partir de p1 y p2.
+template <typename I, typename S, typename F>
+alp::Matrix<I,S> transform1D_atras(const alp::Matrix<I,S>& x, F transf)
+{
+    alp::Matrix<I,S> y{x.rows(), x.cols()};
+
+    auto f = x.row_begin();
+    auto g = y.row_begin();
+    for (; f != x.row_end(); ++f, ++g){
+	auto p1 = f->begin();
+	auto q2 = g->begin();
+	auto p2 = std::next(p1);
+
+	*q2 = *p1;
+	++q2;
+	for (; p2 != f->end(); ++p1, ++p2, ++q2){
+	    *q2 = transf(*p1, *p2);
+	}
+    }
+
+
+    return y;
+}
+
 
 
 // F = función transformadora. q1 = F(xp1, xp2, xq1); <--- cuidado con el orden.
