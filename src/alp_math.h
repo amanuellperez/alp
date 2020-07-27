@@ -27,6 +27,7 @@
  *    A.Manuel L.Perez
  *      12/03/2017 Escrito
  *      28/05/2020 Aproximado
+ *      27/07/2020 Degree/Radian
  *
  ****************************************************************************/
 
@@ -35,7 +36,6 @@
 #include <cmath>
 #include <limits>
 
-#include "alp_exception.h"
 
 namespace alp{
 
@@ -290,22 +290,258 @@ inline std::ostream& operator<<(std::ostream& out, const Int_en_base4& n)
 constexpr double pi {3.1415926535897};
 
 // Conversión de radianes a grados y viceversa
-inline constexpr double radian2grado(double r) { return (r*180.0/pi); }
-inline constexpr double grado2radian(double g) { return (g*pi/180.0); }
+inline constexpr double radian2degree(double r) { return (r*180.0/pi); }
+inline constexpr double degree2radian(double g) { return (g*pi/180.0); }
 
-/// Devuelve el coseno. El ángulo está en grados.
-/// Copio esta notación de Octave. ¿Sería mejor cos_en_grados?
-// TODO: g son grados. Cuando hay varias formas de medir un número hay que 
-// usar cosd(Grados{20})  <-- ya está definido en atd::Magnitude!!!
-inline double cosd(double g) { return cos(grado2radian(g)); }
+class Radian;
 
-/// Devuelve el seno. El ángulo está en grados.
-/// Copio esta notación de Octave. ¿Sería mejor sen_en_grados?
-inline double sind(double g) { return sin(grado2radian(g)); }
+/*!
+ *  \brief  Degree
+ *
+ *  An angle in degrees.
+ *
+ */
+class Degree{
+public:
+    using Rep = double;
+
+// Construction
+    constexpr Degree() : value_{} {}
+
+    constexpr Degree(const Rep& x) : value_{static_cast<Rep>(x)}{}
+
+    // Conversion radians to degrees
+    constexpr Degree(const Radian& x);
+
+// Observer
+    constexpr Rep value() const { return value_; }
+
+// Algebraic structure
+    constexpr Degree& operator+=(const Degree& x);
+    constexpr Degree& operator-=(const Degree& x);
+
+    constexpr Degree& operator*=(const Rep& a);
+    constexpr Degree& operator/=(const Rep& a);
+
+private:
+    Rep value_;
+};
+
+inline constexpr Degree& Degree::operator+=(const Degree& x) 
+{
+    value_ += x.value_;
+    return *this;
+}
+
+inline constexpr Degree& Degree::operator-=(const Degree& x)
+{
+    value_ -= x.value_;
+    return *this;
+}
+
+inline constexpr Degree& Degree::operator*=(const Rep& a)
+{
+    value_ *= a;
+    return *this;
+}
+
+inline constexpr Degree& Degree::operator/=(const Rep& a)
+{
+    value_ /= a;
+    return *this;
+}
 
 
-/// Devuelve el arcotangente. Devuelve el ángulo en grados.
-inline double atand(double x) {return radian2grado(atan(x));}
+
+
+inline constexpr Degree operator+(Degree a, const Degree& b)
+{ return a += b; }
+
+inline constexpr Degree operator-(Degree a, const Degree& b)
+{ return a -= b; }
+
+inline constexpr Degree operator*(const Degree::Rep& a, Degree b)
+{ return b *= a; }
+
+inline constexpr Degree operator*(Degree b, const Degree::Rep& a)
+{ return a * b; }
+
+inline constexpr Degree operator/(Degree b, const Degree::Rep& a)
+{ return b /= a; }
+
+
+// Equality
+inline constexpr bool operator==(const Degree& a, const Degree& b)
+{ return a.value() == b.value();}
+
+inline constexpr bool operator!=(const Degree& a, const Degree& b)
+{ return !(a == b);}
+
+// Order
+inline constexpr bool operator<(const Degree& a, const Degree& b)
+{ return a.value() < b.value(); }
+
+inline constexpr bool operator<=(const Degree& a, const Degree& b)
+{ return a.value() <= b.value(); }
+
+inline constexpr bool operator>(const Degree& a, const Degree& b)
+{ return a.value() > b.value(); }
+
+inline constexpr bool operator>=(const Degree& a, const Degree& b)
+{ return a.value() >= b.value(); }
+
+
+/*!
+ *  \brief  Radian
+ *
+ *  An angle in degrees.
+ *
+ */
+class Radian{
+public:
+    using Rep = double;
+
+// Construction
+    constexpr Radian() : value_{} {}
+
+    constexpr Radian(const Rep& x) : value_{static_cast<Rep>(x)}{}
+
+    // Conversion radians to degrees
+    constexpr Radian(const Degree& x);
+
+// Observer
+    constexpr Rep value() const { return value_; }
+
+// Algebraic structure
+    constexpr Radian& operator+=(const Radian& x);
+    constexpr Radian& operator-=(const Radian& x);
+
+    constexpr Radian& operator*=(const Rep& a);
+    constexpr Radian& operator/=(const Rep& a);
+
+private:
+    Rep value_;
+};
+
+inline constexpr Radian& Radian::operator+=(const Radian& x) 
+{
+    value_ += x.value_;
+    return *this;
+}
+
+inline constexpr Radian& Radian::operator-=(const Radian& x)
+{
+    value_ -= x.value_;
+    return *this;
+}
+
+inline constexpr Radian& Radian::operator*=(const Rep& a)
+{
+    value_ *= a;
+    return *this;
+}
+
+inline constexpr Radian& Radian::operator/=(const Rep& a)
+{
+    value_ /= a;
+    return *this;
+}
+
+inline constexpr Radian operator+(Radian a, const Radian& b)
+{ return a += b; }
+
+inline constexpr Radian operator-(Radian a, const Radian& b)
+{ return a -= b; }
+
+inline constexpr Radian operator*(const Radian::Rep& a, Radian b)
+{ return b *= a; }
+
+inline constexpr Radian operator*(Radian b, const Radian::Rep& a)
+{ return a * b; }
+
+inline constexpr Radian operator/(Radian b, const Radian::Rep& a)
+{ return b /= a; }
+
+
+// Equality
+inline constexpr bool operator==(const Radian& a, const Radian& b)
+{ return a.value() == b.value();}
+
+inline constexpr bool operator!=(const Radian& a, const Radian& b)
+{ return !(a == b);}
+
+
+// Order
+inline constexpr bool operator<(const Radian& a, const Radian& b)
+{ return a.value() < b.value(); }
+
+inline constexpr bool operator<=(const Radian& a, const Radian& b)
+{ return a.value() <= b.value(); }
+
+inline constexpr bool operator>(const Radian& a, const Radian& b)
+{ return a.value() > b.value(); }
+
+inline constexpr bool operator>=(const Radian& a, const Radian& b)
+{ return a.value() >= b.value(); }
+
+
+
+// Funciones de conversión. Básicamente creo estas dos clases para hacer esto.
+inline constexpr Degree::Degree(const Radian& x)
+    : value_{radian2degree(x.value())} { }
+
+inline constexpr Radian::Radian(const Degree& x)
+    : value_{degree2radian(x.value())} { }
+
+
+// Angles equality
+inline constexpr bool operator==(const Radian& r, const Degree& d)
+{ return r == Radian{d}; }
+
+inline constexpr bool operator==(const Degree& d, const Radian& r) 
+{ return r == d; }
+
+inline constexpr bool operator!=(const Radian& r, const Degree& d)
+{ return !(r == d);}
+
+inline constexpr bool operator!=(const Degree& d, const Radian& r) 
+{ return r != d;}
+
+
+// Trigonometric functions
+// -----------------------
+// TODO: Las funciones trig. pueden operar usando float, double o long double.
+// Parametrizar Radian por la representación (esta todo preparado para hacer
+// el cambio de forma sencilla).
+inline double sin(const Radian& r) {return std::sin(r.value());}
+inline double cos(const Radian& r) {return std::cos(r.value());}
+inline double tan(const Radian& r) {return std::tan(r.value());}
+
+inline Radian asin(double x) {return Radian{std::asin(x)};}
+inline Radian acos(double x) {return Radian{std::acos(x)};}
+inline Radian atan(double x) {return Radian{std::atan(x)};}
+
+
+inline double sin(const Degree& d) { return sin(Radian{d}); }
+inline double cos(const Degree& d) {return cos(Radian{d});}
+inline double tan(const Degree& d) {return tan(Radian{d});}
+
+inline Degree asind(double x) {return Degree{asin(x)};}
+inline Degree acosd(double x) {return Degree{acos(x)};}
+inline Degree atand(double x) {return Degree{atan(x)};}
+
+
+
+///// Devuelve el coseno. El ángulo está en grados.
+///// Copio esta notación de Octave. ¿Sería mejor cos_en_grados?
+//// TODO: g son grados. Cuando hay varias formas de medir un número hay que 
+//// usar cosd(Grados{20})  <-- ya está definido en atd::Magnitude!!!
+//inline double cosd(double g) { return std::cos(degree2radian(g)); }
+//
+///// Devuelve el seno. El ángulo está en grados.
+///// Copio esta notación de Octave. ¿Sería mejor sen_en_grados?
+//inline double sind(double g) { return std::sin(degree2radian(g)); }
+//
 
 /// Devuelve el módulo del vector de coordenadas cartesianas (x, y)
 inline double modulo_vector(double x, double y)
@@ -321,7 +557,7 @@ inline double angulo_eje_x(double x, double y)
     if(x != 0)
     {
 	double xn = x, yn = y;	// cuidado con los castings en atan!!!
-	ang = radian2grado(atan(yn/xn));
+	ang = radian2degree(std::atan(yn/xn));
 	if(x < 0)   // 2º o 3er cuadrante
 	    ang += 180.0;
 	else
@@ -352,10 +588,9 @@ inline std::pair<double, double> cartesianas2polares(double x, double y)
 }
 
 /// Devuelve el vector (r, theta) en cartesianas (x, y). 
-/// El ángulo dado en grados.
-inline std::pair<double, double> polares2cartesianas(double r, double theta)
+inline std::pair<double, double> polares2cartesianas(double r, const Degree& theta)
 {
-    return {r*cosd(theta), r*sind(theta)};
+    return {r*cos(theta), r*sin(theta)};
 }
 
 
@@ -372,8 +607,8 @@ average(InputIt first, InputIt last)
     using Difference = typename std::iterator_traits<InputIt>::difference_type;
 
     if (first == last)
-	throw Error_de_programacion{__FILE__, __LINE__, "average",
-		"Se está intentando calcular la media de un rango vacío"};
+        throw std::logic_error{
+            "Se está intentando calcular la media de un rango vacío"};
 
     Value sum = Value{0};
     Difference num_elementos = Difference{0};

@@ -135,6 +135,136 @@ void test_maximo()
     CHECK_TRUE(x == 3, "maximo");
 }
 
+template <typename Int>
+void test_integral()
+{
+    double a0 = 10.0;
+    double b0 = 30.0;
+
+    Int a{a0};
+    Int b{b0};
+    CHECK_TRUE(a.value() == a0, "constructor");
+    CHECK_TRUE(a == a, "operator==");
+    CHECK_TRUE(!(a != a), "operator!=");
+
+    CHECK_TRUE(a < b, "operator<");
+    CHECK_TRUE(a <= b, "operator<=");
+    CHECK_TRUE(a <= a, "operator<=");
+    CHECK_TRUE(b >= b, "operator>=");
+    CHECK_TRUE(a >= a, "operator>=");
+    CHECK_TRUE(b > a, "operator>");
+
+
+    b += a;
+    CHECK_TRUE(b.value() == a0 + b0, "operator+=");
+
+    b -= a;
+    CHECK_TRUE(b.value() == b0, "operator-=");
+
+    b *= 2;
+    CHECK_TRUE(b.value() == 2*b0, "operator*=");
+
+    b /= 2;
+    CHECK_TRUE(b.value() == b0, "operator/=");
+
+    Int c = a + b;
+    CHECK_TRUE(c.value() == a0 + b0, "operator+");
+
+    c = a - b;
+    CHECK_TRUE(c.value() == a0 - b0, "operator-");
+
+    c = 3*b;
+    CHECK_TRUE(c.value() == 3*b0, "operator*");
+
+    c = b / 2;
+    CHECK_TRUE(c.value() == b0 / 2, "operator/");
+}
+
+void test_degree2radian(double deg, double rad)
+{
+    alp::Degree d = deg;
+    alp::Radian r{d};
+
+    alp::Aproximado aprox{0.0000001};
+    CHECK_TRUE(aprox(r.value(), rad), alp::as_str() << deg << "º to rad");
+}
+
+
+void test_radian2degree(double rad, double deg)
+{
+    alp::Radian r = rad;
+    alp::Degree d{r};
+
+    alp::Aproximado aprox{0.0000001};
+    CHECK_TRUE(aprox(d.value(), deg), alp::as_str() << rad << " rad to º");
+}
+
+
+void test_angles()
+{
+    test::interfaz("Degree");
+    test_integral<alp::Degree>();
+
+    test::interfaz("Radian");
+    test_integral<alp::Radian>();
+
+    test::interfaz("Degree to Radian and vice");
+    test_degree2radian(0.0, 0.0);
+    test_radian2degree(0.0, 0.0);
+
+    test_degree2radian(30.0, alp::pi/6.0);
+    test_radian2degree(alp::pi/6.0, 30.0);
+
+    test_degree2radian(60.0, alp::pi/3.0);
+    test_radian2degree(alp::pi/3.0, 60.0);
+
+    test_degree2radian(90.0, alp::pi/2.0);
+    test_radian2degree(alp::pi/2.0, 90.0);
+
+    test_degree2radian(120.0, 2.0*alp::pi/3.0);
+    test_radian2degree(2.0*alp::pi/3.0, 120.0);
+
+    test_degree2radian(180.0, alp::pi);
+    test_radian2degree(alp::pi, 180.0);
+
+    test_degree2radian(360.0, 2.0*alp::pi);
+    test_radian2degree(2.0*alp::pi, 360.0);
+
+    test_degree2radian(-360.0, -2.0*alp::pi);
+    test_radian2degree(-2.0*alp::pi, -360.0);
+
+    {// angle equality
+	alp::Degree d{180};
+	alp::Radian r{pi};
+	CHECK_TRUE(d == r, "degree == radian")
+	CHECK_TRUE(r == d, "degree == radian")
+	CHECK_TRUE(!(d != r), "degree != radian")
+	CHECK_TRUE(!(r != d), "degree != radian")
+    }
+
+
+    test::interfaz("Trigonometric (radians)");
+
+    CHECK_TRUE(std::sin(10.0) == alp::sin(Radian{10.0}), "sin");
+    CHECK_TRUE(std::cos(10.0) == alp::cos(Radian{10.0}), "cos");
+    CHECK_TRUE(std::tan(10.0) == alp::tan(Radian{10.0}), "tan");
+
+    CHECK_TRUE(Radian{std::asin(0.25)} == alp::asin(0.25), "asin");
+    CHECK_TRUE(Radian{std::acos(0.25)} == alp::acos(0.25), "acos");
+    CHECK_TRUE(Radian{std::atan(10.0)} == alp::atan(10.0), "atan");
+
+
+    CHECK_TRUE(alp::sin(Degree{10.0}) == alp::sin(Radian{Degree{10.0}}), "sind");
+    CHECK_TRUE(alp::cos(Degree{10.0}) == alp::cos(Radian{Degree{10.0}}), "cosd");
+    CHECK_TRUE(alp::tan(Degree{10.0}) == alp::tan(Radian{Degree{10.0}}), "tand");
+
+    CHECK_TRUE(alp::asind(0.25) == alp::Degree{alp::asin(0.25)}, "asind");
+    CHECK_TRUE(alp::acosd(0.25) == alp::Degree{alp::acos(0.25)}, "acosd");
+    CHECK_TRUE(alp::atand(10.0) == alp::Degree{alp::atan(10.0)}, "atand");
+}
+
+
+
 
 int main()
 {
@@ -147,6 +277,7 @@ try{
     test_punto_medio();
     test_cartesianas2polares();
     test_maximo();
+    test_angles();
 
 }catch(std::exception& e)
 {
