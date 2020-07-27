@@ -96,6 +96,7 @@ forma sencilla.
 #### Ejemplo 1
 Supongamos que queremos hacer un programa llamado `prueba` que tiene 
 la siguiente forma de uso:
+
 `prueba [-h] [-o output] [-n num] [-f float] fichero`
 
 Para implementarlo basta con escribir:
@@ -109,7 +110,7 @@ ing main(int argc, char* argv[])
     int num = 23;	// valor por defecto '23'
     float f = 3.14; // valor por defecto '3.14'
 
-    alp::Getopts getopts{1, USAGE};
+    alp::Getopts getopts{1, USAGE}; 
     getopts.add_option('h', help);
     getopts.add_option('o', output);
     getopts.add_option('n', num);
@@ -118,6 +119,9 @@ ing main(int argc, char* argv[])
     auto files = getopts.parse(argc, argv);
 }
 ```
+El 1 del constructor de `getopts` indica el número de argumentos obligatorios
+que hay que pasar. En este caso esperamos un fichero como argumento por eso
+ese 1.
 
 Al llamar a `parse` se hace el parse de la línea de comandos buscando las
 opciones indicadas.
@@ -134,17 +138,17 @@ principio. Esto es:
 `> prueba fichero -n 4`
 
 no "parsea" correctamente. Al llamar a `parse` devuelve `files = "fichero -n
-4".
+4"`.
 
 #### Ejemplo 2
 
 También admite argumentos de más de una letra. Supongamos que queremos que la
 línea de comandos sea de la forma:
-`prueba [--help] [-output output] [-numero num] fichero`
+`prueba [--help] [--output output] [--numero num] fichero`
 
 bastaría con implementarlo:
 ```
-constexpr char USAGE[] = "prueba [--help] [-output output] [-numero num] fichero"
+constexpr char USAGE[] = "prueba [--help] [--output output] [--numero num] fichero"
 
 ing main(int argc, char* argv[])
 {
@@ -160,7 +164,9 @@ ing main(int argc, char* argv[])
     auto files = getopts.parse(argc, argv);
 }
 ```
-
+Observar que la única diferencia es que se pasa entre comillas (tipo char \*) 
+la opción. Si solo se quiere una letra se pasa un caracter entre apóstrofes 
+(tipo char).
 
 ### Ficheros
 * `alp_getopts.h`
