@@ -78,10 +78,89 @@ TODO
 
 
 ## Gestión de parámetros a programas: getopts
-TODO
+En UNIX es habitual pasar los paramétros a los programas con opciones con un
+guión.
+
+Ejemplos:
+```
+> ls -l
+> sort -n
+```
+
+Este paquete sirve para gestionar los argumentos en la línea de comandos de
+forma sencilla.
+
 
 ### Ejemplos
-TODO
+
+#### Ejemplo 1
+Supongamos que queremos hacer un programa llamado `prueba` que tiene 
+la siguiente forma de uso:
+`prueba [-h] [-o output] [-n num] [-f float] fichero`
+
+Para implementarlo basta con escribir:
+```
+constexpr char USAGE[] = "prueba [-h] [-o output] [-n num] [-f float] fichero"
+
+ing main(int argc, char* argv[])
+{
+    bool help;
+    std::string output;
+    int num = 23;	// valor por defecto '23'
+    float f = 3.14; // valor por defecto '3.14'
+
+    alp::Getopts getopts{1, USAGE};
+    getopts.add_option('h', help);
+    getopts.add_option('o', output);
+    getopts.add_option('n', num);
+    getopts.add_option('f', float);
+
+    auto files = getopts.parse(argc, argv);
+}
+```
+
+Al llamar a `parse` se hace el parse de la línea de comandos buscando las
+opciones indicadas.
+
+Las opciones que no llevan argumento, como `-h`, son de tipo `bool`. Si
+`parse` encuentra la opción la marca `true`, y en caso contrario `false`. El
+resto de opciones no se modifican los valores si no se pasan. Así, por
+ejemplo, si no se pasa la opción `-n` será 23, el valor que tenía. La
+`std::string output` como no la hemos inicializado seguirá estando vacía en
+caso de no pasar la opción `-o`.
+
+_Cuidado, restricción:_ De momento los argumentos opcionales tienen que ir al
+principio. Esto es: 
+`> prueba fichero -n 4`
+
+no "parsea" correctamente. Al llamar a `parse` devuelve `files = "fichero -n
+4".
+
+#### Ejemplo 2
+
+También admite argumentos de más de una letra. Supongamos que queremos que la
+línea de comandos sea de la forma:
+`prueba [--help] [-output output] [-numero num] fichero`
+
+bastaría con implementarlo:
+```
+constexpr char USAGE[] = "prueba [--help] [-output output] [-numero num] fichero"
+
+ing main(int argc, char* argv[])
+{
+    bool help;
+    std::string output;
+    int num = 23;	// valor por defecto '23'
+
+    alp::Getopts getopts{1, USAGE};
+    getopts.add_option("help", help);
+    getopts.add_option("output", output);
+    getopts.add_option("numero", num);
+
+    auto files = getopts.parse(argc, argv);
+}
+```
+
 
 ### Ficheros
 * `alp_getopts.h`
