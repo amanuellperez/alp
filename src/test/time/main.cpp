@@ -77,7 +77,7 @@ int main()
 try{
     // test_cronometro();
     test_es_bisiesto();
-}catch(Excepcion& e){
+}catch(const std::exception& e){
     std::cout << e.what() << '\n';
     return 1;
 }

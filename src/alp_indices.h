@@ -29,7 +29,8 @@
  *   Seguramente sobren cosas (y cambiar nombre a Segmento1D)
  *
  *   - HISTORIA:
- *           A.Manuel L.Perez - 27/02/2019 Escrito
+ *    A.Manuel L.Perez
+ *	27/02/2019 v0.0
  *
  ****************************************************************************/
 
@@ -44,6 +45,8 @@ namespace alp{
 /*!
  *  \brief  Intervalo cerrado de números naturales o enteros [a, b]
  *
+ *  TODO: llamarlo Segmento_i
+ *
  *  DUDA: ¿Qué otro nombre se podría elegir? 
  *		1. CRango_i???		[i0, i1]
  *		2. Closed_range_i ???	[i0, i1]
@@ -51,107 +54,204 @@ namespace alp{
  *
  *	  ¿Merece la pena crear esta clase o dejarlo como funciones sueltas?
  */
-template <typename Int>
-// requires: is_integral(Ind)
-struct Segmento1D{
-    Int a, b;
- 
-    constexpr Segmento1D(Int a0, Int b0)
-	:a{a0}, b{b0} 
-    {}
-
-    /// Devuelve el número de pasos que hay que dar para ir de 'a' a 'b'.
-    /// postcondicion: b = a + num_pasos
-    constexpr Int num_pasos()
-    {
-	if constexpr (std::is_signed_v<Int>)
-	    return std::abs(a - b);
-	else 
-	    return a > b? a - b: b - a;
-
-    }
-
-    /// Devuelve la longitud del segmento [a, b]. Esto es, el número de puntos
-    /// que tiene el intervalo [a, b]
-    constexpr Int longitud()
-    {
-	return num_pasos() + Int{1};
-    }
-};
-
+//template <typename Int>
+//// requires: is_integral(Ind)
+//struct Segmento1D{
+//    Int a, b;
+// 
+//    constexpr Segmento1D(Int a0, Int b0)
+//	:a{a0}, b{b0} 
+//    {}
+//
+//    /// Devuelve el número de pasos que hay que dar para ir de 'a' a 'b'.
+//    /// postcondicion: b = a + num_pasos
+//    constexpr Int num_pasos()
+//    {
+//	if constexpr (std::is_signed_v<Int>)
+//	    return std::abs(a - b);
+//	else 
+//	    return a > b? a - b: b - a;
+//
+//    }
+//
+//    /// Devuelve la longitud del segmento [a, b]. Esto es, el número de puntos
+//    /// que tiene el intervalo [a, b]
+//    constexpr Int longitud()
+//    {
+//	return num_pasos() + Int{1};
+//    }
+//};
+//
 
 
 
 
 /***************************************************************************
- *				POSICION
+ *			COORDENADAS DE MATRIZ LOCALES	
  ***************************************************************************/
 /*!
- *  \brief  Posición de un punto dentro de un contenedor bidimensional.
+ *  \brief  Coordenadas matriciales de un punto en el plano.
  *
- *  Esto es más genérico. No tiene nada que ver con contenedores
- *  bidimensionales. Es un punto en un plano de coordenadas (i, j).
+ *
+ *  En principio tenemos 2 conceptos diferentes:
+ *  1.- Point_ij: son puntos en un sistema de referencia de matriz.
+ *  2.- Vector_ij: son vectores.
+ *
+ *  La diferencia básica es que con los vectores podemos operar y los puntos
+ *  no. Ahora bien lo habitual es que a los puntos se les asocie un vector
+ *  posición, que es lo que se hace en mecánica, y sea ese vector posición el
+ *  que realmente se use. Esto sugiere que en lugar de tener 2 tipos
+ *  diferentes, puntos y vectores, basta con tener 1 único tipo Vector_ij. Las
+ *  puntos los definiremos por los vectores.
+ *  
+ *  ¿Qué son coordenadas matriciales?
+ *
+ *  Al empezar a trabajar con imágenes se genera un montón de lio con las
+ *  coordenadas. En matrices se usan índices (i,j), pero si quieres dibujar en
+ *  una imagen es más natural usar coordenadas cartesianas (x,y). Al final
+ *  acabé bautizando a (i,j) como coordenadas matriciales (es el nombre de
+ *  esperar).
+ *
+ *
+ *  ¿Por qué el subíndice _ij? 
+ *  
+ *  Porque tenemos diferentes tipos de sistemas de
+ *  coordenadas. El otro habitual es el Vector_xy, que sería un sistema
+ *  cartesiano, pero también podemos tener el Vector_rt, que estaría dado en
+ *  polares.
+ *
+ *  ¿Por qué digo que son locales?
+ *
+ *  Las matrices las voy a usar para contener imágenes. Cuando quiero dibujar
+ *  en imágenes me interesa sobre una imagen colocar diferentes sistemas de
+ *  referencia para poder dibujar. Vector_ij son las coordenadas del punto en
+ *  el sistema de referencia local asociado a la matriz, mientras que
+ *  Vector_ij_in<2> son las coordenadas del mismo punto dadas en el sistema de
+ *  referencia 2.
+ *
+ *  Por supuesto que si solo se usa un sistema de referencia Vector_ij da las
+ *  coordenadas en ese sistema y serían coordenadas absolutas.
  *  
  */
 template <typename Int>
 // requires: is_integer(Int) and is_signed(Int)
 //	     Int = tipo del índice usado en el contenedor bidimensional
-struct Posicion_ij{
-    // tipos
+struct Vector_ij{
+// Types
     using Ind  = Int;
 
-    // Características
+// Data
     Int i;
     Int j;
 
-    // Construcción
-    constexpr Posicion_ij():i{0}, j{0} {}
-    constexpr Posicion_ij(Int i0, Int j0):i{i0}, j{j0} {}
+// Constructors
+    constexpr Vector_ij():i{0}, j{0} {}
+    constexpr Vector_ij(Int i0, Int j0):i{i0}, j{j0} {}
 
-    constexpr Posicion_ij& operator+=(const Posicion_ij& b)
-    {
-	i += b.i;
-	j += b.j;
+// Operations: estructura de espacio vectorial
+    constexpr Vector_ij& operator+=(const Vector_ij& b);
+    constexpr Vector_ij& operator-=(const Vector_ij& b);
+    constexpr Vector_ij& operator*=(const Ind& a);
+    constexpr Vector_ij& operator/=(const Ind& a);
 
-	return *this;
-    }
-
-    constexpr Posicion_ij& operator-=(const Posicion_ij& b)
-    {
-	i -= b.i;
-	j -= b.j;
-
-	return *this;
-    }
-
-
-    // forma genérica de hablar
-    bool esta_a_la_dcha_de(const Posicion_ij& b) const
-    {return j >= b.j;}
-
-    bool esta_a_la_izda_de(const Posicion_ij& b) const
-    {return j <= b.j;}
-
-    bool esta_encima_de(const Posicion_ij& b) const
-    {return i <= b.i;}
-    
-    bool esta_debajo_de(const Posicion_ij& b) const
-    {return i >= b.i;}
+//    // forma genérica de hablar. TODO: eliminarlas al crear Rectangle_ij
+//    bool esta_a_la_dcha_de(const Vector_ij& b) const
+//    {return j >= b.j;}
+//
+//    bool esta_a_la_izda_de(const Vector_ij& b) const
+//    {return j <= b.j;}
+//
+//    bool esta_encima_de(const Vector_ij& b) const
+//    {return i <= b.i;}
+//    
+//    bool esta_debajo_de(const Vector_ij& b) const
+//    {return i >= b.i;}
 
 };
 
 
+// Algebraic structure
+template <typename I>
+inline constexpr 
+Vector_ij<I>& Vector_ij<I>::operator+=(const Vector_ij<I>& b)
+{
+    i += b.i;
+    j += b.j;
+
+    return *this;
+}
+
+template <typename I>
+inline constexpr 
+Vector_ij<I>& Vector_ij<I>::operator-=(const Vector_ij<I>& b)
+{
+    i -= b.i;
+    j -= b.j;
+
+    return *this;
+}
+
+template <typename I>
+inline constexpr 
+Vector_ij<I>& Vector_ij<I>::operator*=(const Ind& a)
+{
+    i *= a;
+    j *= a;
+
+    return *this;
+}
+
+template <typename I>
+inline constexpr 
+Vector_ij<I>& Vector_ij<I>::operator/=(const Ind& a)
+{
+    i /= a;
+    j /= a;
+
+    return *this;
+}
+
+template <typename I>
+inline constexpr Vector_ij<I> operator+(Vector_ij<I> a,
+                                            const Vector_ij<I>& b)
+{ return a+=b; }
+
+template <typename I>
+inline constexpr Vector_ij<I> operator-(Vector_ij<I> a,
+                                            const Vector_ij<I>& b)
+{ return a-=b; }
+
+template <typename I>
+inline constexpr 
+Vector_ij<I> operator*(const typename Vector_ij<I>::Ind a, 
+                                            Vector_ij<I> b)
+{ return b *= a; }
+
+template <typename I>
+inline constexpr Vector_ij<I> operator*(Vector_ij<I> b,
+			       const typename Vector_ij<I>::Ind a)
+{ return a*b;}
+
+
+template <typename I>
+inline constexpr Vector_ij<I> operator/(Vector_ij<I> b,
+			       const typename Vector_ij<I>::Ind a)
+{ return b /= a; }
+
+
+// Equality
 template<typename Int>
-inline bool operator==(const Posicion_ij<Int>& p1, const Posicion_ij<Int>& p2)
+inline bool operator==(const Vector_ij<Int>& p1, const Vector_ij<Int>& p2)
 { return p1.i == p2.i and p1.j == p2.j; }
 
 template<typename Int>
-inline bool operator!=(const Posicion_ij<Int>& p1, const Posicion_ij<Int>& p2)
+inline bool operator!=(const Vector_ij<Int>& p1, const Vector_ij<Int>& p2)
 {return !(p1 == p2);}
 
 
+// Iostreams
 template<typename Int>
-inline std::ostream& operator<<(std::ostream& out, const Posicion_ij<Int>& p)
+inline std::ostream& operator<<(std::ostream& out, const Vector_ij<Int>& p)
 {
     out << '(' << p.i << ", " << p.j << ')';
     return out;
@@ -159,7 +259,7 @@ inline std::ostream& operator<<(std::ostream& out, const Posicion_ij<Int>& p)
 
 
 template<typename Int>
-std::istream& operator>>(std::istream& input, Posicion_ij<Int>& p)
+std::istream& operator>>(std::istream& input, Vector_ij<Int>& p)
 {
     char c;
     input >> c >> p.i >> c >> c >> p.j >> c;
@@ -167,35 +267,19 @@ std::istream& operator>>(std::istream& input, Posicion_ij<Int>& p)
 }
 
 
-// En principio no tiene ningún sentido sumar posiciones. Pero como antes
-// usaba vector hay código que las suma. Migrarlo poco a poco y borrar esta
-// función cuando todo esté migrado
-template<typename Int>
-inline Posicion_ij<Int> operator+(const Posicion_ij<Int>& a, const Posicion_ij<Int>& b)
-{
-    auto c = a;
-    return c += b;
-}
 
-template<typename Int>
-inline Posicion_ij<Int> operator-(const Posicion_ij<Int>& a, const Posicion_ij<Int>& b)
-{
-    auto c = a;
-    return c -= b;
-}
-
-
+// TODO: eliminar estas.
 /// Partiendo de p nos movemos num_pasos a la derecha
 template<typename Int>
-inline Posicion_ij<Int> a_la_dcha_de(const Posicion_ij<Int>& p, Int num_pasos)
+inline Vector_ij<Int> a_la_dcha_de(const Vector_ij<Int>& p, Int num_pasos)
 { return {p.i, p.j + num_pasos}; }
 
 /// Devuelve el punto que se encuentra num_pasos a la derecha de p,
 /// sin sobrepasar tope
 template <typename Int>
-inline Posicion_ij<Int> a_la_dcha_de(const Posicion_ij<Int>& p,
+inline Vector_ij<Int> a_la_dcha_de(const Vector_ij<Int>& p,
                                      Int num_pasos,
-                                     const Posicion_ij<Int>& tope)
+                                     const Vector_ij<Int>& tope)
 { 
     if (p.j + num_pasos > tope.j) return {p.i, tope.j};
 
@@ -206,7 +290,7 @@ inline Posicion_ij<Int> a_la_dcha_de(const Posicion_ij<Int>& p,
 
 /// Partiendo de p nos movemos num_pasos a la izquierda
 template<typename Int>
-inline Posicion_ij<Int> a_la_izda_de(const Posicion_ij<Int>& p, Int num_pasos)
+inline Vector_ij<Int> a_la_izda_de(const Vector_ij<Int>& p, Int num_pasos)
 { return {p.i, p.j - num_pasos}; }
 
 
@@ -215,9 +299,9 @@ inline Posicion_ij<Int> a_la_izda_de(const Posicion_ij<Int>& p, Int num_pasos)
 // Observar que no resto en la comprobación. Int puede ser unsigned
 // y la resta podría dar underflow
 template <typename Int>
-inline Posicion_ij<Int> a_la_izda_de(const Posicion_ij<Int>& p,
+inline Vector_ij<Int> a_la_izda_de(const Vector_ij<Int>& p,
                                      Int num_pasos,
-                                     const Posicion_ij<Int>& tope)
+                                     const Vector_ij<Int>& tope)
 { 
     if (p.j < tope.j + num_pasos) return {p.i, tope.j};
 
@@ -226,82 +310,82 @@ inline Posicion_ij<Int> a_la_izda_de(const Posicion_ij<Int>& p,
 
 
 
-/// Partiendo de p nos movemos num_pasos hacia arriba
-template<typename Int>
-inline Posicion_ij<Int> arriba_de(const Posicion_ij<Int>& p, Int num_pasos)
-{ return Posicion_ij<Int>{p.i - num_pasos, p.j}; }
-
-
-
-/// Devuelve el punto que se encuentra num_pasos arriba de p,
-/// sin sobrepasar tope
-template <typename Int>
-inline Posicion_ij<Int> arriba_de(const Posicion_ij<Int>& p,
-                                     Int num_pasos,
-                                     const Posicion_ij<Int>& tope)
-{ 
-    if (p.i < num_pasos + tope.j) return {tope.i, p.j};
-
-    return {p.i - num_pasos, p.j};
-}
-
-
-/// Partiendo de p nos movemos num_pasos hacia abajo
-template<typename Int>
-inline Posicion_ij<Int> abajo_de(const Posicion_ij<Int>& p, Int num_pasos) 
-{ return Posicion_ij<Int>{p.i + num_pasos, p.j}; }
-
-
-/// Devuelve el punto que se encuentra num_pasos abajo de p,
-/// sin sobrepasar tope
-template <typename Int>
-inline Posicion_ij<Int> abajo_de(const Posicion_ij<Int>& p,
-                                     Int num_pasos,
-                                     const Posicion_ij<Int>& tope)
-{ 
-    if (p.i + num_pasos > tope.j) return {tope.i, p.j};
-
-    return {p.i + num_pasos, p.j};
-}
-
-
-/// Intercambiamos las coordenadas horizontales
-template <typename Int>
-constexpr void swap_h(Posicion_ij<Int>& a, Posicion_ij<Int>& b)
-{std::swap(a.j, b.j);}
-
-/// Intercambiamos las coordenadas horizontales
-template <typename Int>
-constexpr void swap_v(Posicion_ij<Int>& a, Posicion_ij<Int>& b)
-{std::swap(a.i, b.i);}
-
-
-
-/// Devuelve la longitud del segmento [a_h, b_h]
-template <typename Int>
-constexpr Int longitud_segmento_h(const Posicion_ij<Int>& a,
-                               const Posicion_ij<Int>& b)
-{ return Segmento1D<Int>{a.j, b.j}.longitud(); }
-
-
-/// Devuelve la longitud del segmento [a_v, b_v]
-template <typename Int>
-constexpr Int longitud_segmento_v(const Posicion_ij<Int>& a, const Posicion_ij<Int>& b)
-{ return Segmento1D<Int>{a.i, b.i}.longitud(); }
-
-/// Devuelve el número de puntos que hay para ir de 'a' a 'b' horizontalmente
-/// Para ir de a_x a b_x
-/// Se cumple: b_x = a_x + num_pasos
-template <typename Int>
-constexpr Int num_pasos_h(const Posicion_ij<Int>& a, const Posicion_ij<Int>& b)
-{return Segmento1D<Int>{a.j, b.j}.num_pasos();}
-
-/// Devuelve el número de pasos que hay dar ir de 'a' a 'b' verticalmente
-template <typename Int>
-constexpr Int num_pasos_v(const Posicion_ij<Int>& a, const Posicion_ij<Int>& b)
-{return Segmento1D<Int>{a.i, b.i}.num_pasos();}
-
-
+///// Partiendo de p nos movemos num_pasos hacia arriba
+//template<typename Int>
+//inline Vector_ij<Int> arriba_de(const Vector_ij<Int>& p, Int num_pasos)
+//{ return Vector_ij<Int>{p.i - num_pasos, p.j}; }
+//
+//
+//
+///// Devuelve el punto que se encuentra num_pasos arriba de p,
+///// sin sobrepasar tope
+//template <typename Int>
+//inline Vector_ij<Int> arriba_de(const Vector_ij<Int>& p,
+//                                     Int num_pasos,
+//                                     const Vector_ij<Int>& tope)
+//{ 
+//    if (p.i < num_pasos + tope.j) return {tope.i, p.j};
+//
+//    return {p.i - num_pasos, p.j};
+//}
+//
+//
+///// Partiendo de p nos movemos num_pasos hacia abajo
+//template<typename Int>
+//inline Vector_ij<Int> abajo_de(const Vector_ij<Int>& p, Int num_pasos) 
+//{ return Vector_ij<Int>{p.i + num_pasos, p.j}; }
+//
+//
+///// Devuelve el punto que se encuentra num_pasos abajo de p,
+///// sin sobrepasar tope
+//template <typename Int>
+//inline Vector_ij<Int> abajo_de(const Vector_ij<Int>& p,
+//                                     Int num_pasos,
+//                                     const Vector_ij<Int>& tope)
+//{ 
+//    if (p.i + num_pasos > tope.j) return {tope.i, p.j};
+//
+//    return {p.i + num_pasos, p.j};
+//}
+//
+//
+///// Intercambiamos las coordenadas horizontales
+//template <typename Int>
+//constexpr void swap_h(Vector_ij<Int>& a, Vector_ij<Int>& b)
+//{std::swap(a.j, b.j);}
+//
+///// Intercambiamos las coordenadas horizontales
+//template <typename Int>
+//constexpr void swap_v(Vector_ij<Int>& a, Vector_ij<Int>& b)
+//{std::swap(a.i, b.i);}
+//
+//
+//
+///// Devuelve la longitud del segmento [a_h, b_h]
+//template <typename Int>
+//constexpr Int longitud_segmento_h(const Vector_ij<Int>& a,
+//                               const Vector_ij<Int>& b)
+//{ return Segmento1D<Int>{a.j, b.j}.longitud(); }
+//
+//
+///// Devuelve la longitud del segmento [a_v, b_v]
+//template <typename Int>
+//constexpr Int longitud_segmento_v(const Vector_ij<Int>& a, const Vector_ij<Int>& b)
+//{ return Segmento1D<Int>{a.i, b.i}.longitud(); }
+//
+///// Devuelve el número de puntos que hay para ir de 'a' a 'b' horizontalmente
+///// Para ir de a_x a b_x
+///// Se cumple: b_x = a_x + num_pasos
+//template <typename Int>
+//constexpr Int num_pasos_h(const Vector_ij<Int>& a, const Vector_ij<Int>& b)
+//{return Segmento1D<Int>{a.j, b.j}.num_pasos();}
+//
+///// Devuelve el número de pasos que hay dar ir de 'a' a 'b' verticalmente
+//template <typename Int>
+//constexpr Int num_pasos_v(const Vector_ij<Int>& a, const Vector_ij<Int>& b)
+//{return Segmento1D<Int>{a.i, b.i}.num_pasos();}
+//
+//
 
 /***************************************************************************
  *				SIZE
@@ -356,16 +440,21 @@ struct Rango_i{
  *
  *  El rango no garantiza que i0 <= ie. Para garantizarlo suministra
  *  la función ordena_indices (llamarla antes de crear el rango)
+ *
+ *  Un Rango_ij es lo mismo que un Rectangle_ij.
  */
 template <typename Int>
 struct Rango_ij{
+// Types
     using Ind      = Int;
-    using Posicion = Posicion_ij<Int>;
+    using Posicion = Vector_ij<Int>;
     using Size2D   = Size_ij<Int>;
 
+// Data
     Ind i0, ie;
     Ind j0, je;
 
+// Constructors
     /// Creamos un rango vacío
     constexpr Rango_ij():Rango_ij{0,0,0,0}{}
 
@@ -390,8 +479,8 @@ struct Rango_ij{
 
 
 
-    // Características
-    // ---------------
+// Dimensions
+// ----------
     /// Número de filas del rango
     constexpr Int rows() const {return ie - i0;}
 
@@ -401,6 +490,12 @@ struct Rango_ij{
     /// Size 2D del rango
     constexpr Size2D size() const {return {rows(), cols()};}
 
+    /// ¿Es un rango vacío?
+    constexpr bool empty() const {return (i0 == ie) or (j0 == je);}
+
+
+// Esquinas
+// --------
     /// Esquina superior izquierda
     constexpr Posicion p0() const {return Posicion{i0, j0};}
 
@@ -408,16 +503,22 @@ struct Rango_ij{
     /// Cuidado: para que p1 sea válido, el rango no puede estar vacío
     constexpr Posicion p1() const {return Posicion{ie - Ind{1}, je - Ind{1}};}
 
-
     /// Definimos la esquina superior izquierda
     constexpr void p0(const Posicion& p) { *this = Rango_ij{p, p1()}; }
 
     /// Definimos la esquina inferior derecha
     constexpr void p1(const Posicion& p) { *this = Rango_ij{p0(), p}; }
 
-    /// ¿Es un rango vacío?
-    constexpr bool empty() const {return (i0 == ie) or (j0 == je);}
 
+    // TODO: cambiarlas por upper_right_corner...
+    // Solo tienen sentido si el rectángulo no es nulo (empty() != true)
+    constexpr Posicion SI() const {return p0();}
+    constexpr Posicion ID() const {return p1();}
+    constexpr Posicion SD() const { return Posicion{ie - Ind{1}, j0}; }
+    constexpr Posicion II() const { return Posicion{i0, je - Ind{1}}; }
+
+// Varios
+// ------
     // Funciones auxiliares
     constexpr void ordena_indices()
     {
@@ -426,6 +527,8 @@ struct Rango_ij{
     }
 
 };
+
+
 
 template <typename Int>
 inline std::ostream& operator<<(std::ostream& out, const Rango_ij<Int>& rg)
@@ -480,7 +583,7 @@ template <typename Int>
 struct Rango_acotado_ij{
     using Ind      = Int;
     using Rango2D  = alp::Rango_ij<Int>;
-    using Posicion = alp::Posicion_ij<Int>;
+    using Posicion = alp::Vector_ij<Int>;
     using Size2D   = Size_ij<Int>;
 
     Ind i0, ie;	
@@ -724,8 +827,8 @@ inline std::ostream& operator<<(std::ostream& out,
 // Relación: Posicion pertenece a ...
 // Idioma: if (pertence(p).a(rg)) ...
 template <typename Int>
-struct Posicion_ij_pertenece_a{
-    constexpr Posicion_ij_pertenece_a(const Posicion_ij<Int>& p0):p{p0}{}
+struct Vector_ij_pertenece_a{
+    constexpr Vector_ij_pertenece_a(const Vector_ij<Int>& p0):p{p0}{}
 
     // ¿pertenece p al rango rg?
     constexpr bool a(const Rango_ij<Int>& rg){
@@ -733,14 +836,21 @@ struct Posicion_ij_pertenece_a{
 	    and (rg.j0 <= p.j  and p.j < rg.je);
     }
 
-    const Posicion_ij<Int>& p;
+    const Vector_ij<Int>& p;
 };
 
 // Idioma: if (pertence(p).a(rg)) ...
 template <typename Int>
-constexpr Posicion_ij_pertenece_a<Int> pertenece(const Posicion_ij<Int>& p)
-{return Posicion_ij_pertenece_a<Int>{p};}
+constexpr Vector_ij_pertenece_a<Int> pertenece(const Vector_ij<Int>& p)
+{return Vector_ij_pertenece_a<Int>{p};}
 
+
+
+/***************************************************************************
+ *				ALIAS
+ ***************************************************************************/
+template <typename Int>
+using Rectangle_ij = Rango_ij<Int>;
 
 
 }// namespace

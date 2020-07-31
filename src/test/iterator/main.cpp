@@ -498,7 +498,7 @@ try{
     test_view_iterator();
 
 
-}catch(alp::Excepcion e){
+}catch(const std::exception& e){
     std::cerr << e.what() << '\n';
     return 1;
 }

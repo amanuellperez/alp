@@ -115,7 +115,7 @@ try{
 
     test_submatrix_and_matrix_view();
 
-}catch(Excepcion& e){
+}catch(const std::exception& e){
     std::cerr << e.what() << std::endl;
     return 1;
 }

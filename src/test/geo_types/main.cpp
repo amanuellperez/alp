@@ -38,17 +38,17 @@ void test_segmento1D()
 
 void test_posicion()
 {
-    test::interfaz("Posicion_ij");
+    test::interfaz("Vector_ij");
 
     {
-    Posicion_ij<int> a;
+    Vector_ij<int> a;
     CHECK_TRUE(a.i == 0 and a.j == 0, "a()");
     }
 
-    Posicion_ij<int> a{3,4};
+    Vector_ij<int> a{3,4};
     CHECK_TRUE(a.i == 3 and a.j == 4, "a(i,j)");
 
-    Posicion_ij b{5, 10};
+    Vector_ij b{5, 10};
 
     a += b;
     CHECK_TRUE(a.i == 8 and a.j == 14, "a += b");
@@ -56,8 +56,8 @@ void test_posicion()
     a -= b;
     CHECK_TRUE(a.i == 3 and a.j == 4, "a(i,j)");
 
-    a = Posicion_ij {1, 1};
-    b = Posicion_ij {3, 3};
+    a = Vector_ij {1, 1};
+    b = Vector_ij {3, 3};
 
     CHECK_TRUE(!a.esta_a_la_dcha_de(b), "esta_a_la_dcha_de");
     CHECK_TRUE(a.esta_a_la_izda_de(b), "esta_a_la_izda_de");
@@ -67,7 +67,7 @@ void test_posicion()
     a = b;
     CHECK_TRUE(a == b, "==");
 
-    b = Posicion_ij{3,10};
+    b = Vector_ij{3,10};
     CHECK_TRUE(a != b, "!=");
 
 
@@ -77,37 +77,37 @@ void test_posicion()
     c = a - b;
     CHECK_TRUE((c.i == a.i - b.i) and (c.j == a.j - b.j), "c = a - b");
 
-    CHECK_TRUE((a_la_dcha_de(a, 1) == a + Posicion_ij{0,1}), "a_la_dcha");
-    CHECK_TRUE((a_la_izda_de(a, 1) == a + Posicion_ij{0,-1}), "a_la_izda");
-    CHECK_TRUE((arriba_de(a, 1) == a + Posicion_ij{-1,0}), "arriba");
-    CHECK_TRUE((abajo_de(a, 1) == a + Posicion_ij{1,0}), "abajo");
+    CHECK_TRUE((a_la_dcha_de(a, 1) == a + Vector_ij{0,1}), "a_la_dcha");
+    CHECK_TRUE((a_la_izda_de(a, 1) == a + Vector_ij{0,-1}), "a_la_izda");
+    CHECK_TRUE((arriba_de(a, 1) == a + Vector_ij{-1,0}), "arriba");
+    CHECK_TRUE((abajo_de(a, 1) == a + Vector_ij{1,0}), "abajo");
 
 
-    a = Posicion_ij{1, 1};
-    b = Posicion_ij{5, 7};
+    a = Vector_ij{1, 1};
+    b = Vector_ij{5, 7};
 
-    CHECK_TRUE((a_la_dcha_de(a, 4, b) == a + Posicion_ij{0, 4}),
+    CHECK_TRUE((a_la_dcha_de(a, 4, b) == a + Vector_ij{0, 4}),
                "a_la_dcha_de(ok)");
 
-    CHECK_TRUE((a_la_dcha_de(a, 10, b) == Posicion_ij{1, 7}),
+    CHECK_TRUE((a_la_dcha_de(a, 10, b) == Vector_ij{1, 7}),
                "a_la_dcha_de(exceso)");
 
-    CHECK_TRUE((a_la_izda_de(b, 4, a) == b - Posicion_ij{0, 4}),
+    CHECK_TRUE((a_la_izda_de(b, 4, a) == b - Vector_ij{0, 4}),
                "a_la_izda(ok)");
 
-    CHECK_TRUE((a_la_izda_de(b, 10, a) ==  Posicion_ij{5, 1}),
+    CHECK_TRUE((a_la_izda_de(b, 10, a) ==  Vector_ij{5, 1}),
                "a_la_izda(exceso)");
 
-    a = Posicion_ij{6, 10};
-    b = Posicion_ij{10, 20};
+    a = Vector_ij{6, 10};
+    b = Vector_ij{10, 20};
 
-    CHECK_TRUE((a_la_dcha_de(a, 2, b) == Posicion_ij{6, 12}),
+    CHECK_TRUE((a_la_dcha_de(a, 2, b) == Vector_ij{6, 12}),
                "a_la_dcha_de(ok)");
 
 
 
-    a = Posicion_ij{1, 1};
-    b = Posicion_ij{5, 7};
+    a = Vector_ij{1, 1};
+    b = Vector_ij{5, 7};
 
     cout << longitud_segmento_h(a,b) << '\n';
     CHECK_TRUE(longitud_segmento_h(a, b) == 7, "longitud_segmento_h");
@@ -123,7 +123,7 @@ void test_size()
     CHECK_TRUE((sz_ij.rows == 20 and sz_ij.cols == 10),"Size2D_to_Size_ij");
 
     {
-	using Punto = Posicion_ij<int>;
+	using Punto = Vector_ij<int>;
 	using Size = typename Coordenada_traits<Punto>::Size;
 
 	auto sz = Size2D_to<Size>(Size2D<int>{10, 20});
@@ -135,8 +135,8 @@ void test_rectangulo_ij()
 {
     test::interfaz("Rectangulo_ij");
 
-    Posicion_ij p0{1, 3};
-    Posicion_ij p1{5, 9};
+    Vector_ij p0{1, 3};
+    Vector_ij p1{5, 9};
 
     Rectangulo r{p0, p1};
 
@@ -147,10 +147,10 @@ void test_rectangulo_ij()
 
     CHECK_TRUE(r == r2, "ordena_extremos/==");
 
-    CHECK_TRUE((r.SI() == Posicion_ij{1,3}), "SI");
-    CHECK_TRUE((r.SD() == Posicion_ij{1,9}), "SD");
-    CHECK_TRUE((r.II() == Posicion_ij{5,3}), "II");
-    CHECK_TRUE((r.ID() == Posicion_ij{5,9}), "ID");
+    CHECK_TRUE((r.SI() == Vector_ij{1,3}), "SI");
+    CHECK_TRUE((r.SD() == Vector_ij{1,9}), "SD");
+    CHECK_TRUE((r.II() == Vector_ij{5,3}), "II");
+    CHECK_TRUE((r.ID() == Vector_ij{5,9}), "ID");
 
     CHECK_TRUE(r.ancho() == 7, "ancho");
     CHECK_TRUE(r.alto() == 5, "alto");
@@ -160,19 +160,19 @@ void test_rectangulo_ij()
     auto sz = r.size();
     CHECK_TRUE(sz.rows == 5 and sz.cols == 7, "size()");
 
-    r.traslada(Posicion_ij{2, -3});
-    CHECK_TRUE((r == Rectangulo{Posicion_ij{3, 0}, Posicion_ij{7, 6}}),
+    r.traslada(Vector_ij{2, -3});
+    CHECK_TRUE((r == Rectangulo{Vector_ij{3, 0}, Vector_ij{7, 6}}),
                "traslada");
 
-    CHECK_TRUE(r.contiene_a(Posicion_ij{3,0}), "contiene_a(vertice)");
-    CHECK_TRUE(r.contiene_a(Posicion_ij{7,6}), "contiene_a(vertice)");
-    CHECK_TRUE(r.contiene_a(Posicion_ij{5,0}), "contiene_a(lado)");
-    CHECK_TRUE(r.contiene_a(Posicion_ij{5,3}), "contiene_a(interior)");
-    CHECK_TRUE(!r.contiene_a(Posicion_ij{-8,-3}), "!contiene_a(exterior)");
+    CHECK_TRUE(r.contiene_a(Vector_ij{3,0}), "contiene_a(vertice)");
+    CHECK_TRUE(r.contiene_a(Vector_ij{7,6}), "contiene_a(vertice)");
+    CHECK_TRUE(r.contiene_a(Vector_ij{5,0}), "contiene_a(lado)");
+    CHECK_TRUE(r.contiene_a(Vector_ij{5,3}), "contiene_a(interior)");
+    CHECK_TRUE(!r.contiene_a(Vector_ij{-8,-3}), "!contiene_a(exterior)");
 
-    CHECK_TRUE(pertenece(Posicion_ij{3,0}, r), "pertenece(vertice)");
+    CHECK_TRUE(pertenece(Vector_ij{3,0}, r), "pertenece(vertice)");
 
-    Rectangulo<Posicion_ij<int>> r3;  // vacio
+    Rectangulo<Vector_ij<int>> r3;  // vacio
     CHECK_TRUE(r3.empty(), "empty()");
 
     r3 = r;
@@ -183,28 +183,28 @@ void test_rectangulo_acotado()
 {
     test::interfaz("Rectangulo_acotado");
 
-    using Rectangulo_acotado = alp::Rectangulo_acotado<Posicion_ij<int>>;
+    using Rectangulo_acotado = alp::Rectangulo_acotado<Vector_ij<int>>;
 
-    Rectangulo terreno{Posicion_ij{3, 8}, Posicion_ij{10, 20}};
+    Rectangulo terreno{Vector_ij{3, 8}, Vector_ij{10, 20}};
 
-    Posicion_ij p0{3, 8};
-    Posicion_ij p1{6, 10};
+    Vector_ij p0{3, 8};
+    Vector_ij p1{6, 10};
     Rectangulo_acotado r{Rectangulo{p0, p1}, terreno};
 
     CHECK_TRUE(r.p0() == p0, "p0");
     CHECK_TRUE(r.p1() == p1, "p1");
 
     r.muevete_a_la_dcha(4);
-    CHECK_TRUE((r.p0() == Posicion_ij{3,12}
-		and r.p1() == Posicion_ij{6,14}), "muevete_a_la_dcha(ok)");
+    CHECK_TRUE((r.p0() == Vector_ij{3,12}
+		and r.p1() == Vector_ij{6,14}), "muevete_a_la_dcha(ok)");
 
     r.muevete_a_la_izda(4);
     CHECK_TRUE((r.p0() == p0
 		and r.p1() == p1), "muevete_a_la_dcha(ok)");
 
     r.muevete_abajo(2);
-    CHECK_TRUE((r.p0() == Posicion_ij{5,8}
-		and r.p1() == Posicion_ij{8,10}), "muevete_abajo(ok)");
+    CHECK_TRUE((r.p0() == Vector_ij{5,8}
+		and r.p1() == Vector_ij{8,10}), "muevete_abajo(ok)");
 
     r.muevete_arriba(2);
     CHECK_TRUE((r.p0() == p0
@@ -212,16 +212,16 @@ void test_rectangulo_acotado()
 
 
     r.muevete_a_la_dcha(10);
-    CHECK_TRUE((r.p0() == Posicion_ij{3,18}
-		and r.p1() == Posicion_ij{6,20}), "muevete_a_la_dcha(borde)");
+    CHECK_TRUE((r.p0() == Vector_ij{3,18}
+		and r.p1() == Vector_ij{6,20}), "muevete_a_la_dcha(borde)");
 
     r.muevete_a_la_izda(10);
     CHECK_TRUE((r.p0() == p0
 		and r.p1() == p1), "muevete_a_la_dcha(borde)");
 
     r.muevete_abajo(4);
-    CHECK_TRUE((r.p0() == Posicion_ij{7,8}
-		and r.p1() == Posicion_ij{10,10}), "muevete_abajo(borde)");
+    CHECK_TRUE((r.p0() == Vector_ij{7,8}
+		and r.p1() == Vector_ij{10,10}), "muevete_abajo(borde)");
 
     r.muevete_arriba(4);
     CHECK_TRUE((r.p0() == p0
@@ -229,65 +229,65 @@ void test_rectangulo_acotado()
 
 
     r.muevete_a_la_dcha(20);
-    CHECK_TRUE((r.p0() == Posicion_ij{3,18}
-		and r.p1() == Posicion_ij{6,20}), "muevete_a_la_dcha(imposible)");
+    CHECK_TRUE((r.p0() == Vector_ij{3,18}
+		and r.p1() == Vector_ij{6,20}), "muevete_a_la_dcha(imposible)");
 
     r.muevete_a_la_izda(20);
     CHECK_TRUE((r.p0() == p0
 		and r.p1() == p1), "muevete_a_la_izda(imposible)");
 
     r.muevete_abajo(20);
-    CHECK_TRUE((r.p0() == Posicion_ij{7,8}
-		and r.p1() == Posicion_ij{10,10}), "muevete_a_la_abajo(imposible)");
+    CHECK_TRUE((r.p0() == Vector_ij{7,8}
+		and r.p1() == Vector_ij{10,10}), "muevete_a_la_abajo(imposible)");
 
     r.muevete_arriba(20);
     CHECK_TRUE((r.p0() == p0
 		and r.p1() == p1), "muevete_a_la_arriba(imposible)");
 
     r.mueve_lado_dcho(2, Rectangulo_acotado::Direccion::dcha);
-    CHECK_TRUE((r.p0() == Posicion_ij{3, 8} and 
-		r.p1() == Posicion_ij{6, 12}), "mueve_lado_dcho(dcha, +ok)");
+    CHECK_TRUE((r.p0() == Vector_ij{3, 8} and 
+		r.p1() == Vector_ij{6, 12}), "mueve_lado_dcho(dcha, +ok)");
 
     r.mueve_lado_dcho(2, Rectangulo_acotado::Direccion::izda);
-    CHECK_TRUE((r.p0() == Posicion_ij{3, 8} and 
-		r.p1() == Posicion_ij{6, 10}), "mueve_lado_dcho(izda, +ok)");
+    CHECK_TRUE((r.p0() == Vector_ij{3, 8} and 
+		r.p1() == Vector_ij{6, 10}), "mueve_lado_dcho(izda, +ok)");
 
     r.mueve_lado_dcho(10, Rectangulo_acotado::Direccion::dcha);
-    CHECK_TRUE((r.p0() == Posicion_ij{3, 8} and 
-		r.p1() == Posicion_ij{6, 20}), "mueve_lado_dcho(dcha, extremo)");
+    CHECK_TRUE((r.p0() == Vector_ij{3, 8} and 
+		r.p1() == Vector_ij{6, 20}), "mueve_lado_dcho(dcha, extremo)");
 
     r.mueve_lado_dcho(12, Rectangulo_acotado::Direccion::izda);
-    CHECK_TRUE((r.p0() == Posicion_ij{3, 8} and 
-		r.p1() == Posicion_ij{6, 8}), "mueve_lado_dcho(izda, 0)");
+    CHECK_TRUE((r.p0() == Vector_ij{3, 8} and 
+		r.p1() == Vector_ij{6, 8}), "mueve_lado_dcho(izda, 0)");
 
     r.mueve_lado_dcho(50, Rectangulo_acotado::Direccion::dcha);
-    CHECK_TRUE((r.p0() == Posicion_ij{3, 8} and 
-		r.p1() == Posicion_ij{6, 20}), "mueve_lado_dcho(dcha, exceso)");
+    CHECK_TRUE((r.p0() == Vector_ij{3, 8} and 
+		r.p1() == Vector_ij{6, 20}), "mueve_lado_dcho(dcha, exceso)");
 
     r.mueve_lado_dcho(8, Rectangulo_acotado::Direccion::izda);
-    CHECK_TRUE((r.p0() == Posicion_ij{3, 8} and 
-		r.p1() == Posicion_ij{6, 12}), "mueve_lado_dcho(izda, ok)");
+    CHECK_TRUE((r.p0() == Vector_ij{3, 8} and 
+		r.p1() == Vector_ij{6, 12}), "mueve_lado_dcho(izda, ok)");
 
     r.mueve_lado_izdo(2, Rectangulo_acotado::Direccion::dcha);
-    CHECK_TRUE((r.p0() == Posicion_ij{3, 10} and 
-		r.p1() == Posicion_ij{6, 12}), "mueve_lado_izda(dcha, ok)");
+    CHECK_TRUE((r.p0() == Vector_ij{3, 10} and 
+		r.p1() == Vector_ij{6, 12}), "mueve_lado_izda(dcha, ok)");
 
     r.mueve_lado_izdo(2, Rectangulo_acotado::Direccion::izda);
-    CHECK_TRUE((r.p0() == Posicion_ij{3, 8} and 
-		r.p1() == Posicion_ij{6, 12}), "mueve_lado_izda(dcha, ok)");
+    CHECK_TRUE((r.p0() == Vector_ij{3, 8} and 
+		r.p1() == Vector_ij{6, 12}), "mueve_lado_izda(dcha, ok)");
 
     r.mueve_lado_izdo(20, Rectangulo_acotado::Direccion::dcha);
-    CHECK_TRUE((r.p0() == Posicion_ij{3, 12} and 
-		r.p1() == Posicion_ij{6, 12}), "mueve_lado_izda(dcha, exceso)");
+    CHECK_TRUE((r.p0() == Vector_ij{3, 12} and 
+		r.p1() == Vector_ij{6, 12}), "mueve_lado_izda(dcha, exceso)");
 
     r.mueve_lado_izdo(20, Rectangulo_acotado::Direccion::izda);
-    CHECK_TRUE((r.p0() == Posicion_ij{3, 8} and 
-		r.p1() == Posicion_ij{6, 12}), "mueve_lado_izda(izda, exceso)");
+    CHECK_TRUE((r.p0() == Vector_ij{3, 8} and 
+		r.p1() == Vector_ij{6, 12}), "mueve_lado_izda(izda, exceso)");
 
 
     r.mueve_lado_inferior(2, Rectangulo_acotado::Direccion::abajo);
-    CHECK_TRUE((r.p0() == Posicion_ij{3, 8} and 
-		r.p1() == Posicion_ij{8, 12}), "mueve_lado_inferior(abajo, ok)");
+    CHECK_TRUE((r.p0() == Vector_ij{3, 8} and 
+		r.p1() == Vector_ij{8, 12}), "mueve_lado_inferior(abajo, ok)");
 
 
     Rectangulo_acotado r2;

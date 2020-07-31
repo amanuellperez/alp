@@ -60,7 +60,8 @@ public:
     using Ind	      = difference_type;
 
     // Tipos asociados a la matrix
-    using Posicion  = alp::Posicion_ij<Ind>;  // Indice 2D
+    // using Posicion  = alp::Posicion_ij<Ind>;  // Indice 2D
+    using Posicion  = alp::Vector_ij<Ind>;  // Indice 2D
     using Size2D    = alp::Size_ij<Ind>;      
     using Rango2D   = alp::Rango_ij<Ind>;
 

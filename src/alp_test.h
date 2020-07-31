@@ -29,6 +29,7 @@
  *    06/05/2017 Escrito
  *    02/04/2020 CHECK_STDOUT
  *    10/05/2020 CHECK_EXCEPTION
+ *    30/07/2020 CHECK_DONT_COMPILE
  *
  ****************************************************************************/
 #include <string>
@@ -159,6 +160,15 @@ inline void check_false(bool condicion, const std::string& prueba)
 	                  << (msg) <<'\n'; exit(1);}\
     catch(std::exception&){CHECK_TRUE(true, (msg));}
 
+
+// ¿Cómo comprobar que algo que no tiene que compilar no compila?
+// Una forma puede ser usar esta macro. En principio si se ejecuta el test se
+// elimina el `cmd` que no compila, compilando y probando todo de forma
+// habitual. Luego con un script se van sustituyendo uno por uno los
+// CHECK_DONT_COMPILE por el `cmd` y el script prueba a compilarlo teniendo
+// que fallar la compilación. Si no falla la compilación el script finaliza
+// mostrando un mensaje de error igual a `msg`.
+#define CHECK_DONT_COMPILE(cmd, msg)	;
 
 /*!
  *  \brief  Verificamos que se satisface la condición dada para cada elemento

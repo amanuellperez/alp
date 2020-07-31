@@ -300,7 +300,7 @@ try{
     test_matrix();
     test_constructor_por_filas();
 
-}catch(Excepcion& e){
+}catch(const std::exception& e){
     std::cerr << e.what() << std::endl;
     return 1;
 }

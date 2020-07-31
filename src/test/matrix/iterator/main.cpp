@@ -262,7 +262,7 @@ try{
     test_transpose_iterator();
 
 
-}catch(Excepcion& e){
+}catch(const std::exception& e){
     std::cerr << e.what() << std::endl;
     return 1;
 }

@@ -144,6 +144,7 @@ no "parsea" correctamente. Al llamar a `parse` devuelve `files = "fichero -n
 
 También admite argumentos de más de una letra. Supongamos que queremos que la
 línea de comandos sea de la forma:
+
 `prueba [--help] [--output output] [--numero num] fichero`
 
 bastaría con implementarlo:

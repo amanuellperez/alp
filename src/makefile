@@ -37,6 +37,7 @@ INCS= alp_algorithm.h 	\
 	alp_matrix_iterator.h 	\
 	alp_submatrix.h 	\
 	alp_random.h 		\
+	alp_rframes.h		\
 	alp_stdio.h 		\
 	alp_string.h 		\
 	alp_subcontainer.h 	\

@@ -50,7 +50,7 @@ try{
     test::header("alp_exception");
     tst();
 
-}catch(Excepcion& e){
+}catch(const std::exception& e){
     std::cout << e.what() << '\n';
 }
 }

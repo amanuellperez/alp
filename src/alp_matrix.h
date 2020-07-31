@@ -110,7 +110,8 @@ public:
     using Ind	      = Ind_t;	    // indice 
 
     // Tipos asociados a la matrix
-    using Posicion  = alp::Posicion_ij<Ind>;  // Indice 2D
+    // using Posicion  = alp::Posicion_ij<Ind>;  // Indice 2D
+    using Posicion  = Vector_ij<Ind>; 
     using Size2D    = alp::Size_ij<Ind>;      
     using Rango2D   = alp::Rango_ij<Ind>;
 
@@ -179,7 +180,7 @@ public:
     /// Dimensiones de la matrix
     Size2D size2D() const {return Size2D{rows(), cols()};}
 
-    /// Extensión que ocupa dentro del sistema de referencia (i, j)
+    /// Extensión que ocupa dentro del sistema de referencia local (i, j)
     Rango2D extension() const {return Rango2D{0, rows(), 0, cols()};}
 
 

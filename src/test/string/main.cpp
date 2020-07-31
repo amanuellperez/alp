@@ -100,7 +100,7 @@ void test_nombre_sin_extension(const std::string& s, const std::string& res)
 	cout  << " OK\n";
     else{
 	cout << " ERROR!!!\n";
-	throw Excepcion{""};
+	throw alp::Excepcion{""};
     }
 }
 
@@ -124,7 +124,7 @@ void test_cambia_extension(const string& path, const string new_ext, const strin
 	cout  << " OK\n";
     else{
 	cout << " ERROR!!!\n";
-	throw Excepcion{""};
+	throw alp::Excepcion{""};
     }
 }
 
@@ -149,7 +149,7 @@ void check_funcion1(Funcion f, const Param& x, const Return& y)
 	std::cout  << " OK\n";
     else{
 	std::cout << " ERROR!!!\n";
-	throw Excepcion{""};
+	throw alp::Excepcion{""};
     }
 }
 void test_dirname()

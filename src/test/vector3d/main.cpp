@@ -73,7 +73,7 @@ int main()
 try{
     test_vector3D();
 
-}catch(alp::Excepcion& e)
+}catch(const std::exception& e)
 {
     std::cerr << e.what() << std::endl;
     return 1;
