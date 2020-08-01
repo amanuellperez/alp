@@ -17,20 +17,30 @@
 
 #pragma once
 
-#ifndef __ALP_INDICES_H__
-#define __ALP_INDICES_H__
+#ifndef __ALP_RFRAME_IJ_H__
+#define __ALP_RFRAME_IJ_H__
 /****************************************************************************
  *
- *   - DESCRIPCION: Rangos de índices
+ *   - DESCRIPCION: Sistema de referencia (i,j).
  *
- *   - COMENTARIOS: 
+ *   - COMENTARIOS: Incluimos todo lo que se puede representar en este sistema
+ *   de referencia:
+ *	+ Size_ij   : dimensiones de un objeto (rows, cols).
+ *	+ Rango_i   : intervalo [i0, ie). 
+ *	+ Rango_ij  : región del plano [i0, ie) x [j0, je). Es un rectángulo.
+ *	+ Rango_acotado_ij: es un Rango_ij dentro de otro rango.
+ *	
+ *  Tenemos además los siguientes objetos geométricos:
+ *	+ Vector_ij	: un vector vulgar y corriente. 
+ *	+ Segment_ij	: segmento de 2 puntos {A, B} dados en coordenadas (i,j).
+ *	+ Rectangle_ij	: es un sinónimo de Rango_ij. Es la misma clase.
  *
- *   TODO: revisar Posicion y Segmento1D. Proceden de la primera versión. 
- *   Seguramente sobren cosas (y cambiar nombre a Segmento1D)
  *
  *   - HISTORIA:
  *    A.Manuel L.Perez
  *	27/02/2019 v0.0
+ *	01/08/2020 Reestructurado. TODO: borrar todo lo comentado en unos
+ *				   meses.
  *
  ****************************************************************************/
 
@@ -268,46 +278,46 @@ std::istream& operator>>(std::istream& input, Vector_ij<Int>& p)
 
 
 
-// TODO: eliminar estas.
-/// Partiendo de p nos movemos num_pasos a la derecha
-template<typename Int>
-inline Vector_ij<Int> a_la_dcha_de(const Vector_ij<Int>& p, Int num_pasos)
-{ return {p.i, p.j + num_pasos}; }
-
-/// Devuelve el punto que se encuentra num_pasos a la derecha de p,
-/// sin sobrepasar tope
-template <typename Int>
-inline Vector_ij<Int> a_la_dcha_de(const Vector_ij<Int>& p,
-                                     Int num_pasos,
-                                     const Vector_ij<Int>& tope)
-{ 
-    if (p.j + num_pasos > tope.j) return {p.i, tope.j};
-
-    return {p.i, p.j + num_pasos};
-}
-
-
-
-/// Partiendo de p nos movemos num_pasos a la izquierda
-template<typename Int>
-inline Vector_ij<Int> a_la_izda_de(const Vector_ij<Int>& p, Int num_pasos)
-{ return {p.i, p.j - num_pasos}; }
-
-
-/// Devuelve el punto que se encuentra num_pasos a la izquierda de p,
-/// sin sobrepasar tope.
-// Observar que no resto en la comprobación. Int puede ser unsigned
-// y la resta podría dar underflow
-template <typename Int>
-inline Vector_ij<Int> a_la_izda_de(const Vector_ij<Int>& p,
-                                     Int num_pasos,
-                                     const Vector_ij<Int>& tope)
-{ 
-    if (p.j < tope.j + num_pasos) return {p.i, tope.j};
-
-    return {p.i, p.j - num_pasos};
-}
-
+//// TODO: eliminar estas.
+///// Partiendo de p nos movemos num_pasos a la derecha
+//template<typename Int>
+//inline Vector_ij<Int> a_la_dcha_de(const Vector_ij<Int>& p, Int num_pasos)
+//{ return {p.i, p.j + num_pasos}; }
+//
+///// Devuelve el punto que se encuentra num_pasos a la derecha de p,
+///// sin sobrepasar tope
+//template <typename Int>
+//inline Vector_ij<Int> a_la_dcha_de(const Vector_ij<Int>& p,
+//                                     Int num_pasos,
+//                                     const Vector_ij<Int>& tope)
+//{ 
+//    if (p.j + num_pasos > tope.j) return {p.i, tope.j};
+//
+//    return {p.i, p.j + num_pasos};
+//}
+//
+//
+//
+///// Partiendo de p nos movemos num_pasos a la izquierda
+//template<typename Int>
+//inline Vector_ij<Int> a_la_izda_de(const Vector_ij<Int>& p, Int num_pasos)
+//{ return {p.i, p.j - num_pasos}; }
+//
+//
+///// Devuelve el punto que se encuentra num_pasos a la izquierda de p,
+///// sin sobrepasar tope.
+//// Observar que no resto en la comprobación. Int puede ser unsigned
+//// y la resta podría dar underflow
+//template <typename Int>
+//inline Vector_ij<Int> a_la_izda_de(const Vector_ij<Int>& p,
+//                                     Int num_pasos,
+//                                     const Vector_ij<Int>& tope)
+//{ 
+//    if (p.j < tope.j + num_pasos) return {p.i, tope.j};
+//
+//    return {p.i, p.j - num_pasos};
+//}
+//
 
 
 ///// Partiendo de p nos movemos num_pasos hacia arriba
@@ -399,11 +409,15 @@ struct Size_ij
     Int rows, cols;
 };
 
+// Equality
 template <typename Int>
 bool operator==(const Size_ij<Int>& s1, const Size_ij<int>& s2)
-{
-    return s1.rows == s2.rows and s1.cols == s2.cols;
-}
+{ return s1.rows == s2.rows and s1.cols == s2.cols; }
+
+template <typename Int>
+bool operator!=(const Size_ij<Int>& s1, const Size_ij<int>& s2)
+{ return !(s1 == s2); }
+
 
 /***************************************************************************
  *			    RANGOS DE INDICES
@@ -469,11 +483,11 @@ struct Rango_ij{
     constexpr Rango_ij(const Rango_i<Int>& ri, const Rango_i<Int>& rj)
 	:Rango_ij{ri.i0, ri.ie, rj.i0, rj.ie} {}
 
-    /// Rango [p0, p1]
+    /// Rango [p0, p1] = [upper_left_corner, bottom_right_corner]
     constexpr Rango_ij(const Posicion& p0, const Posicion& p1)
 	:Rango_ij{p0.i, p1.i + Ind{1}, p0.j, p1.j + Ind{1}} {}
 
-    /// Rango (p0, sz)
+    /// Rango (p0, sz) = (upper_left_corner, size)
     constexpr Rango_ij(const Posicion& p0, const Size2D& sz)
 	:Rango_ij{p0.i, p0.i + sz.rows, p0.j, p0.j + sz.cols} {}
 
@@ -496,29 +510,35 @@ struct Rango_ij{
 
 // Esquinas
 // --------
-    /// Esquina superior izquierda
-    constexpr Posicion p0() const {return Posicion{i0, j0};}
+//    /// Esquina superior izquierda
+//    constexpr Posicion p0() const {return Posicion{i0, j0};}
+//
+//    /// Esquina inferior derecha 
+//    /// Cuidado: para que p1 sea válido, el rango no puede estar vacío
+//    constexpr Posicion p1() const {return Posicion{ie - Ind{1}, je - Ind{1}};}
+//
+//    /// Definimos la esquina superior izquierda
+//    constexpr void p0(const Posicion& p) { *this = Rango_ij{p, p1()}; }
+//
+//    /// Definimos la esquina inferior derecha
+//    constexpr void p1(const Posicion& p) { *this = Rango_ij{p0(), p}; }
 
-    /// Esquina inferior derecha 
-    /// Cuidado: para que p1 sea válido, el rango no puede estar vacío
-    constexpr Posicion p1() const {return Posicion{ie - Ind{1}, je - Ind{1}};}
+
+    // Solo tienen sentido si el rectángulo no es nulo (empty() != true)
+    constexpr Posicion upper_left_corner() const;
+    constexpr Posicion bottom_right_corner() const;
+    constexpr Posicion upper_right_corner() const;
+    constexpr Posicion bottom_left_corner() const;
 
     /// Definimos la esquina superior izquierda
-    constexpr void p0(const Posicion& p) { *this = Rango_ij{p, p1()}; }
+    constexpr void upper_left_corner(const Posicion& p);
 
     /// Definimos la esquina inferior derecha
-    constexpr void p1(const Posicion& p) { *this = Rango_ij{p0(), p}; }
+    constexpr void bottom_right_corner(const Posicion& p);
 
 
-    // TODO: cambiarlas por upper_right_corner...
-    // Solo tienen sentido si el rectángulo no es nulo (empty() != true)
-    constexpr Posicion SI() const {return p0();}
-    constexpr Posicion ID() const {return p1();}
-    constexpr Posicion SD() const { return Posicion{ie - Ind{1}, j0}; }
-    constexpr Posicion II() const { return Posicion{i0, je - Ind{1}}; }
-
-// Varios
-// ------
+    // Varios
+    // ------
     // Funciones auxiliares
     constexpr void ordena_indices()
     {
@@ -529,7 +549,45 @@ struct Rango_ij{
 };
 
 
+// Esquinas
+template <typename Int>
+inline constexpr 
+Rango_ij<Int>::Posicion Rango_ij<Int>::upper_left_corner() const
+{
+    return Posicion{i0, j0};
+}
 
+
+template <typename Int>
+inline constexpr 
+Rango_ij<Int>::Posicion Rango_ij<Int>::bottom_right_corner() const
+{ return Posicion{ie - Ind{1}, je - Ind{1}}; }
+
+template <typename Int>
+inline constexpr 
+Rango_ij<Int>::Posicion Rango_ij<Int>::upper_right_corner() const
+{ return Posicion{ie - Ind{1}, j0}; }
+
+template <typename Int>
+inline constexpr 
+Rango_ij<Int>::Posicion Rango_ij<Int>::bottom_left_corner() const
+{ return Posicion{i0, je - Ind{1}}; }
+
+template <typename Int>
+inline constexpr 
+void Rango_ij<Int>::upper_left_corner(const Posicion& p)
+//{ *this = Rango_ij{p, p1()}; }
+{ *this = Rango_ij{p, bottom_right_corner()}; }
+
+template <typename Int>
+inline constexpr 
+void Rango_ij<Int>::bottom_right_corner(const Posicion& p) 
+//{ *this = Rango_ij{p0(), p}; }
+{ *this = Rango_ij{upper_left_corner(), p}; }
+
+
+
+// Iostreams
 template <typename Int>
 inline std::ostream& operator<<(std::ostream& out, const Rango_ij<Int>& rg)
 {
@@ -566,6 +624,9 @@ constexpr Rango_ij_ser_subconjunto_de<Int> es_subconjunto(const Rango_ij<Int>& r
 template <typename Int>
 constexpr Rango_ij_ser_subconjunto_de<Int> esta_dentro(const Rango_ij<Int>& rg)
 {return es_subconjunto(rg);}
+
+
+
 
 
 /*!
@@ -843,6 +904,77 @@ struct Vector_ij_pertenece_a{
 template <typename Int>
 constexpr Vector_ij_pertenece_a<Int> pertenece(const Vector_ij<Int>& p)
 {return Vector_ij_pertenece_a<Int>{p};}
+
+
+
+
+/***************************************************************************
+ *				    GEOMETRY
+ ***************************************************************************/
+/*!
+ *  \brief  Es un segmento.
+ *
+ *  Un segmento viene definido por dos puntos [A, B].
+ *
+ *  Con esta descripción es imposible hablar de segmentos 0 (o vacíos)
+ *  ya que el segmento [A, A] está formado por el punto A no siendo vacío.
+ *  Por ello, para poder incluir segmentos vacíos se puede implementar un
+ *  segmento como [p0, pe). Tenemos dos formas básicas de describir un
+ *  segmento:
+ *	1.- [p0, p1] = [A, B]
+ *	2.- [p0, pe)
+ *
+ *
+ *  Es muy sencillo implementar una clase Segment<Point> donde el parámetro de
+ *  plantilla sea el tipo de punto. Sin embargo, como tendría un interfaz
+ *  distinto que Rectangle_ij<Int> (<--- viene parametrizado por el índice y no
+ *  por el tipo de punto) eso genera confusión (al hacerlo yo mismo me
+ *  confundí). Por eso la implemento de forma separada. (La opción de
+ *  implementar una clase Rectangle<Point> complica todo ya que hay que
+ *  complicar todas las clases Point para poder implementarlo. Lo hicé y
+ *  complicó el código).
+ */
+template<typename Int>
+class Segment_ij
+{
+public:
+// Types
+    using Ind   = Int;
+    using Point = Vector_ij<Int>;
+
+// Data
+    Point A, B; // extremos del segmento
+
+// Constructors
+    Segment_ij(const Point& A0, const Point& B0) : A{A0}, B{B0} {}
+};
+
+
+
+// Equality
+template<typename I>
+inline bool operator==(const Segment_ij<I>& a, const Segment_ij<I>& b)
+{ return (a.A == b.A) and (a.B == b.B); }
+
+template<typename I>
+inline bool operator!=(const Segment_ij<I>& a, const Segment_ij<I>& b)
+{ return !(a == b); }
+
+
+// Iostreams
+template<typename I>
+inline std::ostream& operator<<(std::ostream& out, const Segment_ij<I>& s)
+{
+    out << "[" << s.A << ", " << s.B << "]";
+
+    return out;
+}
+
+
+// Predicates
+template<typename I>
+inline bool es_un_punto(const Segment_ij<I>& s)
+{ return (s.A == s.B); }
 
 
 

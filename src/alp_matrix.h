@@ -58,9 +58,8 @@
 
 #include "alp_concepts.h"
 #include "alp_exception.h"
-#include "alp_geo_types.h"
 #include "alp_cast.h"
-#include "alp_indices.h"
+#include "alp_rframe_ij.h"
 #include "alp_subcontainer.h"
 #include "alp_matrix_iterator.h"
 

@@ -25,9 +25,7 @@ INCS= alp_algorithm.h 	\
 	alp_find.h 			\
 	alp_functional.h	\
 	alp_gen.h 			\
-	alp_geo_types.h 	\
 	alp_getopts.h		\
-	alp_indices.h 		\
 	alp_iterator.h 		\
 	alp_math_efunc.h 	\
 	alp_math.h 			\
@@ -38,6 +36,9 @@ INCS= alp_algorithm.h 	\
 	alp_submatrix.h 	\
 	alp_random.h 		\
 	alp_rframes.h		\
+	alp_rframe_ij.h 	\
+	alp_rframe_xy.h 	\
+	alp_rframe_xyz.h 	\
 	alp_stdio.h 		\
 	alp_string.h 		\
 	alp_subcontainer.h 	\
@@ -49,8 +50,7 @@ INCS= alp_algorithm.h 	\
 	alp_trace.h 		\
 	alp_type_traits.h 	\
 	alp_utf8.h 			\
-	alp_vector.h		\
-	alp_vector3D.h
+	alp_vector.h	
 
 
 

@@ -38,6 +38,8 @@
 #include <iterator>
 #include <utility>
 
+#include "alp_type_traits.h"
+
 namespace alp{
 
 /// Imprime el vector, usando el separador indicado para separar elementos.
@@ -123,6 +125,144 @@ inline void copy_new(It p0, It pe, std::vector<Value>& v)
 
     std::copy(p0, pe, v.begin());
 }
+
+
+/*****************************************************************************
+ * 
+ *   - CLASE: Tabla
+ *
+ *   - DESCRIPCIÓN: Esta clase la uso para expresar mi intención en 
+ *	código de leer/escribir un std::vector como tabla en un fichero.
+ *
+ *	Esto es, amen de escribir los datos del vector, le añado la posición.
+ *	La posición es el id del elemento.
+ *
+ *   - FORMATO:
+ *	    Escribimos el vector con el siguiente formato:
+ *
+ *	    [colores = 4]
+ *	    0 = desconocido
+ *	    1 = amarillo
+ *	    2 = rojo
+ *	    3 = verde
+ *
+ *   - EJEMPLO:
+ *
+ *	vector<string> v = {"desconocido", "amarillo", "rojo", "verde"};
+ *	ofstream out{"kk.txt"};
+ *	out << tabla("colores", v);
+ *	out.close();
+ *
+ *	vector<string> u;
+ *	ifstream in{"kk.txt"};
+ *	in >> tabla("colores", u);
+ *
+ *	cout << tabla("colores", u);
+ *
+ *   - NOTAS:
+ *	Al principio la parametrice por el tipo T del vector. Sin embargo
+ *	eso genera el problema de que el operator<< lee de un const Tabla,
+ *	generando un error al intentar inicializar Tabla<T> con un const
+ *	vector.
+ *
+ *	Para evitar este problema lo parametrizo con el contenedor
+ *	directamente (y de hecho, queda más natural). De esta forma
+ *	si le paso un const vector, la tabla es const y todo funciona bien.
+ *
+ ***************************************************************************/
+template<typename Cont>
+class Tabla{
+public:
+    Tabla(const std::string& ttitulo, Cont& vv)
+	:titulo{ttitulo}, v(vv){}
+
+    template<typename C>
+    friend std::ostream& operator<<(std::ostream& out, const Tabla<C>& t);
+
+    template<typename C>
+    friend std::istream& operator>>(std::istream& in, Tabla<C> t);
+
+private:
+    const std::string titulo;
+    Cont& v;
+};
+
+template<typename C>
+std::ostream& operator<<(std::ostream& out, const Tabla<C>& t)
+{
+    out << '[' << t.titulo << " = " << t.v.size() << "]\n";
+    for(size_t i = 0; i != t.v.size(); ++i)
+	out << i << " = " << t.v[i] << '\n';
+
+    return out;
+}
+
+
+// CUIDADO: Observar que pasamos por valor Tabla<T> t.
+// Esto no supone ningún problema, ya que vamos a escribir en el vector
+// t.v, del cual no es propietario Tabla<T>. 
+// TODO: ¿validar errores de formato? Si el fichero no se modifica
+// externamente y se escribe y lee con estas funciones no debería de tener
+// errores
+template<typename C>
+std::istream& operator>>(std::istream& in, Tabla<C> t)
+{
+    // leemos la cabecera con el tamaño
+    // [colores = 20]
+    std::string titulo;
+    char inicio;
+    in >> inicio;	// [
+    in >> titulo;
+    if (titulo != t.titulo)
+	throw std::runtime_error{"Error: la sección del fichero "
+		"empieza con un título [" + titulo + "] diferente "
+		"del que tendría que tener [" + t.titulo + "]"};
+
+    char igual;
+    in >> igual;
+
+    size_t size;
+    in >> size;
+
+    char end;
+    in >> end;	//]
+
+    // leemos la tabla
+    for(size_t i = 0; i != size; ++i)
+    {
+	int j;
+	in >> j;
+	
+	char igual;
+	in >> igual;
+	
+	Value_type<C> valor;
+	in >> valor;
+	t.v.push_back(valor);
+    }
+
+    return in;
+}
+
+
+
+// Función auxiliar: Creamos la tabla sin necesidad de indicar el tipo T
+template<typename Cont>
+inline Tabla<Cont> tabla( const std::string& titulo
+		     , Cont& v) 
+{return Tabla<Cont>{titulo, v};}
+
+
+
+
+
+
+
+
+
+
+
+
 
 }// namespace
 

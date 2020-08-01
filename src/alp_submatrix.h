@@ -75,7 +75,7 @@
  *
  ****************************************************************************/
 #include "alp_matrix_iterator.h"
-#include "alp_indices.h"
+#include "alp_rframe_ij.h"
 
 #include <type_traits>	// remove_const
 #include "alp_matrix.h"	// quitarlo al mover clone de aquí

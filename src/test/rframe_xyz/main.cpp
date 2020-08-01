@@ -16,52 +16,48 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-#include "../../alp_vector3D.h"
+#include "../../alp_rframe_xyz.h"
 #include "../../alp_math.h"
 
-#include "../../alp_exception.h"
 #include "../../alp_test.h"
 
 #include <iostream>
 #include <vector>
 
-using std::cout;
-using std::endl;
-using std::vector;
 
-using namespace alp;
-using namespace test;
-
-
-void test_vector3D()
+void test_vector_xyz()
 {
-    Vector3D<int> a{1,2,3};
-    Vector3D<int> b;
+    test::interfaz("Vector_xyz");
+    
+    using V = alp::Vector_xyz<int>;
+
+    V a{1,2,3};
+    V b;
     b = a;
 
-    check_true(a == b, "operator==()");
+    CHECK_TRUE(a == b, "operator==()");
 
     b.x = 5;
-    check_true(a != b, "operator!=()");
+    CHECK_TRUE(a != b, "operator!=()");
 
     auto c = a + b;
-    check_true(c == Vector3D<int>{6, 4, 6}, "operator+=");
+    CHECK_TRUE((c == V{6, 4, 6}), "operator+=");
 
     b.z = -4;
     c = a - b;
-    check_true(c == Vector3D<int>{-4, 0, 7}, "operator-=");
+    CHECK_TRUE((c == V{-4, 0, 7}), "operator-=");
 
     c = 2*a;
-    check_true(c == Vector3D<int>{2, 4, 6}, "operator*");
+    CHECK_TRUE((c == V{2, 4, 6}), "operator*");
 
     a = {1, 2, 3};
     b = {4, 5, 6};
     auto x = dot_product(a, b);
 
-    check_true(x == 4 + 10 + 18, "dot_product");
+    CHECK_TRUE(x == 4 + 10 + 18, "dot_product");
 
     c = cross_product(a, b);
-    check_true(c == Vector3D<int>{-3, 6, -3}, "cross_product");
+    CHECK_TRUE((c == V{-3, 6, -3}), "cross_product");
 
 }
 
@@ -71,13 +67,12 @@ void test_vector3D()
 int main()
 {
 try{
-    test_vector3D();
+    test_vector_xyz();
 
 }catch(const std::exception& e)
 {
-    std::cerr << e.what() << std::endl;
+    std::cerr << e.what() << '\n';
     return 1;
 }
 
-    return 0;
 }

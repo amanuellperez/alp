@@ -1,0 +1,204 @@
+// Copyright (C) 2019-2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
+//
+// This file is part of the ALP Library.
+//
+// ALP Library is a free library: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This library is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+#pragma once
+
+#ifndef __ALP_RFRAME_XY_H__
+#define __ALP_RFRAME_XY_H__
+/****************************************************************************
+ *
+ *   - DESCRIPCION: Sistema de coordenadas (x,y)
+ *
+ *   - COMENTARIOS: 
+ *	Puntos en 2D: (realmente son los vectores posición de los puntos)
+ *	    (vamos a operar con ellos)
+ *	    + Posicion_ij: posición dentro de una matriz (i,j)
+ *	    + Punto_xy: punto en cartesianas (x,y)
+ *	    + Punto_rt: punto en polares (r, theta)
+ *
+ *	    ¡¡¡RECORDAR QUE REALMENTE SON VECTORES!!!
+ *
+ *	Puntos en 3D:
+ *	    + Punto_xyz: en cartesianas (x,y,z)
+ *	    + Punto_rtz: en cilíndricas (r, theta, z)
+ *	    + Punto_rtf: en esféricas (r, theta, fi)
+ *
+ *	Rectángulos en 2D:
+ *	    + Rectangulo_ij: en (i,j)
+ *	    + Rectangulo_xy: en (x,y)
+ *
+ *	Todo siempre lo vamos a referir al sistema de referencia humano:
+ *	horizontal y vertical, a la derecha, izquierda, arriba y abajo.
+ *	Este sistema es el natural para nosotros, por eso todas las funciones
+ *	lo usan. Además, permiten desvincular mucho código del sistema de
+ *	referencia que estemos usando.
+ *
+ *   - CUIDADO: Aunque los puntos están parametrizados por Int, Int es 
+ *	signed. Usar siempre signed. Si se quiere usar size_t (que en
+ *	principio parecería ser lo más lógico para matrices) hay que revisar
+ *	el código.
+ *
+ *   - HISTORIA:
+ *    A.Manuel L.Perez
+ *	14/10/2017 Reescrito
+ *	22/02/2019 Generalizo Rectangulo y notación.
+ *	31/07/2020 Reestructurado. 
+ *
+ ****************************************************************************/
+
+#include <iostream>
+
+
+namespace alp{
+/*!
+ *  \brief  Vector en coordenadas locales.
+ *
+ *  Sistemas de referencias que podemos tener:
+ *	1.- Sistema local, asociado al objeto.
+ *	2.- Sistema absoluto (sería el sistema de referencia universal de
+ *	    Newton).
+ *	3.- Diferentes sistemas de referencias.
+ *
+ *  En principio está pensado para ser manejado en imágenes, de ahí que por
+ *  defecto Int = int.
+ *
+ *  CUIDADO: el sistema de referencia xy es un sistema de ejes cartesiano,
+ *  perpendiculares, con el eje x hacia la derecha y el eje y hacia arriba.
+ *  Esto es fundamental para coordinarlo con el sistema matricial ij que es el
+ *  sistema donde j va hacia la derecha e i hacia abajo.
+ *
+ */
+template <typename Int = int>
+struct Vector_xy{
+// Types
+    using Ind = Int;	// tipo de índice usado
+
+// Data
+    Ind x;
+    Ind y;
+
+// Constructors
+    constexpr Vector_xy() : x{}, y{} {}
+    constexpr Vector_xy(Ind x0, Ind y0) : x{x0}, y{y0} {}
+
+// Operations: estructura de espacio vectorial
+    constexpr Vector_xy& operator+=(const Vector_xy& b);
+    constexpr Vector_xy& operator-=(const Vector_xy& b);
+    constexpr Vector_xy& operator*=(const Ind& a);
+    constexpr Vector_xy& operator/=(const Ind& a);
+};
+
+
+// Algebraic structure
+template <typename I>
+inline constexpr 
+Vector_xy<I>& Vector_xy<I>::operator+=(const Vector_xy<I>& b)
+{
+    x += b.x;
+    y += b.y;
+
+    return *this;
+}
+
+template <typename I>
+inline constexpr 
+Vector_xy<I>& Vector_xy<I>::operator-=(const Vector_xy<I>& b)
+{
+    x -= b.x;
+    y -= b.y;
+
+    return *this;
+}
+
+template <typename I>
+inline constexpr 
+Vector_xy<I>& Vector_xy<I>::operator*=(const Ind& a)
+{
+    x *= a;
+    y *= a;
+
+    return *this;
+}
+
+template <typename I>
+inline constexpr 
+Vector_xy<I>& Vector_xy<I>::operator/=(const Ind& a)
+{
+    x /= a;
+    y /= a;
+
+    return *this;
+}
+
+template <typename I>
+inline constexpr Vector_xy<I> operator+(Vector_xy<I> a,
+                                            const Vector_xy<I>& b)
+{ return a+=b; }
+
+template <typename I>
+inline constexpr Vector_xy<I> operator-(Vector_xy<I> a,
+                                            const Vector_xy<I>& b)
+{ return a-=b; }
+
+template <typename I>
+inline constexpr 
+Vector_xy<I> operator*(const typename Vector_xy<I>::Ind a, 
+                                            Vector_xy<I> b)
+{ return b *= a; }
+
+template <typename I>
+inline constexpr Vector_xy<I> operator*(Vector_xy<I> b,
+			       const typename Vector_xy<I>::Ind a)
+{ return a*b;}
+
+
+template <typename I>
+inline constexpr Vector_xy<I> operator/(Vector_xy<I> b,
+			       const typename Vector_xy<I>::Ind a)
+{ return b /= a; }
+
+// Equality
+template <typename I>
+inline constexpr bool operator==(const Vector_xy<I>& a, const Vector_xy<I>& b)
+{ return (a.x == b.x) and (a.y == b.y); }
+
+template <typename I>
+inline constexpr bool operator!=(const Vector_xy<I>& a, const Vector_xy<I>& b)
+{ return !(a == b);}
+
+
+
+// Iostreams
+template <typename I>
+std::ostream& operator<<(std::ostream& out, const Vector_xy<I>& p)
+{
+    return out << '(' << p.x << ", " << p.y << ") local";
+}
+
+
+
+/***************************************************************************
+ *				ALIAS
+ ***************************************************************************/
+template <typename Int>
+using Point_xy = Vector_xy<Int>;
+
+
+
+}// namespace
+
+#endif 

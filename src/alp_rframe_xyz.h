@@ -17,18 +17,28 @@
 
 #pragma once
 
-#ifndef __ALP_VECTOR3D_H__
-#define __ALP_VECTOR3D_H__
+#ifndef __ALP_RFRAME_XYZ_H__
+#define __ALP_RFRAME_XYZ_H__
 /****************************************************************************
  *
- *   - DESCRIPCION: Vector3D = vector de un espacio vectorial
+ *  - DESCRIPCION: Vector_xyz = vector de un espacio vectorial
  *
- *   - COMENTARIOS: 
+ *  - COMENTARIOS: 
+ *	Los vectores en 3 dimensiones se pueden representar usando diferentes
+ *	sistemas de coordenadas:
+ *	    + Vector_xyz: en cartesianas (x,y,z)
+ *	    + Vector_rtz: en cilíndricas (r, theta, z)
+ *	    + Vector_rtf: en esféricas (r, theta, fi)
+ *	    + Vector_ijk: en coordenadas de matriz (i, j, k)
  *
- *   - HISTORIA:
- *           alp  - 21/01/2017 Escrito
+ *  - HISTORIA:
+ *    A.Manuel L.Perez
+ *	21/01/2017 Escrito
+ *	01/08/2020 Renombro por consistencia con rframe_xy/ij.
  *
  ****************************************************************************/
+
+
 #include <iostream>
 
 namespace alp{
@@ -36,32 +46,32 @@ namespace alp{
 // Futuro: 
 // 1.- se puede generalizar y crear:
 //	Vector<int, int> = Vector2D
-//	Vector<int, int, int> = Vector3D
+//	Vector<int, int, int> = Vector_xyz
 //
 // 2.- Los tipos del vector y del escalar no tienen porque ser los mismos.
 // Habría que parametrizar esta template también indicando el cuerpo sobre el
 // que está definido el espacio vectorial.
 template <typename T>
 // requires: integral_type(T)
-struct Vector3D{
+struct Vector_xyz{
     using value_type = T;
 
     value_type x, y, z;
 
     /// Construimos un vector sin incializar.
-    Vector3D(){}
+    Vector_xyz(){}
 
     /// Definimos el vector
-    Vector3D(value_type x0, value_type y0, value_type z0)
+    Vector_xyz(value_type x0, value_type y0, value_type z0)
 	:x{x0}, y{y0}, z{z0}{}
 
     // Suma de vectores
-    Vector3D<T>& operator+=(const Vector3D<T>& v);
-    Vector3D<T>& operator-=(const Vector3D<T>& v);
+    Vector_xyz<T>& operator+=(const Vector_xyz<T>& v);
+    Vector_xyz<T>& operator-=(const Vector_xyz<T>& v);
 };
 
 template <typename T>
-inline Vector3D<T>& Vector3D<T>::operator+=(const Vector3D<T>& v)
+inline Vector_xyz<T>& Vector_xyz<T>::operator+=(const Vector_xyz<T>& v)
 {
     x += v.x;
     y += v.y;
@@ -72,7 +82,7 @@ inline Vector3D<T>& Vector3D<T>::operator+=(const Vector3D<T>& v)
 
 
 template <typename T>
-inline Vector3D<T>& Vector3D<T>::operator-=(const Vector3D<T>& v)
+inline Vector_xyz<T>& Vector_xyz<T>::operator-=(const Vector_xyz<T>& v)
 {
     x -= v.x;
     y -= v.y;
@@ -85,23 +95,23 @@ inline Vector3D<T>& Vector3D<T>::operator-=(const Vector3D<T>& v)
 
 // Regular type
 template <typename T>
-inline bool operator==(const Vector3D<T>& a, const Vector3D<T>& b)
+inline bool operator==(const Vector_xyz<T>& a, const Vector_xyz<T>& b)
 { return a.x == b.x and a.y == b.y and a.z == b.z;}
 
 template <typename T>
-inline bool operator!=(const Vector3D<T>& a, const Vector3D<T>& b)
+inline bool operator!=(const Vector_xyz<T>& a, const Vector_xyz<T>& b)
 { return !(a == b);}
 
 // Suma de vectores
 template <typename T>
-inline Vector3D<T> operator+(const Vector3D<T>& a, const Vector3D<T>& b)
+inline Vector_xyz<T> operator+(const Vector_xyz<T>& a, const Vector_xyz<T>& b)
 {
     auto c = a;
     return c += b;
 }
 
 template <typename T>
-inline Vector3D<T> operator-(const Vector3D<T>& a, const Vector3D<T>& b)
+inline Vector_xyz<T> operator-(const Vector_xyz<T>& a, const Vector_xyz<T>& b)
 {
     auto c = a;
     return c -= b;
@@ -112,22 +122,22 @@ inline Vector3D<T> operator-(const Vector3D<T>& a, const Vector3D<T>& b)
 // Solo lo defino por la izquierda, como es habitual en matemáticas.
 // E = tipo del escalar
 template <typename T, typename E>
-inline Vector3D<T> operator*(E lambda, const Vector3D<T>& v)
+inline Vector_xyz<T> operator*(E lambda, const Vector_xyz<T>& v)
 {
     return {v.x*lambda, v.y*lambda, v.z*lambda};
 }
 
 /// Producto escalar
 template <typename T>
-inline T dot_product(const Vector3D<T>& u, const Vector3D<T>& v)
+inline T dot_product(const Vector_xyz<T>& u, const Vector_xyz<T>& v)
 { return (u.x * v.x + u.y * v.y + u.z * v.z); }
 
 
 /// Producto vectorial
 template <typename T>
-inline Vector3D<T> cross_product(const Vector3D<T>& u, const Vector3D<T>& v)
+inline Vector_xyz<T> cross_product(const Vector_xyz<T>& u, const Vector_xyz<T>& v)
 { 
-    return Vector3D<T>{u.y * v.z - u.z * v.y
+    return Vector_xyz<T>{u.y * v.z - u.z * v.y
 		     , u.z * v.x - u.x * v.z
 		     , u.x * v.y - u.y * v.x};
 }
@@ -136,13 +146,13 @@ inline Vector3D<T> cross_product(const Vector3D<T>& u, const Vector3D<T>& v)
 ///// Módulo de un vector
 // DUDA: ¿Qué tiene que devolver? T o double?
 //template <typename T>
-//inline T modulo(const Vector3D<T>& v)
+//inline T modulo(const Vector_xyz<T>& v)
 //{ return sqrt(dot_product(v,v));}
 
 
 // Impresión
 template <typename T>
-inline std::ostream& operator<<(std::ostream& out, const Vector3D<T>& v)
+inline std::ostream& operator<<(std::ostream& out, const Vector_xyz<T>& v)
 { return out << '(' << v.x << ", " << v.y << ", " << v.z << ')'; }
 
 

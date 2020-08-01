@@ -53,7 +53,7 @@ for (size_t i = 0; i < m.rows(); ++i)
 
 
 ### Ficheros
-* `alp_indices.h`
+* `alp_rframe_ij.h`: Sistema de coordenadas (i,j). (vectores, rectángulos...)
 * `alp_iterator.h`
 * `alp_matrix_iterator.h`
 * `alp_subcontainer.h`

@@ -669,6 +669,70 @@ struct Aproximado{
 };
 
 
+/*****************************************************************************
+ * 
+ *   - CLASE: Range
+ *
+ *   - DESCRIPCIÓN: Definimos un rango de números. En principio
+ *	solo voy a considerar números enteros (es lo natural). 
+ *
+ ***************************************************************************/
+class Range_mal_definido{
+public:
+    Range_mal_definido(int i0, int ie)
+    {
+	msg_ = "Error";
+    }
+
+    std::string what() const{ return msg_;}
+
+private:
+    std::string msg_;
+};
+
+//template<typename T>
+class Range{
+public:
+    using value_type = int; //T;
+    class iterator{
+    public:
+	explicit iterator(value_type i0):i_{i0}{}
+	iterator operator++(){++i_; return *this;}
+	value_type operator*() const {return i_;}
+
+	bool operator==(const iterator& b) const
+	{return (i_ == b.i_);}
+	
+	bool operator!=(const iterator& b) const
+	{return !(*this == b);}
+
+    private:
+	value_type i_;	// valor actual
+    };
+
+    using const_iterator = iterator;
+    
+    Range(value_type i0, value_type ie)
+	:i0_{i0}, ie_{ie}
+    {
+	if(i0_ > ie_)
+	    throw Range_mal_definido{i0_, ie_};
+    }
+
+    iterator begin() {return iterator{i0_};}
+    iterator end()   {return iterator{ie_};}
+
+    const_iterator begin() const {return iterator{i0_};}
+    const_iterator end()   const {return iterator{ie_};}
+
+private:
+    value_type i0_, ie_;   // Range = [i0, ie)
+};
+
+inline Range range(int i0, int ie)
+{return Range{i0, ie};}
+
+
 }// namespace alp
 
 #endif

@@ -9,16 +9,15 @@ DIRS = cast 	\
 	iterator 	\
 	math 		\
 	matrix 		\
+	rframe_ij	\
+	rframe_xyz	\
 	time 		\
 	type_traits \
-	vector3d
 
-#	geo_types 	\
 #	rframe		\
 #
 #	string \ <--- lo estaba modificando
 #	trace \	???
-#	indices
 
 include $(CPP_RECRULES)
 
