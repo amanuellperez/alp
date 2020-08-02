@@ -98,6 +98,63 @@ void test_rectangle_xy()
     }
 }
 
+void test_rotate()
+{
+    test::interfaz("rotate");
+    
+    using V = alp::Vector_xy<int>;
+
+    {
+    V v{1,2};
+    CHECK_TRUE((alp::rotate(v, alp::Degree{0}) == v), "rotate(0)");
+    CHECK_TRUE((alp::rotate(v, alp::Degree{360}) == v), "rotate(360)");
+    CHECK_TRUE((alp::rotate(v, alp::Degree{-360}) == v), "rotate(-360)");
+    }
+    {
+    V v{3,0};
+    CHECK_TRUE((alp::rotate(v, alp::Degree{90}) == V{0,3}), "rotate(90)");
+    CHECK_TRUE((alp::rotate(v, alp::Degree{180}) == V{-3,0}), "rotate(180)");
+    CHECK_TRUE((alp::rotate(v, alp::Degree{270}) == V{0,-3}), "rotate(270)");
+
+    CHECK_TRUE((alp::rotate(v, alp::Degree{-90}) == V{0,-3}), "rotate(-90)");
+    CHECK_TRUE((alp::rotate(v, alp::Degree{-180}) == V{-3,0}), "rotate(-180)");
+    CHECK_TRUE((alp::rotate(v, alp::Degree{-270}) == V{0,3}), "rotate(-270)");
+    }
+    {
+    V v{1,1};
+    // observar el error cometido por culpa de manejar vectores de int
+    CHECK_TRUE((alp::rotate(v, alp::Degree{45}) == V{0, 1}), "rotate(45)");
+    CHECK_TRUE((alp::rotate(v, alp::Degree{90}) == V{-1, 1}), "rotate(90)");
+    CHECK_TRUE((alp::rotate(v, alp::Degree{135}) == V{-1, 0}), "rotate(135)");
+    }
+
+    {
+    using V = alp::Vector_xy<double>;
+    V v{1.0,1.0};
+    alp::Aproximado aprox{0.0001};
+    {
+    V u = alp::rotate(v, alp::Degree{45});
+    V res{0.0, sqrt(2)};
+    CHECK_TRUE((aprox(u.x, res.x) and aprox(u.y, res.y)), "rotate(45)");
+    }
+    {
+    V u = alp::rotate(v, alp::Degree{90});
+    V res{-1.0, 1.0};
+    CHECK_TRUE((aprox(u.x, res.x) and aprox(u.y, res.y)), "rotate(90)");
+    }
+    {
+    V u = alp::rotate(v, alp::Degree{-180});
+    V res{-1.0, -1.0};
+    CHECK_TRUE((aprox(u.x, res.x) and aprox(u.y, res.y)), "rotate(-180)");
+    }
+    {
+    V u = alp::rotate(v, alp::Degree{-135});
+    V res{0.0, -sqrt(2)};
+    CHECK_TRUE((aprox(u.x, res.x) and aprox(u.y, res.y)), "rotate(-135)");
+    }
+
+    }
+}
 
 int main()
 {
@@ -107,6 +164,7 @@ try{
     test_vector_xy();
     test_rectangle_xy();
 
+    test_rotate();
 
 }catch(const std::exception& e)
 {

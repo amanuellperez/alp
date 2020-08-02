@@ -411,13 +411,18 @@ struct Size_ij
 
 // Equality
 template <typename Int>
-bool operator==(const Size_ij<Int>& s1, const Size_ij<int>& s2)
+bool operator==(const Size_ij<Int>& s1, const Size_ij<Int>& s2)
 { return s1.rows == s2.rows and s1.cols == s2.cols; }
 
 template <typename Int>
-bool operator!=(const Size_ij<Int>& s1, const Size_ij<int>& s2)
+bool operator!=(const Size_ij<Int>& s1, const Size_ij<Int>& s2)
 { return !(s1 == s2); }
 
+
+// Iostreams
+template <typename Int>
+inline std::ostream& operator<<(std::ostream& out, const Size_ij<Int>& s)
+{ return out << s.rows << " x " << s.cols; }
 
 /***************************************************************************
  *			    RANGOS DE INDICES

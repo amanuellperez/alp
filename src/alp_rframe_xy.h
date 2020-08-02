@@ -63,6 +63,8 @@
 #include <iostream>
 
 
+#include "alp_math.h"	// Radian/Degree
+
 namespace alp{
 /*!
  *  \brief  Vector en coordenadas locales.
@@ -73,8 +75,6 @@ namespace alp{
  *	    Newton).
  *	3.- Diferentes sistemas de referencias.
  *
- *  En principio está pensado para ser manejado en imágenes, de ahí que por
- *  defecto Int = int.
  *
  *  CUIDADO: el sistema de referencia xy es un sistema de ejes cartesiano,
  *  perpendiculares, con el eje x hacia la derecha y el eje y hacia arriba.
@@ -82,7 +82,7 @@ namespace alp{
  *  sistema donde j va hacia la derecha e i hacia abajo.
  *
  */
-template <typename Int = int>
+template <typename Int>
 struct Vector_xy{
 // Types
     using Ind = Int;	// tipo de índice usado
@@ -192,6 +192,42 @@ std::ostream& operator<<(std::ostream& out, const Vector_xy<I>& p)
 // Alias
 template <typename Int>
 using Point_xy = Vector_xy<Int>;
+
+
+
+// Other operations
+// ----------------
+// TODO: what is the best name in english? modulus? norm? lenght?
+template <typename Int>
+Int modulo(const Vector_xy<Int>& v)
+{ return sqrt(v.x * v.x + v.y * v.y); }
+
+
+/// Gira el vector `v`, `angle` radianes.
+template <typename Int>
+Vector_xy<Int> rotate(const Vector_xy<Int>& v, const Radian& angle)
+{
+    Vector_xy<Int> res;
+
+    auto x = v.x * cos(angle) - v.y * sin(angle);
+    auto y = v.x * sin(angle) + v.y * cos(angle);
+
+    if constexpr (std::is_integral_v<Int>){
+	res.x = std::round(x);  // round para evitar los problemas de casting
+	res.y = std::round(y);
+    }
+    else{// float, double
+	res.x = x;
+	res.y = y;
+    }
+
+    return res;
+}
+
+/// Gira el vector `v`, `angle` grados.
+template <typename I>
+inline Vector_xy<I> rotate(const Vector_xy<I>& v, const Degree& angle)
+{ return rotate(v, Radian{angle}); }
 
 
 /*!
