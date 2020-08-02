@@ -49,6 +49,7 @@
  *   - HISTORIA:
  *    A.Manuel L.Perez
  *      25/08/2017 Escrito
+ *      02/08/2020 Corners: upper_left_corner,...
  *
  ****************************************************************************/
 
@@ -359,6 +360,27 @@ Matrix<T, S>::Matrix(const_row_iterator f0, const_row_iterator fe)
     for (; f0 != fe; ++f0, ++g)
 	std::copy(f0->begin(), f0->end(), g->begin());
 }
+
+
+// Corners (en coordenadas de matriz)
+// ----------------------------------
+template <typename T, typename I>
+Matrix<T,I>::Posicion upper_left_corner(const Matrix<T,I>& m)
+{return {0,0};}
+
+
+template <typename T, typename I>
+Matrix<T,I>::Posicion upper_right_corner(const Matrix<T,I>& m)
+{return {0, m.cols() - 1};}
+
+template <typename T, typename I>
+Matrix<T,I>::Posicion bottom_left_corner(const Matrix<T,I>& m)
+{return {m.rows() - 1, 0};}
+
+template <typename T, typename I>
+Matrix<T,I>::Posicion bottom_right_corner(const Matrix<T,I>& m)
+{return {m.rows() - 1, m.cols() - 1};}
+
 
 }// namespace
 

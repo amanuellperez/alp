@@ -20,26 +20,24 @@
 
 #include <iostream>
 
-using namespace std;
-using namespace alp;
 
 void test_log()
 {
     {
-    Log log{"prueba.txt"};
+	alp::Log log{"prueba.txt"};
 
     for (int i = 0; i < 100; ++i)
 	log << i << ' ';
     }
 
-    ifstream log{"prueba.txt"};
+    std::ifstream log{"prueba.txt"};
     if (!log)
-	throw Excepcion{"No se generó el fichero!!!"};
+	throw alp::Excepcion{"No se generó el fichero!!!"};
     
     int j;
     for (int i = 0; i < 100 and log >> j; ++i){
 	if (i != j){
-	    cerr << "Error: grabado " << j << " en lugar de " << i << '\n';
+	    std::cerr << "Error: grabado " << j << " en lugar de " << i << '\n';
 	}
     }
 
@@ -47,8 +45,8 @@ void test_log()
 
 void test_ctrace()
 {
-    ctrace(2) << "esto es una prueba\n";
-    ctrace(3) << "otra" << std::endl;
+    alp::trace(2) << "esto es una prueba\n";
+    alp::trace(3) << "otra\n";
 }
 
 int main()
@@ -56,9 +54,10 @@ int main()
 try{
     test_log();
     test_ctrace();
-}catch(std::runtime_error e)
+
+}catch(const std::exception& e)
 {
-    std::cerr << e.what() << endl;
+    std::cerr << e.what() << '\n';
+    return 1;
 }
-    return 0;
 }

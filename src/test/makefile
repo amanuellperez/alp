@@ -10,11 +10,12 @@ DIRS = cast 	\
 	math 		\
 	matrix 		\
 	rframe_ij	\
+	rframe_xy	\
 	rframe_xyz	\
+	rframes		\
 	time 		\
 	type_traits \
 
-#	rframe		\
 #
 #	string \ <--- lo estaba modificando
 #	trace \	???

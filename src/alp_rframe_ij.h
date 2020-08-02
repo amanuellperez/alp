@@ -458,7 +458,8 @@ struct Rango_i{
  *  Un Rango_ij es lo mismo que un Rectangle_ij.
  */
 template <typename Int>
-struct Rango_ij{
+class Rango_ij{
+public:
 // Types
     using Ind      = Int;
     using Posicion = Vector_ij<Int>;

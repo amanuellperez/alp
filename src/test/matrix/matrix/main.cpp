@@ -20,25 +20,19 @@
 #include "../../../alp_test.h"
 
 #include <iostream>
-#include <fstream>
-#include <sstream>
-#include <iterator>
 #include <numeric>
 
-using namespace alp;
-using namespace std;
-using namespace test;
 
 // Crea una matriz de dimensiones rows x cols, donde los números secuenciales
 // a partir de n0
-Matrix<int> matrix(size_t rows, size_t cols, int n0)
+alp::Matrix<int> matrix(size_t rows, size_t cols, int n0)
 {
-    Matrix<int> res{rows, cols};
+    alp::Matrix<int> res{rows, cols};
     std::iota(res.begin(), res.end(), n0);
     return res;
 }
 
-void print(const Matrix<int>& m)
+void print(const alp::Matrix<int>& m)
 {
     for (auto f = m.row_begin(); f != m.row_end(); ++f){
 	for (auto x: *f)
@@ -55,7 +49,7 @@ void test_matrix()
     test::interfaz("Matrix");
 
     constexpr int num_rows = 3, num_cols = 4;
-    Matrix<int> m1{num_rows, num_cols};
+    alp::Matrix<int> m1{num_rows, num_cols};
 
     CHECK_TRUE(m1.rows() == num_rows, "rows()");
     CHECK_TRUE(m1.cols() == num_cols, "cols()");
@@ -69,24 +63,24 @@ void test_matrix()
     for (size_t i = 0; i < m1.rows(); ++i){
 	for (size_t j = 0; j < m1.cols(); ++j){
 	    CHECK_TRUE(m1(i,j) == static_cast<int>(i*m1.cols() + j) , "operator(i,j)");
-	    cout << m1(i,j) << ' ';
+	    std::cout << m1(i,j) << ' ';
 	}
 
-	cout << '\n';
+	std::cout << '\n';
     }
 
-    cout << "-------------------------\n";
-    cout << "Matriz m1:\n";
+    std::cout << "-------------------------\n";
+    std::cout << "Matriz m1:\n";
     for (size_t i = 0; i < m1.rows(); ++i){
 	for (size_t j = 0; j < m1.cols(); ++j)
-	    cout << m1(i,j) << ' ';
+	    std::cout << m1(i,j) << ' ';
 
-	cout << '\n';
+	std::cout << '\n';
     }
-    cout << "-------------------------\n";
+    std::cout << "-------------------------\n";
 
 
-    const Matrix<int> m2 = m1;
+    const alp::Matrix<int> m2 = m1;
     CHECK_TRUE(m2.rows() == m1.rows(), "constructor de copia");
     CHECK_TRUE(m2.cols() == m1.cols(), "constructor de copia");
     CHECK_TRUE(m2.size() == m1.size(), "constructor de copia");
@@ -95,16 +89,16 @@ void test_matrix()
 	for (size_t j = 0; j < m1.cols(); ++j)
 	    CHECK_TRUE(m2(i,j) == m1(i,j), "");
 
-    cout << "Probando range for:\n";
+    std::cout << "Probando range for:\n";
     for(auto x: m1)
-	cout << x << ' ';
-    cout << "\n\n";
+	std::cout << x << ' ';
+    std::cout << "\n\n";
 
 
 
     for(size_t i = 0; i < m1.rows(); ++i){
 	auto f = m1.row(i); // versión no const
-	// cout << "Fila " << i << ": ";
+	// std::cout << "Fila " << i << ": ";
 	// acceso aleatorio
 	for (size_t j = 0; j < f.size(); ++j)
 	    CHECK_TRUE(f[j] == m1(i,j), "row[]");
@@ -163,31 +157,31 @@ void test_matrix()
 	for(auto p = f->begin(); p != f->end(); ++p, ++j){
 	    CHECK_TRUE(*p == m1(i,j), "");
 	}
-	cout << '\n';
+	std::cout << '\n';
     }
 
-    cout << "--------------------------------\n";
+    std::cout << "--------------------------------\n";
     for(auto f = m2.row_begin(); f != m2.row_end(); ++f){
 	for(auto p = f->begin(); p != f->end(); ++p){
-	    cout << *p << ' ';
+	    std::cout << *p << ' ';
 	}
-	cout << '\n';
+	std::cout << '\n';
     }
 
-    cout << "--------------------------------\n";
+    std::cout << "--------------------------------\n";
     for(auto f = m2.row_begin(); f != m2.row_end(); ++f){
 	for(auto x: *f)
-	    cout << x << ' ';
-	cout << endl;
+	    std::cout << x << ' ';
+	std::cout << '\n';
     }
 
 
     {// metodo fill
-	cout << "\n\n";
-	Matrix<int> m2{3,3};
+	std::cout << "\n\n";
+	alp::Matrix<int> m2{3,3};
 	std::fill(m2.begin(), m2.end(), 1);
 	
-	check_for_each_condicion(m2.begin(), m2.end(), 
+	test::check_for_each_condicion(m2.begin(), m2.end(), 
 		[](auto x){
 		    return x == 1;
 		}, "Probando fill()");
@@ -195,19 +189,19 @@ void test_matrix()
     }
 
     {
-	Matrix<int> m3{m1.rows(), m1.cols()};
+	alp::Matrix<int> m3{m1.rows(), m1.cols()};
 	m3 = m1;
 
         CHECK_EQUAL_CONTAINERS(
             m1.begin(), m1.end(), m3.begin(), m3.end(), "operator=");
     }
     {
-	Matrix<Objeto> m{2, 3};
+	alp::Matrix<test::Objeto> m{2, 3};
 	for (int i = 0; i < (int) m.rows(); ++i)
 	    for (int j = 0; j < (int) m.cols(); ++j)
-		m(i,j) = Objeto{i, j};
+		m(i,j) = test::Objeto{i, j};
 
-	Matrix<Objeto> m3{m.rows(), m.cols()};
+	alp::Matrix<test::Objeto> m3{m.rows(), m.cols()};
 	m3 = m;
 
         CHECK_EQUAL_CONTAINERS(
@@ -216,11 +210,11 @@ void test_matrix()
 
 }
 
-void test_constructor_por_filas(const Matrix<int>::const_row_iterator& f0,
-			        const Matrix<int>::const_row_iterator& fe,
-				const Matrix<int>& res)
+void test_constructor_por_filas(const alp::Matrix<int>::const_row_iterator& f0,
+			        const alp::Matrix<int>::const_row_iterator& fe,
+				const alp::Matrix<int>& res)
 {
-    Matrix<int> y{f0, fe};
+    alp::Matrix<int> y{f0, fe};
 
     CHECK_EQUAL_CONTAINERS(
 	y.begin(), y.end(), res.begin(), res.end(), "constructor por filas");
@@ -243,7 +237,7 @@ void test_constructor_por_filas()
     {
 	auto f0 = m.row_begin();
 	auto fe = f0;
-	Matrix<int> res{0, 4};
+	alp::Matrix<int> res{0, 4};
 	test_constructor_por_filas(f0, fe, res);
     }
     
@@ -252,23 +246,23 @@ void test_constructor_por_filas()
 
 void test_tipos()
 {
-    using M = Matrix<int>;
+    using M = alp::Matrix<int>;
     CHECK_TRUE((std::is_same_v<M::iterator, int*>), "Matrix::iterator");
     CHECK_TRUE((std::is_same_v<M::const_iterator, const int*>), "Matrix::const_iterator");
 
-    CHECK_TRUE((std::is_same_v<M::row_iterator, Row_iterator<int*>>),
+    CHECK_TRUE((std::is_same_v<M::row_iterator, alp::Row_iterator<int*>>),
                   "row_iterator");
 
-    CHECK_TRUE((std::is_same_v<M::row_iterator, Row_iterator<int*>>),
+    CHECK_TRUE((std::is_same_v<M::row_iterator, alp::Row_iterator<int*>>),
                   "row_iterator");
 
-    CHECK_TRUE((std::is_same_v<M::row_iterator::It, Row_iterator_base<int*>>),
+    CHECK_TRUE((std::is_same_v<M::row_iterator::It, alp::Row_iterator_base<int*>>),
                   "row_iterator::It");
 
     CHECK_TRUE((std::is_same_v<alp::iterator_traits<const int*>::const_iterator, const int*>),
                   "iterator_traits<const int*>");
 
-    using R = const_Row_iterator_min<const int*>;
+    using R = alp::const_Row_iterator_min<const int*>;
     CHECK_TRUE(
         (std::is_same_v<alp::iterator_traits<const int*>::iterator, int*>),
         "iterator_traits::iterator");
@@ -291,6 +285,21 @@ void test_tipos()
 
 }
 
+
+void test_corners()
+{
+    test::interfaz("corners");
+
+    using M = alp::Matrix<int>;
+    using Pos = alp::Matrix<int>::Posicion;
+    M m{3,5};
+
+    CHECK_TRUE((upper_left_corner(m) == Pos{0,0}), "upper_left_corner");
+    CHECK_TRUE((upper_right_corner(m) == Pos{0,4}), "upper_right_corner");
+    CHECK_TRUE((bottom_left_corner(m) == Pos{2,0}), "bottom_left_corner");
+    CHECK_TRUE((bottom_right_corner(m) == Pos{2,4}), "bottom_right_corner");
+}
+
 int main()
 {
 try{
@@ -299,10 +308,10 @@ try{
 
     test_matrix();
     test_constructor_por_filas();
+    test_corners();
 
 }catch(const std::exception& e){
-    std::cerr << e.what() << std::endl;
+    std::cerr << e.what() << '\n';
     return 1;
 }
-    return 0;
 }

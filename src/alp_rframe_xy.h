@@ -189,14 +189,90 @@ std::ostream& operator<<(std::ostream& out, const Vector_xy<I>& p)
     return out << '(' << p.x << ", " << p.y << ") local";
 }
 
-
-
-/***************************************************************************
- *				ALIAS
- ***************************************************************************/
+// Alias
 template <typename Int>
 using Point_xy = Vector_xy<Int>;
 
+
+/*!
+ *  \brief  Rectángulo en un sistema de coordenadas (x,y)
+ *
+ */
+template <typename Int>
+class Rectangle_xy{
+public:
+// Types
+    using Ind    = Int;
+    using Vector = Vector_xy<Int>;
+
+// Constructors
+    constexpr Rectangle_xy() : b0_{0,0}, width_{0}, height_{0} { }
+
+    // Definirmos un rectángulo con las esquinas dadas, ambas perteneciendo al
+    // rectángulo.
+    constexpr Rectangle_xy(Vector bottom_left_corner, Ind width0, Ind height0)
+	    : b0_{bottom_left_corner}, width_{width0}, height_{height0} { }
+
+// Esquinas
+    constexpr Vector upper_left_corner() const;
+    constexpr Vector upper_right_corner() const;
+    constexpr Vector bottom_left_corner() const;
+    constexpr Vector bottom_right_corner() const;
+
+
+// Dimensiones
+    Ind width() const {return width_;}
+    Ind height() const {return height_;}
+
+    /// ¿Rectángulo nulo?
+    bool empty() const {return width_ == 0 or height_ == 0;}
+
+// Equality
+    template<typename V>
+    friend bool operator==(const Rectangle_xy<V>& r1, const Rectangle_xy<V>& r2);
+
+private:
+    Vector b0_;	// esquina inferior izda
+    Ind width_;
+    Ind height_;
+};
+
+
+
+// Esquinas
+template <typename I>
+inline constexpr 
+Rectangle_xy<I>::Vector Rectangle_xy<I>::bottom_left_corner() const
+{ return b0_; }
+
+template <typename I>
+inline constexpr
+Rectangle_xy<I>::Vector Rectangle_xy<I>::bottom_right_corner() const
+{ return b0_ +  Vector{width_ - 1, 0}; }
+
+template <typename I>
+inline constexpr
+Rectangle_xy<I>::Vector Rectangle_xy<I>::upper_left_corner() const
+{ return b0_ + Vector{0, height_ - 1}; }
+
+template <typename I>
+inline constexpr
+Rectangle_xy<I>::Vector Rectangle_xy<I>::upper_right_corner() const
+{ return b0_ +  Vector{width_ - 1, height_ - 1}; }
+
+
+// Equality
+template <typename I>
+inline bool operator==(const Rectangle_xy<I>& r1, const Rectangle_xy<I>& r2)
+{
+    return (r1.b0_ == r2.b0_ and 
+	    r1.width_ == r2.width_ and
+            r1.height_ == r2.height_);
+}
+
+template <typename I>
+inline bool operator!=(const Rectangle_xy<I>& r1, const Rectangle_xy<I>& r2)
+{ return !(r1 == r2); }
 
 
 }// namespace

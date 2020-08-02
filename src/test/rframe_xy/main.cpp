@@ -15,24 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include "../../alp_rframe_ij.h"
+#include "../../alp_rframe_xy.h"
 #include "../../alp_test.h"
 
 #include <iostream>
 
 
-void test_vector_ij()
+void test_vector_xy()
 {
-    test::interfaz("Vector_ij");
+    test::interfaz("Vector_xy");
 
-    using V = alp::Vector_ij<int>;
+    using V = alp::Vector_xy<int>;
 
     {// basic
     V u{2, 3};
-    CHECK_TRUE(u.i == 2 and u.j == 3, "constructor");
+    CHECK_TRUE(u.x == 2 and u.y == 3, "constructor");
 
     V v = u;
-    CHECK_TRUE(v.i == u.i and v.j == u.j, "constructor");
+    CHECK_TRUE(v.x == u.x and v.y == u.y, "constructor");
 
     CHECK_TRUE(v == u, "operator==");
     v = V{5,6};
@@ -65,16 +65,48 @@ void test_vector_ij()
 
 }
 
+void test_rectangle_xy()
+{
+    test::interfaz("Rectangle_xy");
 
+    using Rect = alp::Rectangle_xy<int>;
+    using V = alp::Vector_xy<int>;
 
+    {
+	Rect r;
+	CHECK_TRUE((r.bottom_left_corner() == V{0,0}), "null constructor");
+	CHECK_TRUE(r.width() == 0, "null constructor");
+	CHECK_TRUE(r.height() == 0, "null constructor");
+	CHECK_TRUE(r.empty(), "empty");
+    }
+
+    {// básica
+	Rect r{V{7,2}, 6, 3};
+	
+	CHECK_TRUE((r.bottom_left_corner() == V{7,2}), "bottom_left_corner");
+	CHECK_TRUE((r.bottom_right_corner() == V{12,2}), "bottom_right_corner");
+	CHECK_TRUE((r.upper_left_corner() == V{7,4}), "upper_left_corner");
+	CHECK_TRUE((r.upper_right_corner() == V{12,4}), "upper_right_corner");
+
+	CHECK_TRUE(r.width() == 6, "width");
+	CHECK_TRUE(r.height() == 3, "height");
+
+	CHECK_TRUE(!r.empty(), "empty");
+
+	CHECK_TRUE(r == r, "operator==");
+	CHECK_TRUE(!(r != r), "operator!=");
+    }
+}
 
 
 int main()
 {
 try{
-    test::header("alp_rframe_ij.h");
+    test::header("alp_rframe_xy.h");
 
-    test_vector_ij();
+    test_vector_xy();
+    test_rectangle_xy();
+
 
 }catch(const std::exception& e)
 {

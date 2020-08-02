@@ -20,11 +20,10 @@
 
 #include <iostream>
 
-template <typename Vector>
+
+template <typename V>
 void test_vector()
 {
-    using V = Vector;
-
     {// basic
     V u{2, 3};
     CHECK_TRUE(u.x == 2 and u.y == 3, "constructor");
@@ -63,21 +62,12 @@ void test_vector()
 
 }
 
-void test_vector_xy_local()
-{
-    test::interfaz("Vector_xy_local");
-
-    using V = alp::Vector_xy_local<int>;
-    test_vector<V>();
-}
-
-
 void test_vector_xy()
 {
-    test::interfaz("Vector_xy");
+    test::interfaz("Vector_xy_in");
     
-    using V0 = alp::Vector_xy<0>;
-    using V1 = alp::Vector_xy<1>;
+    using V0 = alp::Vector_xy_in<0>;
+    using V1 = alp::Vector_xy_in<1>;
     
     test_vector<V0>();
 
@@ -137,10 +127,10 @@ void test_vectorij()
 
 void test_vector_ij()
 {
-    test::interfaz("Vector_ij");
+    test::interfaz("Vector_ij_in");
     
-    using V0 = alp::Vector_ij<0>;
-    using V1 = alp::Vector_ij<1>;
+    using V0 = alp::Vector_ij_in<0>;
+    using V1 = alp::Vector_ij_in<1>;
     
     test_vectorij<V0>();
 
@@ -162,12 +152,16 @@ void test_reference_frame()
     RF::origin[0] = RF::Origin{0,0};
     RF::origin[1] = RF::Origin{0,7};
 
-    using Vector0 = alp::Vector_xy<0>;
-    using Vector1 = alp::Vector_xy<1>;
+    using Vector0 = alp::Vector_xy_in<0>;
+    using Vector1 = alp::Vector_xy_in<1>;
 
     Vector0 p1{10,20};
     Vector1 q1{10,20};
 
+    {
+    CHECK_DONT_COMPILE(auto kk = p1 + q1, "suma")
+    CHECK_DONT_COMPILE(auto kk = p1 - q1, "resta")
+    }
     std::cout << "p1 = " << p1 << '\n';
     std::cout << "q1 = " << q1 << '\n';
 
@@ -178,7 +172,7 @@ void test_reference_frame()
     CHECK_TRUE(p2 == p1, "convert");
 
 
-    using Pos = alp::Vector_ij<1>;
+    using Pos = alp::Vector_ij_in<1>;
 
     {
     Pos pos{0, 0};
@@ -197,61 +191,7 @@ void test_reference_frame()
     }
 }
 
-void test_segment()
-{
-    test::interfaz("Segment");
 
-    using Point = alp::Vector_ij_local<int>;
-    using S = alp::Segment<Point>;
-    Point A{2,3};
-    Point B{4,5};
-    S seg{A, B};
-    CHECK_TRUE(seg == seg, "operator==");
-    CHECK_TRUE(!(seg != seg), "operator!=");
-
-    std::cout << seg << '\n';
-    
-}
-
-
-void test_rectangle_xy()
-{
-    test::interfaz("Rectangle_xy");
-
-    using Point = alp::Vector_xy_local<int>;
-    using Rect = alp::Rectangle_xy<alp::Vector_xy_local<int>>;
-    {
-    Rect r;
-    CHECK_TRUE(r.width() == 0 and r.height() == 0, "constructor null");
-    CHECK_TRUE(r.empty(), "empty");
-    }
-    {
-//    Point A{2,3};
-//    Rect r{A, 5, 6};
-    
-    Rect r{Point{2,8}, Point{6,3}};
-    CHECK_TRUE(r.width() == 5 and r.height() == 6, "constructor");
-    CHECK_TRUE(!r.empty(), "!empty");
-
-    CHECK_TRUE((r.bottom_left_corner() == Point{2,3}), "bottom_left_corner");
-    CHECK_TRUE((r.bottom_right_corner() == Point{6,3}), "bottom_right_corner");
-    CHECK_TRUE((r.upper_left_corner() == Point{2,8}), "upper_left_corner");
-    CHECK_TRUE((r.upper_right_corner() == Point{6,8}), "upper_right_corner");
-
-    CHECK_TRUE(r == r, "operator==");
-    CHECK_TRUE(!(r != r), "operator!=");
-    }
-
-    {// orden
-    Rect r0{Point{2,8}, Point{6,3}};
-    Rect r1{Point{6,3}, Point{2,8}};
-    std::cout << r1.upper_left_corner() << ", " << r1.bottom_right_corner() << '\n';
-    CHECK_TRUE(r0 == r1, "invariante constructor");
-
-    }
-
-
-}
 
 
 int main()
@@ -259,13 +199,10 @@ int main()
 try{
     test::header("alp_rframes.h");
  
-    test_vector_xy_local();
     test_vector_xy();
     test_vector_ij();
     test_reference_frame();
 
-    test_segment();
-    test_rectangle_xy();
 
 
 }catch(std::exception& e)
