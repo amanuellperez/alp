@@ -323,6 +323,7 @@ public:
     constexpr Degree& operator*=(const Rep& a);
     constexpr Degree& operator/=(const Rep& a);
 
+
 private:
     Rep value_;
 };
@@ -352,8 +353,6 @@ inline constexpr Degree& Degree::operator/=(const Rep& a)
 }
 
 
-
-
 inline constexpr Degree operator+(Degree a, const Degree& b)
 { return a += b; }
 
@@ -368,6 +367,11 @@ inline constexpr Degree operator*(Degree b, const Degree::Rep& a)
 
 inline constexpr Degree operator/(Degree b, const Degree::Rep& a)
 { return b /= a; }
+
+
+
+// Normaliza el ángulo de [0, 360)
+Degree normalize(const Degree& a);
 
 
 // Equality

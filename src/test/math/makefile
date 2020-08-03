@@ -1,10 +1,9 @@
 
 SOURCES= main.cpp \
-		 ../../alp_test.cpp	\
-		 ../../alp_exception.cpp
+		 ../../alp_math.cpp	\
+		 ../../alp_test.cpp	
 
 BIN = xx
-
 
 
 include $(ALP_COMPRULES)
