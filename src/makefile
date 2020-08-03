@@ -3,6 +3,7 @@ SOURCES=alp_cast.cpp 	\
 	alp_exception.cpp 	\
 	alp_getopts.cpp		\
 	alp_filesystem.cpp 	\
+	alp_math.cpp		\
 	alp_stdio.cpp 		\
 	alp_string.cpp		\
 	alp_termios_avr.cpp 		\
