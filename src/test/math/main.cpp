@@ -140,9 +140,12 @@ void test_integral()
 
     Int a{a0};
     Int b{b0};
+    Int minus_a{-a0};
+
     CHECK_TRUE(a.value() == a0, "constructor");
     CHECK_TRUE(a == a, "operator==");
     CHECK_TRUE(!(a != a), "operator!=");
+    CHECK_TRUE((-a) == minus_a, "operator-");
 
     CHECK_TRUE(a < b, "operator<");
     CHECK_TRUE(a <= b, "operator<=");

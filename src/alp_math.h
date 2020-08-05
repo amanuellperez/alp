@@ -317,6 +317,8 @@ public:
     constexpr Rep value() const { return value_; }
 
 // Algebraic structure
+    constexpr Degree operator-();
+
     constexpr Degree& operator+=(const Degree& x);
     constexpr Degree& operator-=(const Degree& x);
 
@@ -327,6 +329,10 @@ public:
 private:
     Rep value_;
 };
+
+inline constexpr Degree Degree::operator-()
+{ return Degree{-value_}; }
+
 
 inline constexpr Degree& Degree::operator+=(const Degree& x) 
 {
@@ -417,6 +423,8 @@ public:
     constexpr Rep value() const { return value_; }
 
 // Algebraic structure
+    constexpr Radian operator-();
+
     constexpr Radian& operator+=(const Radian& x);
     constexpr Radian& operator-=(const Radian& x);
 
@@ -426,6 +434,10 @@ public:
 private:
     Rep value_;
 };
+
+inline constexpr Radian Radian::operator-()
+{ return Radian{-value_}; }
+
 
 inline constexpr Radian& Radian::operator+=(const Radian& x) 
 {
