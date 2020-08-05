@@ -64,17 +64,6 @@ for (size_t i = 0; i < m.rows(); ++i)
 
 
 
-## Test
-Paquete para automatizar los test. Hay un montón de suites por ahí que hacen
-lo mismo y seguramente que mejor, así que este no creo que le merezca a nadie
-la pena usarlo. Pretende ser mínimo y útil.
-
-### Ejemplos
-TODO
-
-### Ficheros
-* `alp_test.h`
-* `../bin`: scripts para hacer tests automáticos.
 
 
 ## Gestión de parámetros a programas: getopts
@@ -173,3 +162,45 @@ la opción. Si solo se quiere una letra se pasa un caracter entre apóstrofes
 * `alp_getopts.h`
 
 
+
+## Strings
+
+Del paquete de strings `as_str()` es una función bastante útil. Sirve para
+componer rápidamente cadenas.
+
+### Ejemplo 1
+Para mostrar un mensaje con el tipo de test que estamos haciendo:
+```
+    CHECK_TRUE(X == X_res and Y == Y_res,
+               alp::as_str() << "rota(" << x << ", " << y << ")");
+
+```
+
+De esa forma el mensaje que se muestra es  `rota(20, 40)` sabiendo qué valores
+de `x` e `y` se están probando a rotar.
+
+Esto mismo se puede hacer lanzando excepciones:
+```
+    throw std::runtime_error(alp::as_str() << "rotate(" << angle << ")");
+
+```
+
+
+### Ficheros
+* `alp_string.h`
+
+
+
+
+
+## Test
+Paquete para automatizar los test. Hay un montón de suites por ahí que hacen
+lo mismo y seguramente que mejor, así que este no creo que le merezca a nadie
+la pena usarlo. Pretende ser mínimo y útil.
+
+### Ejemplos
+TODO
+
+### Ficheros
+* `alp_test.h`
+* `../bin`: scripts para hacer tests automáticos.
