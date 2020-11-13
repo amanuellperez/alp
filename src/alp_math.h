@@ -400,6 +400,9 @@ inline constexpr bool operator>(const Degree& a, const Degree& b)
 inline constexpr bool operator>=(const Degree& a, const Degree& b)
 { return a.value() >= b.value(); }
 
+// Iostreams
+inline std::ostream& operator<<(std::ostream& out, const Degree& a)
+{ return out << a.value() << "º"; }
 
 /*!
  *  \brief  Radian
@@ -501,6 +504,9 @@ inline constexpr bool operator>=(const Radian& a, const Radian& b)
 { return a.value() >= b.value(); }
 
 
+// Iostreams
+inline std::ostream& operator<<(std::ostream& out, const Radian& a)
+{ return out << a.value() << " rad"; }
 
 // Funciones de conversión. Básicamente creo estas dos clases para hacer esto.
 inline constexpr Degree::Degree(const Radian& x)

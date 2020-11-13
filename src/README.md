@@ -20,14 +20,14 @@ Si alguno no funciona mira los tests, todos deberían de funcionar.
 ```
 Matrix<int> m{4, 4};
 for (auto x: m)
-   cout << x << '\n';
+   std::cout << x << '\n';
 ```
 
 * Método con iteradores:
 ```
 Matrix<int> m{4, 4};
 for (auto p = m.begin(); p != m.end(); ++p)
-   cout << *p << '\n';
+   std::cout << *p << '\n';
 ```
 
 #### Iteración como contenedor bidimensional
@@ -37,8 +37,8 @@ Matrix<int> m{4, 4};
 
 for(auto f = m.row_begin(); f != m.row_end(); ++f){
    for(auto x: *f)
-      cout << x << ' ';
-   cout << '\n';
+      std::cout << x << ' ';
+   std::cout << '\n';
 }
 ```
 
@@ -173,7 +173,6 @@ Para mostrar un mensaje con el tipo de test que estamos haciendo:
 ```
     CHECK_TRUE(X == X_res and Y == Y_res,
                alp::as_str() << "rota(" << x << ", " << y << ")");
-
 ```
 
 De esa forma el mensaje que se muestra es  `rota(20, 40)` sabiendo qué valores
@@ -181,8 +180,7 @@ de `x` e `y` se están probando a rotar.
 
 Esto mismo se puede hacer lanzando excepciones:
 ```
-    throw std::runtime_error(alp::as_str() << "rotate(" << angle << ")");
-
+    throw std::runtime_error{alp::as_str() << "rotate(" << angle << ")"};
 ```
 
 
