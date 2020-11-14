@@ -621,37 +621,10 @@ alp::Matrix<I,S> transform2D_alrededor(const alp::Matrix<I,S>& x, const V& x0, F
  *
  */
 template <typename I, typename S>
-std::vector<typename Matrix<I, S>::Posicion>
-alrededor(const Matrix<I, S>& c, const typename Matrix<I, S>::Posicion& p)
+inline std::vector<typename Matrix<I, S>::Posicion>
+alrededor(const Matrix<I, S>& m, const typename Matrix<I, S>::Posicion& p)
 {
-    using Posicion = typename Matrix<I,S>::Posicion;
-
-    std::vector<Posicion> v;
-    v.reserve(8);
-   
-    // (i1, j1) valores máximos de los índices
-    auto i1 = c.rows()-1; auto  j1 = c.cols() - 1;
-    auto i = p.i; auto j = p.j;
-
-    if(i-1 >= 0){
-	if(j-1 >= 0)	v.push_back(Posicion{i-1, j-1});
-	v.push_back(Posicion{i-1, j});
-	if(j+1 <= j1)	v.push_back(Posicion{i-1, j+1});
-    }
-
-    // i
-    if(j-1 >= 0)    v.push_back(Posicion{i, j-1});
-//		    v.push_back(Posicion{i, j}); <--- este no está alrededor!
-    if(j+1 <= j1)   v.push_back(Posicion{i, j+1});
-
-
-    if(i+1 <= i1){
-	if(j-1 >= 0)	v.push_back(Posicion{i+1, j-1});
-	v.push_back(Posicion{i+1, j});
-	if(j+1 <= j1)	v.push_back(Posicion{i+1, j+1});
-    }
-
-    return v;
+    return alrededor(m.extension(), p);
 }
 
 

@@ -41,11 +41,12 @@
  *	27/02/2019 v0.0
  *	01/08/2020 Reestructurado. TODO: borrar todo lo comentado en unos
  *				   meses.
+ *	14/11/2020 alrededor (generalizado de img)
  *
  ****************************************************************************/
 
 #include <iostream>
-
+#include <vector>
 
 namespace alp{
 
@@ -111,7 +112,7 @@ namespace alp{
  *  no. Ahora bien lo habitual es que a los puntos se les asocie un vector
  *  posición, que es lo que se hace en mecánica, y sea ese vector posición el
  *  que realmente se use. Esto sugiere que en lugar de tener 2 tipos
- *  diferentes, puntos y vectores, basta con tener 1 único tipo Vector_ij. Las
+ *  diferentes, puntos y vectores, basta con tener 1 único tipo Vector_ij. Los
  *  puntos los definiremos por los vectores.
  *  
  *  ¿Qué son coordenadas matriciales?
@@ -163,19 +164,6 @@ struct Vector_ij{
     constexpr Vector_ij& operator-=(const Vector_ij& b);
     constexpr Vector_ij& operator*=(const Ind& a);
     constexpr Vector_ij& operator/=(const Ind& a);
-
-//    // forma genérica de hablar. TODO: eliminarlas al crear Rectangle_ij
-//    bool esta_a_la_dcha_de(const Vector_ij& b) const
-//    {return j >= b.j;}
-//
-//    bool esta_a_la_izda_de(const Vector_ij& b) const
-//    {return j <= b.j;}
-//
-//    bool esta_encima_de(const Vector_ij& b) const
-//    {return i <= b.i;}
-//    
-//    bool esta_debajo_de(const Vector_ij& b) const
-//    {return i >= b.i;}
 
 };
 
@@ -491,7 +479,7 @@ public:
 
     /// Rango [p0, p1] = [upper_left_corner, bottom_right_corner]
     constexpr Rango_ij(const Posicion& p0, const Posicion& p1)
-	:Rango_ij{p0.i, p1.i + Ind{1}, p0.j, p1.j + Ind{1}} {}
+	:Rango_ij{p0.i, p1.i, p0.j, p1.j} { ++ie; ++je;}
 
     /// Rango (p0, sz) = (upper_left_corner, size)
     constexpr Rango_ij(const Posicion& p0, const Size2D& sz)
@@ -516,21 +504,8 @@ public:
 
 // Esquinas
 // --------
-//    /// Esquina superior izquierda
-//    constexpr Posicion p0() const {return Posicion{i0, j0};}
-//
-//    /// Esquina inferior derecha 
-//    /// Cuidado: para que p1 sea válido, el rango no puede estar vacío
-//    constexpr Posicion p1() const {return Posicion{ie - Ind{1}, je - Ind{1}};}
-//
-//    /// Definimos la esquina superior izquierda
-//    constexpr void p0(const Posicion& p) { *this = Rango_ij{p, p1()}; }
-//
-//    /// Definimos la esquina inferior derecha
-//    constexpr void p1(const Posicion& p) { *this = Rango_ij{p0(), p}; }
-
-
     // Solo tienen sentido si el rectángulo no es nulo (empty() != true)
+    // Recordar que son coordenadas de matriz: i va hacia abajo!!!
     constexpr Posicion upper_left_corner() const;
     constexpr Posicion bottom_right_corner() const;
     constexpr Posicion upper_right_corner() const;
@@ -572,23 +547,21 @@ Rango_ij<Int>::Posicion Rango_ij<Int>::bottom_right_corner() const
 template <typename Int>
 inline constexpr 
 Rango_ij<Int>::Posicion Rango_ij<Int>::upper_right_corner() const
-{ return Posicion{ie - Ind{1}, j0}; }
-
-template <typename Int>
-inline constexpr 
-Rango_ij<Int>::Posicion Rango_ij<Int>::bottom_left_corner() const
 { return Posicion{i0, je - Ind{1}}; }
 
 template <typename Int>
 inline constexpr 
+Rango_ij<Int>::Posicion Rango_ij<Int>::bottom_left_corner() const
+{ return Posicion{ie - Ind{1}, j0}; }
+
+template <typename Int>
+inline constexpr 
 void Rango_ij<Int>::upper_left_corner(const Posicion& p)
-//{ *this = Rango_ij{p, p1()}; }
 { *this = Rango_ij{p, bottom_right_corner()}; }
 
 template <typename Int>
 inline constexpr 
 void Rango_ij<Int>::bottom_right_corner(const Posicion& p) 
-//{ *this = Rango_ij{p0(), p}; }
 { *this = Rango_ij{upper_left_corner(), p}; }
 
 
@@ -991,7 +964,53 @@ template <typename Int>
 using Rectangle_ij = Rango_ij<Int>;
 
 
+/***************************************************************************
+ *				ALGORITMOS
+ ***************************************************************************/
+/*!
+ *  \brief  Devuelve los puntos del rango que se encuentran alrededor de p.
+ *
+ *  Ejemplo:
+ *  \code
+ *		for(auto p: alrededor(rango, {3,4})) ...
+ *  \endcode
+ *
+ */
+template <typename I>
+std::vector<typename Rango_ij<I>::Posicion>
+alrededor(const Rango_ij<I>& rg, const typename Rango_ij<I>::Posicion& p)
+{
+    using Posicion = typename Rango_ij<I>::Posicion;
+
+    std::vector<Posicion> v;
+    v.reserve(8);
+   
+    // (i1, j1) valores máximos de los índices
+    auto i1 = rg.rows()-1; auto  j1 = rg.cols() - 1;
+    auto i = p.i; auto j = p.j;
+
+    if(i-1 >= 0){
+	if(j-1 >= 0)	v.push_back(Posicion{i-1, j-1});
+	v.push_back(Posicion{i-1, j});
+	if(j+1 <= j1)	v.push_back(Posicion{i-1, j+1});
+    }
+
+    // i
+    if(j-1 >= 0)    v.push_back(Posicion{i, j-1});
+//		    v.push_back(Posicion{i, j}); <--- este no está alrededor!
+    if(j+1 <= j1)   v.push_back(Posicion{i, j+1});
+
+
+    if(i+1 <= i1){
+	if(j-1 >= 0)	v.push_back(Posicion{i+1, j-1});
+	v.push_back(Posicion{i+1, j});
+	if(j+1 <= j1)	v.push_back(Posicion{i+1, j+1});
+    }
+
+    return v;
+}
 }// namespace
+
 
 #endif
 
