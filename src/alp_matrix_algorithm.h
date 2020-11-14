@@ -41,6 +41,7 @@
 
 #include "alp_math.h"	// punto_medio
 #include "alp_type_traits.h"
+#include "alp_cast.h"	// narrow_cast 
 
 #include <fstream>
 #include <sstream>
@@ -83,10 +84,10 @@ void copia_dentro  ( const Container2D& m0    // copiamos m0 en
 
 /// Convierte un vector 'v' en una Matrix de 'rows x cols' dimensiones.
 /// Precondicion: v.size() = rows * cols;
-template <typename Int>
-Matrix<Int> vector2matrix(std::vector<Int>& v, size_t rows)
+template <typename T, typename I>
+Matrix<T, I> vector2matrix(std::vector<T>& v, I rows)
 {
-    Matrix<Int> m{rows, v.size()/rows};
+    Matrix<T, I> m{rows, narrow_cast<I>(v.size())/rows};
 
     std::copy(v.begin(), v.end(), m.begin());
 
@@ -164,11 +165,11 @@ inline void print(const std::string& fname, const M& m)
 // Solución 1: cargar todo el fichero en un vector calculando el número de
 // filas y columnas y luego convertirlo en matriz.
 // Por este mismo motivo no podemos definirlo como:
-//	    read(in, matrix); // de qué dimensiones matrix??? 
-template <typename Int>
-Matrix<Int> read_matrix(std::istream& in)
+//	    read(in, matrix); // de qué dimensiones matrix???
+template <typename T, typename I>
+Matrix<T, I> read_matrix(std::istream& in)
 {
-    std::vector<Int> file;
+    std::vector<T> file;
     
     std::size_t rows = 0;
 
@@ -176,26 +177,26 @@ Matrix<Int> read_matrix(std::istream& in)
     while (std::getline(in, line)){
 	++rows;
 	std::istringstream str{line};
-	Int tmp;
+	T tmp;
 	while (str >> tmp)
 	    file.push_back(tmp);
     }
 
-    return vector2matrix(file, rows);
+    return vector2matrix<T,I>(file, rows);
 }
 
 
 
 
 /// Lee una matriz de Ints desde un fichero.
-template <typename Int>
-inline Matrix<Int> read_matrix(const std::string& nom_fichero)
+template <typename T, typename I>
+inline Matrix<T, I> read_matrix(const std::string& nom_fichero)
 {
     std::ifstream in{nom_fichero};
     if (!in)
 	throw File_cant_read{nom_fichero};
 
-    return read_matrix<Int>(in);
+    return read_matrix<T, I>(in);
 }
 	
 /*!

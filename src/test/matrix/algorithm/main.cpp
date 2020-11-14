@@ -36,7 +36,7 @@ void test_read_matrix()
 	    "4 5 6\n";
 
     std::vector<int> res = {1,2,3,4,5,6};
-    auto m = alp::read_matrix<int>(file);
+    auto m = alp::read_matrix<int, size_t>(file);
 
     CHECK_TRUE(m.rows() == 2 and m.cols() == 3, "read_matrix(flujo)");
     CHECK_EQUAL_CONTAINERS_C(m, res, "read_matrix");
@@ -51,7 +51,7 @@ void test_read_matrix()
     out.close();
 
     std::vector<int> res = {1,2,3,4,5,6};
-    auto m = alp::read_matrix<int>(fname);
+    auto m = alp::read_matrix<int, size_t>(fname);
 
     CHECK_TRUE(m.rows() == 2 and m.cols() == 3, "read_matrix(file)");
     CHECK_EQUAL_CONTAINERS_C(m, res, "read_matrix");
@@ -69,7 +69,7 @@ void test_print_matrix()
 			      3, 4,
 			      5, 6};
 
-	auto m = alp::vector2matrix(v, 3);
+	auto m = alp::vector2matrix<int, size_t>(v, 3);
 	alp::print(std::cout, m);
 	std::cout << '\n';
     }
