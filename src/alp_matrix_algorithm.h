@@ -49,15 +49,6 @@
 #include <numeric>
 
 namespace alp{
-/// Devuelve la posición que ocupa el centro de la matrix
-// TODO: esto solo depende de rows y cols!!! está definido sobre un
-// rectángulo!
-template <typename C>
-// requires: Contenedor_bidimensional(Container)
-inline typename C::Posicion posicion_del_centro(const C& c)
-{ return {punto_medio(c.rows()), punto_medio(c.cols())}; }
-
-
 
 /*!
  *  \brief  Copia la imagen img0 dentro de la imagen img1.

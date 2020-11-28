@@ -216,6 +216,37 @@ void test_alrededor()
 
 }
 
+void test_posicion_del_centro()
+{
+    test::interfaz("posicion_del_centro");
+
+    using R = alp::Rango_ij<int>;
+    using Pos = alp::Rango_ij<int>::Posicion;
+
+    {
+    R r{Pos{0,0}, Pos{2,2}};
+    Pos c = alp::posicion_del_centro(r);
+    CHECK_TRUE(c.i == 1 and c.j == 1, "posicion_del_centro");
+    }
+    {
+    R r{Pos{0,0}, Pos{3,3}};
+    Pos c = alp::posicion_del_centro(r);
+    CHECK_TRUE(c.i == 2 and c.j == 2, "posicion_del_centro");
+    }
+
+    {
+    R r{Pos{8,8}, Pos{10,10}};
+    Pos c = alp::posicion_del_centro(r);
+    CHECK_TRUE(c.i == 9 and c.j == 9, "posicion_del_centro");
+    }
+    {
+    R r{Pos{8,8}, Pos{11,11}};
+    Pos c = alp::posicion_del_centro(r);
+    CHECK_TRUE(c.i == 10 and c.j == 10, "posicion_del_centro");
+    }
+
+
+}
 
 int main()
 {
@@ -225,6 +256,7 @@ try{
     test_vector_ij();
     test_rango_ij();
     test_alrededor();
+    test_posicion_del_centro();
 
 }catch(const std::exception& e)
 {

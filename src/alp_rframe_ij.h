@@ -1009,6 +1009,16 @@ alrededor(const Rango_ij<I>& rg, const typename Rango_ij<I>::Posicion& p)
 
     return v;
 }
+
+/*!
+ *  \brief  Devuelve la posición que ocupa el centro de la matrix
+ *
+ */
+template <typename Int>
+inline Rango_ij<Int>::Posicion posicion_del_centro(const Rango_ij<Int>& rg)
+{ return {rg.i0 + rg.rows() / 2, rg.j0 + rg.cols() / 2}; }
+
+
 }// namespace
 
 
