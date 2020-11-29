@@ -273,7 +273,7 @@ inline Matrix_view<const_View_iterator<It, View>> const_matrix_view(It begin,
  *  Matrix_xy.
  *
  */
-template <typename Matrix_type>
+template <typename Matrix_type, int x_sign, int y_sign>
 class Matrix_xy_base{
 public:
     // Objetos que contiene
@@ -328,16 +328,40 @@ public:
     { origen_de_coordenadas(posicion_del_centro(img_->extension())); }
     
     /// Valor mínimo de x
-    Ind x_min() const {return x(0);}
+    Ind x_min() const 
+    {
+	if constexpr (x_sign > 0)
+	    return x(0);
+	else 
+	    return x(cols() - 1);
+    }
 
     /// Valor máximo que puede tener x (img(x_max()) es válido).
-    Ind x_max() const {return x(cols() - 1);}
+    Ind x_max() const 
+    {
+	if constexpr (x_sign > 0)
+	    return x(cols() - 1);
+	else 
+	    return x(0);
+    }
 
     /// Valor mínimo de y
-    Ind y_min() const {return y(rows() - 1);}
+    Ind y_min() const 
+    {
+	if constexpr (y_sign > 0)
+	    return y(rows() - 1);
+	else
+	    return y(0);
+    }
 
     /// Valor máximo de y
-    Ind y_max() const {return y(0);}
+    Ind y_max() const 
+    {
+	if constexpr (y_sign > 0)
+	    return y(0);
+	else
+	    return y(rows() - 1);
+    }
 
 
     /// Número de filas
@@ -349,14 +373,13 @@ public:
     /// Devuelve el color del pixel (x,y)
     /// OJO: se da por supuesto que el usuario sabe dónde está accediendo.
     /// Es responsabilidad del usuario validar que los puntos (x, y) sean
-    /// puntos válidos de la imagen.
-    reference operator()(Ind x, Ind y)
-    {return (*img_)(posicion(x,y));}
+    /// puntos válidos de la matriz.
+    reference operator()(Ind x, Ind y) {return (*img_)(posicion(x,y));}
 
     /// Devuelve el color del pixel (x,y)
     /// OJO: se da por supuesto que el usuario sabe dónde está accediendo.
     /// Es responsabilidad del usuario validar que los puntos (x, y) sean
-    /// puntos válidos de la imagen.
+    /// puntos válidos de la matriz.
     const_reference operator()(Ind x, Ind y) const
     {return (*img_)(posicion(x,y));}
 
@@ -373,23 +396,47 @@ public:
 
 
     /// Cambia la coordenada x en la coordenada j correspondiente
-    Ind j(Ind x) const { return (j0_ + x); }
+    Ind j(Ind x) const 
+    { 
+	if constexpr (x_sign > 0)
+	    return (j0_ + x); 
+	else 
+	    return (j0_ - x); 
+    }
 
     /// Cambia la coordenada y en la coordenada i correspondiente
-    Ind i(Ind y) const { return (i0_ - y);}
+    Ind i(Ind y) const 
+    { 
+	if constexpr (y_sign > 0)
+	    return (i0_ - y);
+	else 
+	    return (i0_ + y);
+    }
 
     /// Pasamos de j a x (j --> x)
-    Ind x(Ind j) const { return (j - j0_);}
+    Ind x(Ind j) const 
+    { 
+	if constexpr (x_sign > 0)
+	    return (j - j0_);
+	else 
+	    return (j0_ - j);
+    }
 
     /// Pasamos de i a y (i --> y)
-    Ind y(Ind i) const { return (i0_ - i);}
+    Ind y(Ind i) const 
+    { 
+	if constexpr (y_sign > 0)
+	    return (i0_ - i);
+	else
+	    return (i - i0_);
+    }
 
 
-    /// Acceso a la imagen
-    Matrix_type& img() {return *img_;}
+    /// Acceso a la matriz 
+    Matrix_type& matrix() {return *img_;}
 
-    /// Acceso a la imagen
-    const Matrix_type& img() const {return *img_;}
+    /// Acceso a la matriz
+    const Matrix_type& matrix() const {return *img_;}
 
 private:
     Matrix_type* img_;
@@ -402,40 +449,24 @@ private:
 
 // Fijamos el origen de coordenadas. Después de la llamada de esta
 // función cualquier acceso usará este nuevo origen.
-template <typename It>
-inline void Matrix_xy_base<It>::origen_de_coordenadas(Ind i0, Ind j0)
+template <typename It, int xs, int ys>
+inline void Matrix_xy_base<It,xs,ys>::origen_de_coordenadas(Ind i0, Ind j0)
 {
     i0_ = i0;
     j0_ = j0;
 }
 
-// Corners
-// -------
-template <typename It>
-inline Matrix_xy_base<It>::Point upper_left_corner(const Matrix_xy_base<It>& img0)
-{ return {img0.x_min(), img0.y_max()};}
-
-template <typename It>
-inline Matrix_xy_base<It>::Point upper_right_corner(const Matrix_xy_base<It>& img0)
-{ return {img0.x_max(), img0.y_max()};}
-
-template <typename It>
-inline Matrix_xy_base<It>::Point bottom_left_corner(const Matrix_xy_base<It>& img0)
-{ return {img0.x_min(), img0.y_min()};}
-
-template <typename It>
-inline Matrix_xy_base<It>::Point bottom_right_corner(const Matrix_xy_base<It>& img0)
-{ return {img0.x_max(), img0.y_min()};}
-
 
 // -----
 // Alias
 // -----
-template <typename T, typename Ind_t>
-using Matrix_xy = Matrix_xy_base<Matrix<T, Ind_t>>;
+// El signo + indica que x es hacia la derecha, y que el eje y es hacia
+// arriba. (convención habitual)
+template <typename T, typename Ind_t, int x_sign = +1, int y_sign = +1>
+using Matrix_xy = Matrix_xy_base<Matrix<T, Ind_t>, x_sign, y_sign>;
 
-template <typename T, typename Ind_t>
-using const_Matrix_xy = Matrix_xy_base<const Matrix<T, Ind_t>>;
+template <typename T, typename Ind_t, int x_sign = +1, int y_sign = +1>
+using const_Matrix_xy = Matrix_xy_base<const Matrix<T, Ind_t>, x_sign, y_sign>;
 
 
 }// namespace

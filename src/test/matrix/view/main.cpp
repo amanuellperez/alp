@@ -208,10 +208,15 @@ void test_matrix_xy()
 	}
     }
 
-    {// caso genérico
-	using Point = alp::Matrix_xy<int,int>::Point;
+    {// caso genérico (+,+)
+//	using Point = alp::Matrix_xy<int,int>::Point;
 
 	alp::Matrix_xy<int,int> mxy{m, 1, 3};
+	CHECK_TRUE(mxy.x(0) == -3, "x(0)");
+	CHECK_TRUE(mxy.x(4) == 1, "x(4)");
+	CHECK_TRUE(mxy.y(0) == 1, "y(0)");
+	CHECK_TRUE(mxy.y(3) == -2, "y(3)");
+
 	CHECK_TRUE(mxy.rows()  == 4, "rows");
 	CHECK_TRUE(mxy.cols()  == 5, "cols");
 	CHECK_TRUE(mxy.x_min() == -3, "x_min");
@@ -225,10 +230,10 @@ void test_matrix_xy()
 	CHECK_TRUE(mxy(1,1) == 4, "(1,1)");
 	CHECK_TRUE(mxy(1,-2) == 19, "(1,-2)");
 
-	CHECK_TRUE((upper_left_corner(mxy) == Point{-3,1}), "upper_left_corner");
-	CHECK_TRUE((upper_right_corner(mxy) == Point{1,1}), "upper_right_corner");
-	CHECK_TRUE((bottom_left_corner(mxy) == Point{-3,-2}), "bottom_left_corner");
-	CHECK_TRUE((bottom_right_corner(mxy) == Point{1,-2}), "bottom_right_corner");
+//	CHECK_TRUE((upper_left_corner(mxy) == Point{-3,1}), "upper_left_corner");
+//	CHECK_TRUE((upper_right_corner(mxy) == Point{1,1}), "upper_right_corner");
+//	CHECK_TRUE((bottom_left_corner(mxy) == Point{-3,-2}), "bottom_left_corner");
+//	CHECK_TRUE((bottom_right_corner(mxy) == Point{1,-2}), "bottom_right_corner");
 
 	std::cout << "\nCambiamos el origen\n";
 	mxy.origen_de_coordenadas(1,2);
@@ -242,7 +247,41 @@ void test_matrix_xy()
 	CHECK_TRUE(mxy(2,-2) == 19, "(2,-2)");
 	CHECK_TRUE(mxy(-2,-2) == 15, "(-2,-2)");
 	CHECK_TRUE(mxy(-2,1) == 0, "(-2,1)");
+    }
 
+
+    {// caso genérico (-,-)
+	alp::Matrix_xy<int,int, -1, -1> mxy{m, 1, 3};
+	CHECK_TRUE(mxy.x(0) == 3, "x(0)");
+	CHECK_TRUE(mxy.x(4) == -1, "x(4)");
+	CHECK_TRUE(mxy.y(0) == -1, "y(0)");
+	CHECK_TRUE(mxy.y(3) == 2, "y(3)");
+
+	CHECK_TRUE(mxy.rows()  == 4, "rows");
+	CHECK_TRUE(mxy.cols()  == 5, "cols");
+	CHECK_TRUE(mxy.x_min() == -1, "x_min");
+	CHECK_TRUE(mxy.x_max() == 3, "x_max");
+	CHECK_TRUE(mxy.y_min() == -1, "y_min");
+	CHECK_TRUE(mxy.y_max() == 2, "y_max");
+
+	CHECK_TRUE(mxy(0,0) == 8, "(0,0)");
+	CHECK_TRUE(mxy(3,2) == 15, "(3,2)");
+	CHECK_TRUE(mxy(3,-1) == 0, "(3,-1)");
+	CHECK_TRUE(mxy(-1,-1) == 4, "(-1,-1)");
+	CHECK_TRUE(mxy(-1,2) == 19, "(-1,2)");
+
+	std::cout << "\nCambiamos el origen\n";
+	mxy.origen_de_coordenadas(1,2);
+	CHECK_TRUE(mxy.x_min() == -2, "x_min");
+	CHECK_TRUE(mxy.x_max() == 2, "x_max");
+	CHECK_TRUE(mxy.y_min() == -1, "y_min");
+	CHECK_TRUE(mxy.y_max() == 2, "y_max");
+
+	CHECK_TRUE(mxy(0,0) == 7, "(0,0)");
+	CHECK_TRUE(mxy(-2,-1) == 4, "(-2,-1)");
+	CHECK_TRUE(mxy(-2,2) == 19, "(-2,2)");
+	CHECK_TRUE(mxy(2,2) == 15, "(2,2)");
+	CHECK_TRUE(mxy(2,-1) == 0, "(2,-1)");
     }
 
 }
