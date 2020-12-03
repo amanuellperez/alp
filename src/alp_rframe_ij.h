@@ -1019,6 +1019,79 @@ inline Rango_ij<Int>::Posicion posicion_del_centro(const Rango_ij<Int>& rg)
 { return {rg.i0 + rg.rows() / 2, rg.j0 + rg.cols() / 2}; }
 
 
+/*!
+ *  \brief  Posiciones_bordes
+ *
+ *  Si queremos iterar por los bordes de un rango podemos hacerlo:
+ *  1. Usando posiciones:
+ *	    Posiciones_bordes bordes(m);
+ *	    for (auto p = bordes.begin(); p != bordes.end(); ++p)
+ *		... p.i, p.j = posición del siguiente elemento del borde.
+ *	
+ *  2. Iterando directamente por los valores:
+ *	    Bordes bordes(m);
+ *	    for (auto p = bordes.begin(); p != bordes.end(); ++p)
+ *		    *p = valor de p.
+ *
+ */
+
+class Posiciones_bordes_rango_ij{
+public:
+    int i, j; // posición actual
+
+
+    template <typename I>
+    static Posiciones_bordes_rango_ij begin(const Rango_ij<I>& rg)
+    {
+	Posiciones_bordes_rango_ij p;
+
+	p.i = 0;
+	p.j = 0;
+	p.rows_ = rg.rows();
+	p.cols_ = rg.cols();
+
+	return p;
+    }
+
+    template <typename I>
+    static Posiciones_bordes_rango_ij end(const Rango_ij<I>& rg){
+        Posiciones_bordes_rango_ij p;
+        p.i = rg.rows();
+	p.j = 0;
+
+	return p;
+    }
+
+    Posiciones_bordes_rango_ij& operator++();
+
+    friend bool operator==(const Posiciones_bordes_rango_ij&, const Posiciones_bordes_rango_ij&);
+
+private:
+    int rows_, cols_;
+
+    Posiciones_bordes_rango_ij(){}
+    void next();
+};
+
+
+
+inline Posiciones_bordes_rango_ij& Posiciones_bordes_rango_ij::operator++()
+{
+    next();
+    return *this;
+}
+
+inline bool operator==(const Posiciones_bordes_rango_ij& a,
+                const Posiciones_bordes_rango_ij& b)
+{
+    return (a.i == b.i and a.j == b.j);
+}
+
+inline bool operator!=(const Posiciones_bordes_rango_ij& a,
+                const Posiciones_bordes_rango_ij& b)
+{ return !(a == b);}
+
+
 }// namespace
 
 

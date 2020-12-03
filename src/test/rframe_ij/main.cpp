@@ -17,6 +17,7 @@
 
 #include "../../alp_rframe_ij.h"
 #include "../../alp_test.h"
+#include "../../alp_string.h"
 
 #include <iostream>
 
@@ -245,6 +246,35 @@ void test_posicion_del_centro()
     CHECK_TRUE(c.i == 10 and c.j == 10, "posicion_del_centro");
     }
 
+}
+
+void test_posiciones_borde_rango()
+{
+    test::interfaz("Posiciones_bordes_rango_ij");
+
+    using R = alp::Rango_ij<int>;
+    using Pos = alp::Rango_ij<int>::Posicion;
+
+    {
+    R r{Pos{0, 0}, Pos{4, 3}};
+    std::vector<Pos> res = 
+    {Pos{0,0}, Pos{0,1}, Pos{0,2}, Pos{0,3},
+	Pos{1,3}, Pos{2,3}, Pos{3,3},
+	Pos{4,3}, Pos{4,2}, Pos{4,1}, Pos{4,0},
+	Pos{3,0}, Pos{2,0}, Pos{1,0}
+    };
+
+    auto p = alp::Posiciones_bordes_rango_ij::begin(r);
+    auto pe = alp::Posiciones_bordes_rango_ij::end(r);
+    int i = 0;
+    for (; p != pe; ++p){
+	CHECK_TRUE(res[i].i == p.i and res[i].j == p.j, 
+		alp::as_str() << "Posiciones_bordes_rango_ij " << res[i]);
+//	std::cout << '(' << p.i << ", " << p.j << ")\n";
+	++i;
+    }
+    
+    }
 
 }
 
@@ -257,6 +287,7 @@ try{
     test_rango_ij();
     test_alrededor();
     test_posicion_del_centro();
+    test_posiciones_borde_rango();
 
 }catch(const std::exception& e)
 {
