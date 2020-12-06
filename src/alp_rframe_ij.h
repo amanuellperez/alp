@@ -42,6 +42,7 @@
  *	01/08/2020 Reestructurado. TODO: borrar todo lo comentado en unos
  *				   meses.
  *	14/11/2020 alrededor (generalizado de img)
+ *	06/12/2020 Posiciones_rango_ij
  *
  ****************************************************************************/
 
@@ -1034,7 +1035,6 @@ inline Rango_ij<Int>::Posicion posicion_del_centro(const Rango_ij<Int>& rg)
  *		    *p = valor de p.
  *
  */
-
 class Posiciones_bordes_rango_ij{
 public:
     int i, j; // posición actual
@@ -1089,6 +1089,87 @@ inline bool operator==(const Posiciones_bordes_rango_ij& a,
 
 inline bool operator!=(const Posiciones_bordes_rango_ij& a,
                 const Posiciones_bordes_rango_ij& b)
+{ return !(a == b);}
+
+
+/*!
+ *  \brief Posiciones que tiene un Rango_ij
+ *
+ *  Para iterar con índices en un contenedor unidimensional hacemos:
+ *	    for (int i = 0; i < v.size(); ++i)
+ *		...
+ *
+ *  ¿Cómo hacer el equivalente en contenedores bidimensionales?
+ *	    Posiciones_rango_ij posiciones(m);
+ *	    for (auto p = posiciones.begin(); p != posiciones.end(); ++p)
+ *		... p.i, p.j = posición del siguiente elemento.
+ *
+ *  Esto es equivalente a:
+ *	    for (int i = 0; i < m.rows(); ++i)
+ *		for (int j = 0; j < m.cols(); ++j)
+ *		    ...
+ */
+class Posiciones_rango_ij{
+public:
+    int i, j; // posición actual
+
+
+    template <typename I>
+    static Posiciones_rango_ij begin(const Rango_ij<I>& rg)
+    {
+	Posiciones_rango_ij p;
+
+	p.i = 0;
+	p.j = 0;
+	p.cols_ = rg.cols();
+
+	return p;
+    }
+
+    template <typename I>
+    static Posiciones_rango_ij end(const Rango_ij<I>& rg){
+        Posiciones_rango_ij p;
+        p.i = rg.rows();
+	p.j = 0;
+
+	return p;
+    }
+
+    Posiciones_rango_ij& operator++();
+
+    friend bool operator==(const Posiciones_rango_ij&,
+                           const Posiciones_rango_ij&);
+
+  private:
+    int cols_;
+
+    Posiciones_rango_ij(){}
+    void next();
+};
+
+
+
+inline Posiciones_rango_ij& Posiciones_rango_ij::operator++()
+{
+    ++j;
+
+    if (j == cols_){
+	j = 0;
+	++i;
+    }
+
+    return *this;
+}
+
+
+inline bool operator==(const Posiciones_rango_ij& a,
+                const Posiciones_rango_ij& b)
+{
+    return (a.i == b.i and a.j == b.j);
+}
+
+inline bool operator!=(const Posiciones_rango_ij& a,
+                const Posiciones_rango_ij& b)
 { return !(a == b);}
 
 

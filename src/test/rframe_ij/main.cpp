@@ -248,6 +248,29 @@ void test_posicion_del_centro()
 
 }
 
+void test_posiciones_rango()
+{
+    test::interfaz("Posiciones_rango_ij");
+
+    using R = alp::Rango_ij<int>;
+    using Pos = alp::Rango_ij<int>::Posicion;
+
+    {
+    R rg{Pos{0,0}, Pos{3,4}};
+    auto p = alp::Posiciones_rango_ij::begin(rg);
+    auto pe = alp::Posiciones_rango_ij::end(rg);
+    for (int i = 0; i < rg.rows(); ++i)
+	for (int j = 0; j < rg.cols(); ++j){
+            CHECK_TRUE(p.i == i and p.j == j,
+                       alp::as_str() << '(' << p.i << ", " << p.j << ")");
+	++p;
+    }
+    CHECK_TRUE(p == pe, "p == pe");
+
+
+    }
+}
+
 void test_posiciones_borde_rango()
 {
     test::interfaz("Posiciones_bordes_rango_ij");
@@ -287,6 +310,7 @@ try{
     test_rango_ij();
     test_alrededor();
     test_posicion_del_centro();
+    test_posiciones_rango();
     test_posiciones_borde_rango();
 
 }catch(const std::exception& e)

@@ -33,6 +33,7 @@
  *       28/09/2017 Escrito
  *       16/03/2020 Reestructurado.
  *       26/05/2020 transform1D/2D.
+ *       06/12/2020 transform1D_alrededor
  *
  ****************************************************************************/
 
@@ -501,6 +502,53 @@ alp::Matrix<I,S> transform1D_atras(const alp::Matrix<I,S>& x, F transf)
 
     return y;
 }
+
+
+// Mismos convenios de notación que para los foreach.
+// Transf = función transformadora. y1 = Transf(x0, x1, x2); 
+// Además hay que indicar cómo transformar el primer y último elemento:
+// y0 = Transf_first(x0, x1);
+// y[cols-1] = Transf_last(x[cols-2], x[cols-1]);
+template <typename I, typename S,
+          typename Transf,
+          typename Transf_first, typename Transf_last>
+alp::Matrix<I, S> transform1D_alrededor(const alp::Matrix<I, S>& x,
+                                        Transf transf,
+                                        Transf_first transf_first_element,
+                                        Transf_last transf_last_element)
+{
+    alp::Matrix<I,S> y{x.rows(), x.cols()};
+
+    if (x.cols() < 3)
+	return x;
+
+    auto f = x.row_begin();
+    auto g = y.row_begin();
+    for (; f != x.row_end(); ++f, ++g){
+	auto p0 = f->begin();
+	auto q0 = g->begin();
+
+	auto p1 = std::next(p0);
+	auto p2 = std::next(p1);
+
+	auto q1 = std::next(q0);
+	auto q2 = std::next(q1);
+
+	*q0 = transf_first_element(*p0, *p1);
+	while(p2 != f->end()){
+	    *q1 = transf(*p0, *p1, *p2);
+
+	    ++p0; ++p1; ++p2;
+	    ++q0; ++q1; ++q2;
+	}
+
+	*q1 = transf_last_element(*p0, *p1);
+    }
+
+
+    return y;
+}
+
 
 
 

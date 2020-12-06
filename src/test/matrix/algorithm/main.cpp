@@ -169,6 +169,63 @@ void test_algorithm()
     }
 }
 
+void test_transform1D()
+{
+    test::interfaz("transform_1D_alrededor");
+
+    {
+	std::vector<int> vx = {1,0,0,1,1,1,0,
+	                       0,1,1,2,1,0,1,
+	                       2,1,1,0,1,0,0,
+	                       2,1,2,0,1,2,1};
+
+	alp::Matrix<int> x{4,7};
+	std::copy(vx.begin(), vx.end(), x.begin());
+
+	auto y = alp::transform1D_alrededor(x,
+		[](int x0, int x1, int x2){
+		    if (x1 != 1)
+			return 0;
+
+		    if (x0 == 0 or x2 == 0)
+			return 1;
+                    else
+                        return 0;
+		},
+		[](int x0, int x1){
+		    if (x0 != 1)
+			return 0;
+
+		    if (x1 == 0)
+			return 1;
+                    else
+                        return 0;
+		},
+		[](int x0, int x1){
+		    if (x1 != 1)
+			return 0;
+
+		    if (x0 == 0)
+			return 1;
+                    else
+                        return 0;
+		});
+
+
+        CHECK_TRUE(y.rows() == x.rows() and y.cols() == x.cols(),
+                   "transform1D_alrededor:rows x cols");
+
+	std::vector<int> res = {1,0,0,1,0,1,0,
+				0,1,0,0,1,0,1,
+				0,0,1,0,1,0,0,
+				0,0,0,0,1,0,0};
+	CHECK_EQUAL_CONTAINERS_C(y, res, "transform1D_alrededor");
+
+//        print(std::cout, y);
+
+    }
+
+}
 void test_transform2D()
 {
     test::interfaz("transform_2D_alrededor");
@@ -212,6 +269,7 @@ try{
     test_diferencias();
     test_diferencias2();
     test_algorithm();
+    test_transform1D();
     test_transform2D();
 
 }catch(std::exception& e){
