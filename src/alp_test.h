@@ -30,6 +30,7 @@
  *    02/04/2020 CHECK_STDOUT
  *    10/05/2020 CHECK_EXCEPTION
  *    30/07/2020 CHECK_DONT_COMPILE
+ *    23/07/2021 CHECK_PRINT
  *
  ****************************************************************************/
 #include <string>
@@ -152,6 +153,12 @@ inline void check_false(bool condicion, const std::string& prueba)
 // script hacemos la comprobación.
 #define CHECK_STDOUT(res, res_ok) \
 	(std::cout << "check[" << __FILE__ << '-' << __LINE__ <<"]: " << res << " =? " << res_ok << '\n')
+
+
+#define CHECK_PRINT(print, res_ok) \
+	{std::cout << "check[" << __FILE__ << '-' << __LINE__ <<"]: "; \
+	 print;	 \
+	std::cout << " =? " << res_ok << '\n';}
 
 // Probamos que la llamada de la funcion 'cmd' lance una excepción.
 // En caso de no lanzarla aborta la ejecución mostrando el mensaje 'msg'.
