@@ -183,6 +183,24 @@ std::vector<utf8_string> split_words(const utf8_string& s)
     return res;
 }
 
+char to_iso88951(const utf8_char_t& c)
+{
+    if (is_ascii(c))
+	return c[0];
+
+    if (!has_2bytes(c))
+	return 0;
+
+// Tiene 2 bytes:
+    if (c[0] == (char) 0xC2 and ((char) 0xA0 <= c[1] and c[1] <= (char) 0xBF))
+	return c[1];
+
+    if (c[0] == (char) 0xC3 and ((char) 0x80 <= c[1] and c[1] <= (char) 0xBF))
+	return c[1] + 0xC0 - 0x80;
+
+    return 0;
+}
+
 
 }// namespace
 

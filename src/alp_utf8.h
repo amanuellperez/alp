@@ -279,6 +279,16 @@ inline std::istream& operator>>(std::istream& in, utf8_char_t& uc)
 { return utf8_get(in, uc); }
 
 
+
+/***************************************************************************
+ *		     FUNCIONES DE CONVERSIÓN
+ ***************************************************************************/
+//bool is_iso88951(const utf8_char_t& uc);
+
+/// Convierte el caracter UTF-8 uc en formato ISO-8895-1 (si se puede).
+/// Si no se puede devuelve 0.
+char to_iso88951(const utf8_char_t& uc);
+
 /***************************************************************************
  *			    utf8_char_view_t
  ***************************************************************************/

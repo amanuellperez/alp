@@ -338,6 +338,34 @@ void test_map()
 
 }
 
+void test_to_iso88951()
+{
+    test::interfaz("to_iso88951");
+    std::ifstream in("iso88951.in");
+
+    if (!in)
+        throw std::runtime_error{
+            "No se encuentra el fichero iso88951.in con todas las letras "
+            "IS0-8895-1"};
+
+    std::ofstream out("iso88951.out");
+
+    alp::utf8_char_t uc;
+    while (in >> uc){
+	char res = alp::to_iso88951(uc);
+	if (res == 0)
+	    throw std::runtime_error{"Caracter devuelve 0!!!"};
+	out << res;
+    }
+
+    std::cerr << "TODO: comprobar que iso88951.in y iso88951.out son el mismo\n"
+	         "fichero uno en UTF-8 el otro en ISO-8895-1\n"
+		 "¿Cómo comprobar esto de forma automática?\n";
+
+
+}
+
+
 int main()
 {
 try{
@@ -350,6 +378,7 @@ try{
     test_utf8_string();
     test_split_words();
     test_map();
+    test_to_iso88951();
 
 }catch(std::exception& e){
     std::cerr << e.what() << '\n';
