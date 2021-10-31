@@ -3,6 +3,7 @@ SOURCES=alp_cast.cpp 	\
 	alp_exception.cpp 	\
 	alp_getopts.cpp		\
 	alp_filesystem.cpp 	\
+	alp_iso88591.cpp	\
 	alp_math.cpp		\
 	alp_rframe_ij.cpp 	\
 	alp_stdio.cpp 		\
@@ -28,6 +29,7 @@ INCS= alp_algorithm.h 	\
 	alp_functional.h	\
 	alp_gen.h 			\
 	alp_getopts.h		\
+	alp_iso88591.h		\
 	alp_iterator.h 		\
 	alp_math_efunc.h 	\
 	alp_math.h 			\
