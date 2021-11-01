@@ -171,6 +171,9 @@ std::vector<std::string>::iterator
 	if (std::holds_alternative<int*>(opt))
 	    *std::get<int*>(opt) = std::stoi(*a);
 
+	else if (std::holds_alternative<unsigned int*>(opt))
+	    *std::get<unsigned int*>(opt) = std::stoul(*a);
+
 	else if (std::holds_alternative<float*>(opt))
 	    *std::get<float*>(opt) = std::stof(*a);
 
