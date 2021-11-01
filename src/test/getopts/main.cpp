@@ -33,6 +33,7 @@ try{
     
     std::string output, input;
     int num = 22;
+    unsigned int unum = 50;
     float time = 23.2;
     bool ok = false;
     bool b1 = false;
@@ -41,12 +42,13 @@ try{
 
     Getopts args{1,
                  "Forma de uso: xx [-o output] [-i input] [-t time] [-n num] "
-                 "[-k] file [file2...]"};
+                 "[-u unum] [-k] file [file2...]"};
 
     args.add_option('o', output);
     args.add_option('i', input);
     args.add_option("time", time);
     args.add_option('n', num);
+    args.add_option('u', unum);
     args.add_option('k', ok);
     args.add_option('1', b1);
     args.add_option('2', b2);
@@ -61,6 +63,7 @@ try{
     }
 
     std::cout << "n " << num << "\n";
+    std::cout << "u " << unum << "\n";
     std::cout << "time " << time << "\n";
     std::cout << "i " << input << "\n";
     std::cout << "o " << output << "\n";

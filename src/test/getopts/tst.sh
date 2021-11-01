@@ -32,5 +32,6 @@ test_ok "-k uno" "k" "1"
 test_ok "--time 12.34 uno" "time" "12.34"
 test_ok "-n 25 uno" "n" "25"
 test_ok "-i input uno" "i" "input"
+test_ok "-u 5 uno" "u" "5"
 
 

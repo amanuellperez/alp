@@ -89,15 +89,16 @@ std::vector<std::string>::iterator
 {
     for (size_t i = 1; i < a->size(); ++i){
 
-    auto [c_opt, opt] = find_char_option((*a)[i]);
+        auto [c_opt, opt] = find_char_option((*a)[i]);
 
-    if (std::holds_alternative<bool*>(opt))
-	*std::get<bool*>(opt) = true;
+        if (std::holds_alternative<bool*>(opt))
+            *std::get<bool*>(opt) = true;
 
-    else
-        throw Getopts_error{
-            help_, as_str() << "La opción -" << c_opt
-			    << " no es de tipo booleana. Se esperaba booleana."};
+        else
+            throw Getopts_error{
+                help_,
+                as_str() << "La opción -" << c_opt
+                         << " no es de tipo booleana. Se esperaba booleana."};
     }
     ++a;
 
@@ -125,6 +126,9 @@ std::vector<std::string>::iterator
 	try{
 	if (std::holds_alternative<int*>(opt))
 	    *std::get<int*>(opt) = std::stoi(*a);
+
+	else if (std::holds_alternative<unsigned int*>(opt))
+	    *std::get<unsigned int*>(opt) = std::stoul(*a);
 
 	else if (std::holds_alternative<float*>(opt))
 	    *std::get<float*>(opt) = std::stof(*a);
@@ -199,7 +203,6 @@ std::vector<std::string>::iterator
 	return parse_string_option(a, args_end);
     else    // -option
 	return parse_char_option(a, args_end);
-
 }
 
 
@@ -207,7 +210,6 @@ std::vector<std::string> Getopts::parse(int argc, char* argv[])
 {
     std::vector<std::string> args = cmd_line2vector(argc, argv);
     std::vector<std::string> resto;
-
     auto a = args.begin();
     while (a != args.end()){
 	if ((*a)[0] == '-')
@@ -218,7 +220,6 @@ std::vector<std::string> Getopts::parse(int argc, char* argv[])
 	    ++a;
 	}
     }
-
     if (num_min_args_ != -1 and
 		        (resto.size() < narrow_cast<size_t>(num_min_args_)))
         throw Getopts_error{help_, alp::as_str()

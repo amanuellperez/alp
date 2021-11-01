@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
+// Copyright (C) 2019-2021 A.Manuel L.Perez <amanuel.lperez@gmail.com>
 //
 // This file is part of the ALP Library.
 //
@@ -32,7 +32,9 @@
  *   
  *
  *   - HISTORIA:
- *           A.Manuel L.Perez- 29/04/2019 Escrito
+ *     A.Manuel L.Perez
+ *     29/04/2019 Escrito
+ *     01/11/2021 Soporte para unsigned int
  *
  ****************************************************************************/
 #include <vector>
@@ -107,6 +109,10 @@ public:
     { char_opts_[opt] = &res; }
 
     /// Asociamos una opción de una letra con res
+    void add_option(char opt, unsigned int& res)
+    { char_opts_[opt] = &res; }
+
+    /// Asociamos una opción de una letra con res
     void add_option(char opt, float& res)
     { char_opts_[opt] = &res; }
 
@@ -123,6 +129,10 @@ public:
 
     /// Asociamos la opción con res
     void add_option(const std::string& opt, int& res)
+    { str_opts_[opt] = &res; }
+
+    /// Asociamos la opción con res
+    void add_option(const std::string& opt, unsigned int& res)
     { str_opts_[opt] = &res; }
 
     /// Asociamos la opción con res
@@ -156,7 +166,9 @@ private:
 
     // En vble_option metemos un puntero a donde tenemos que meter el
     // resultado en caso de que una opción esté presente.
-    using vble_option = std::variant<bool*, std::string*, int*, float*>;
+    using vble_option =
+        std::variant<bool*, std::string*, unsigned int*, int*, float*>;
+
     // option, vble donde guardar el resultado
     std::map<std::string, vble_option> str_opts_;
     std::map<char, vble_option> char_opts_;
