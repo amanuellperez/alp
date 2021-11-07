@@ -13,6 +13,7 @@ DIRS = cast 	\
 	rframe_xy	\
 	rframe_xyz	\
 	rframes		\
+	statistics	\
 	time 		\
 	type_traits \
 

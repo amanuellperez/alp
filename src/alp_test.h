@@ -106,6 +106,11 @@ inline void interfaz(const std::string& interfaz)
 	      << "---------------------------------\n";
 }
 
+// migrando a ingles
+inline void interface(const std::string& str)
+{ interfaz(str); }
+
+
 /// El parámetro pasado tiene que ser true.
 ///
 /// Ejemplo:

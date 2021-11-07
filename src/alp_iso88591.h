@@ -36,6 +36,8 @@
 namespace alp{
 
 namespace iso88951{
+static constexpr int num_char_codes = 256;
+
 inline bool is_uppercase(unsigned char c)
 {
     return (65 <= c and c <= 90)    // A..Z

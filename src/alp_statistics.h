@@ -17,8 +17,8 @@
 
 #pragma once
 
-#ifndef __ALP_ESTADISTICA_H__
-#define __ALP_ESTADISTICA_H__
+#ifndef __ALP_STATISTICS_H__
+#define __ALP_STATISTICS_H__
 /****************************************************************************
  *
  *   - DESCRIPCION: Funciones para hacer estadística
@@ -73,81 +73,87 @@ inline Int median(const Int& a, const Int& b, const Int& c)
  *
  *  Ejemplo:
  *  \code
- *	Tabla_de_frecuencias<std::string> tabla;
- *	tabla.add("a");
- *	tabla.add("b");
- *	tabla.add("a");
- *	tabla.add("a");
- *	tabla.add("b");
- *	tabla.add("a");
- *	tabla.add("a");
- *	tabla.add("b");
- *	tabla.add("b");
- *	tabla.add("c");
+ *	Frequency_t<std::string> t;
+ *	t.add("a");
+ *	t.add("b");
+ *	t.add("a");
+ *	t.add("a");
+ *	t.add("b");
+ *	t.add("a");
+ *	t.add("a");
+ *	t.add("b");
+ *	t.add("b");
+ *	t.add("c");
  *
- *	cout << tabla << '\n';
+ *	t.print(std::cout) << '\n';
  *  \endcode
  */
 template <typename T>
-class Tabla_de_frecuencias{
+class Frequency_table{
 public:
     using value_type = T;
     using size_t = ::std::size_t;
     
+// input-output
     /// Sumamos 1 a la frecuencia absoluta del elemento x.
-    /// Si es la primera vez que anotamos este número, su frecuencia inicial
-    /// es 0 (+1 = 1).
-    void add(const value_type& x)
-    {
-	if (est_.find(x) == est_.end())
-	    est_[x] = size_t{1};
-	else
-	    ++est_[x];
-    }
+    void add(const value_type& x) { ++est_[x]; }
+
+    std::ostream& print(std::ostream& out);
+
+// Data
+    /// Tamaño de la tabla
+    size_t size() const {return est_.size();}
+
+    /// Frecuencia del elemento x
+    size_t frequency(const value_type& x) const {return est_.at(x);}
+    size_t operator[](const value_type& x) const {return frequency(x);}
 
 
-
-    /// Devuelve la tabla de frecuencias como un vector de pairs.
+// Helpers
+    /// Devuelve la tabla de frecuencias como un vector ordenado de pairs.
     /// Ordena la frecuencia absoluta usando Comparator
     template <typename Comparator>
-    std::vector<std::pair<T,size_t>> as_sorted_vector(Comparator comp) const
-    {
-	std::vector<std::pair<T,size_t>> res;
+    std::vector<std::pair<T,size_t>> as_sorted_vector(Comparator comp) const;
 
-	for (const auto& x: est_)
-	    res.push_back(x);
-
-	std::sort(begin(res), end(res), [&comp](auto x1, auto x2){
-		return comp(x1.second, x2.second);
-		});
-
-	return res;
-    }
-
-    /// Devuelve la tabla de frecuencias como un vector de pairs.
+    /// Devuelve la tabla de frecuencias como un vector ordenado de pairs.
     /// Lo devuelve ordenado por frecuencia absoluta de mayor a menor.
     std::vector<std::pair<T,size_t>> as_sorted_vector() const
-    {
-	return as_sorted_vector(std::greater<size_t>{});
-    }
-
-
-    friend std::ostream& operator<<(std::ostream& out,
-                                    const Tabla_de_frecuencias& t)
-    {
-	for (const auto& x: t.est_)
-	    out << x.first << " = " << x.second << '\n';
-
-	return out;
-    }
+    { return as_sorted_vector(std::greater<size_t>{}); }
 
 
 private:
     std::map<value_type, size_t> est_;
 };
 
+
+template <typename T> template <typename Comparator>
+std::vector<std::pair<T, size_t>>
+	    Frequency_table<T>::as_sorted_vector(Comparator comp) const
+{
+    std::vector<std::pair<T,size_t>> res{est_.begin(), est_.end()};
+
+    std::sort(begin(res), end(res), [&comp](auto x1, auto x2){
+	    return comp(x1.second, x2.second);
+	    });
+
+    return res;
+}
+
+
+
+template <typename T> 
+std::ostream& Frequency_table<T>::print(std::ostream& out)
+{
+    for (const auto& x: est_)
+	out << x.first << " = " << x.second << '\n';
+
+    return out;
+}
+
+
+
 /*!
- *  \brief  Crea la tabla de frecuencias de [p0, pe)
+ *  \brief  Hace `uniq --count [p0, pe)`
  *
  *   Devuelve un vector de pairs donde first es el elemento que está contando
  *   y second es el número de veces que aparece 'first' en x.
@@ -156,16 +162,15 @@ private:
  *
  */
 template<typename Iterator>
-// T is regular type
 std::vector<
     std::pair<typename std::iterator_traits<Iterator>::value_type, size_t>> 
-tabla_de_frecuencias(Iterator p0, Iterator pe)
+unique_count(Iterator p0, Iterator pe)
 {
     using value_type = typename std::iterator_traits<Iterator>::value_type;
-    std::vector<std::pair<value_type, size_t>> num_elementos;
+    std::vector<std::pair<value_type, size_t>> res;
     
     if(p0 == pe)
-	return num_elementos;
+	return res;
 
     // valor actual que contamos
     auto x_a = *p0;
@@ -174,7 +179,7 @@ tabla_de_frecuencias(Iterator p0, Iterator pe)
 
     for(; p0 != pe; ++p0){
 	if(x_a != *p0){
-	    num_elementos.push_back(std::make_pair(x_a, n_a));
+	    res.push_back(std::make_pair(x_a, n_a));
 	    x_a = *p0; // x[i];
 	    n_a = 1;
 	} else
@@ -182,10 +187,11 @@ tabla_de_frecuencias(Iterator p0, Iterator pe)
     }
 
     // metemos el último elemento
-    num_elementos.push_back(std::make_pair(x_a, n_a));
+    res.push_back(std::make_pair(x_a, n_a));
 
-    return num_elementos;
+    return res;
 }
+
 
 }// namespace
 

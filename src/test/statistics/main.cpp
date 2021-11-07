@@ -31,7 +31,7 @@ void test_median(int a, int b, int c, int res)
 
 void test_median()
 {
-    test::interfaz("median");
+    test::interface("median");
 
     test_median(2, 2, 2, 2);
 
@@ -45,6 +45,32 @@ void test_median()
     test_median(6, 4, 2, 4);
 }
 
+void test_frequency_table()
+{
+    test::interface("frequency_table");
+
+    std::vector<std::string> data{"a", "b", "a", "b", "c", "a"};
+    alp::Frequency_table<std::string> t;
+    for (auto x: data)
+	t.add(x);
+
+    CHECK_TRUE(t.size() == 3, "size");
+    CHECK_TRUE(t["a"] == 3, "a");
+    CHECK_TRUE(t["b"] == 2, "b");
+    CHECK_TRUE(t["c"] == 1, "c");
+
+    std::cout << "No automáticas:\n";
+    auto gsort = t.as_sorted_vector();
+    for (const auto& x: gsort)
+	std::cout << x.first << " = " << x.second << '\n';
+
+    std::cout << "------\n";
+    auto lsort = t.as_sorted_vector(std::less<size_t>{});
+    for (const auto& x: lsort)
+	std::cout << x.first << " = " << x.second << '\n';
+
+}
+
 
 int main()
 {
@@ -52,6 +78,7 @@ try{
     test::header("alp::statistics");
 
     test_median();
+    test_frequency_table();
 
 }catch(std::exception& e)
 {
