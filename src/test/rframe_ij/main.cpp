@@ -68,21 +68,21 @@ void test_vector_ij()
 
 void test_rango_ij()
 {
-    test::interfaz("Rango_ij");
+    test::interfaz("Range_ij");
 
-    using R = alp::Rango_ij<int>;
-    using Pos = alp::Rango_ij<int>::Posicion;
+    using R = alp::Range_ij<int>;
+    using Pos = alp::Range_ij<int>::Position;
 
     {// vacio
     R r;
     CHECK_TRUE(r.i0 == 0 and r.ie == 0 and r.j0 == 0 and r.je == 0,
-               "Rango_ij::vacio");
+               "Range_ij::vacio");
     CHECK_TRUE(r.empty(), "empty()");
     }
     {// basico
     R r{1, 5, 3, 6};
     CHECK_TRUE(r.i0 == 1 and r.ie == 5 and r.j0 == 3 and r.je == 6,
-	    "Rango_ij::Rango_ij");
+	    "Range_ij::Range_ij");
     CHECK_TRUE(!r.empty(), "empty()");
     CHECK_TRUE(r.rows() == 4, "rows()");
     CHECK_TRUE(r.cols() == 3, "cols()");
@@ -95,14 +95,14 @@ void test_rango_ij()
     {// ok
     R r{Pos{2,3}, Pos{5,8}};
     CHECK_TRUE(r.i0 == 2 and r.ie == 6 and r.j0 == 3 and r.je == 9,
-	    "Rango_ij::Rango_ij(pos)");
+	    "Range_ij::Range_ij(pos)");
     CHECK_TRUE((r.upper_left_corner() == Pos{2,3}), "upper_left_corner");
     CHECK_TRUE((r.bottom_right_corner() == Pos{5,8}), "bottom_right_corner");
     }
     {// desordenado
     R r{Pos{5,8}, Pos{2,3}};
     CHECK_TRUE(r.i0 == 2 and r.ie == 6 and r.j0 == 3 and r.je == 9,
-	    "Rango_ij::Rango_ij(pos-des)");
+	    "Range_ij::Range_ij(pos-des)");
     CHECK_TRUE((r.upper_left_corner() == Pos{2,3}), "upper_left_corner");
     CHECK_TRUE((r.bottom_right_corner() == Pos{5,8}), "bottom_right_corner");
     }
@@ -110,7 +110,7 @@ void test_rango_ij()
     {
     R r{1, 5, 3, 6};
     CHECK_TRUE(r.i0 == 1 and r.ie == 5 and r.j0 == 3 and r.je == 6,
-	    "Rango_ij::Rango_ij");
+	    "Range_ij::Range_ij");
     r.upper_left_corner(Pos{10,8});
     CHECK_TRUE(r.i0 == 4 and r.ie == 11 and r.j0 == 5 and r.je == 9,
 		"upper_left_corner(10,8)");
@@ -122,7 +122,7 @@ void test_rango_ij()
     {// ordena indices
     R r{2, 1, 4, 3};
     CHECK_TRUE(r.i0 == 1 and r.ie == 2 and r.j0 == 3 and r.je == 4,
-	    "Rango_ij::Rango_ij - indices desordenados");
+	    "Range_ij::Range_ij - indices desordenados");
     }
 }
 
@@ -130,8 +130,8 @@ void test_alrededor()
 {
     test::interfaz("alrededor");
 
-    using R = alp::Rango_ij<int>;
-    using Pos = alp::Rango_ij<int>::Posicion;
+    using R = alp::Range_ij<int>;
+    using Pos = alp::Range_ij<int>::Position;
 
     R r{Pos{0,0}, Pos{2,2}};
 
@@ -221,8 +221,8 @@ void test_posicion_del_centro()
 {
     test::interfaz("posicion_del_centro");
 
-    using R = alp::Rango_ij<int>;
-    using Pos = alp::Rango_ij<int>::Posicion;
+    using R = alp::Range_ij<int>;
+    using Pos = alp::Range_ij<int>::Position;
 
     {
     R r{Pos{0,0}, Pos{2,2}};
@@ -252,8 +252,8 @@ void test_posiciones_rango()
 {
     test::interfaz("Posiciones_rango_ij");
 
-    using R = alp::Rango_ij<int>;
-    using Pos = alp::Rango_ij<int>::Posicion;
+    using R = alp::Range_ij<int>;
+    using Pos = alp::Range_ij<int>::Position;
 
     {
     R rg{Pos{0,0}, Pos{3,4}};
@@ -275,8 +275,8 @@ void test_posiciones_borde_rango()
 {
     test::interfaz("Posiciones_bordes_rango_ij");
 
-    using R = alp::Rango_ij<int>;
-    using Pos = alp::Rango_ij<int>::Posicion;
+    using R = alp::Range_ij<int>;
+    using Pos = alp::Range_ij<int>::Position;
 
     {
     R r{Pos{0, 0}, Pos{4, 3}};

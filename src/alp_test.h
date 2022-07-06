@@ -310,7 +310,7 @@ void check_orbita0(It p0, It pe, Functor f, const std::string& prueba)
 ///            Vector_direccion::NE(), Vector_direccion::SE(),
 ///            Vector_direccion::SW(), Vector_direccion::NW()};
 ///
-///     vector<Posicion> y{{1, 2}, {2, 2}, {2, 1}, {1, 1},
+///     vector<Position> y{{1, 2}, {2, 2}, {2, 1}, {1, 1},
 ///                           {0, 2}, {1, 3}, {2, 2}, {1, 1}};
 ///
 ///	Iterador_4direcciones it{img1, {1,1}};

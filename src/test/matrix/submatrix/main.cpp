@@ -34,7 +34,7 @@ void test_submatrix()
 {
     test::interfaz("Submatrix");
 
-    using Posicion = Matrix<int>::Posicion;
+    using Position = Matrix<int>::Position;
     using Size = Matrix<int>::Size2D;
 
     alp::Matrix<int> m{6,6};
@@ -53,7 +53,7 @@ void test_submatrix()
 
     {// version no const
     
-    Posicion p0{2,1};
+    Position p0{2,1};
     Size sz{2,3};
 
     //auto  s = Submatrix<Matrix<int>>{m, p0, sz};
@@ -61,7 +61,7 @@ void test_submatrix()
 
     CHECK_TRUE((s.P0() == p0), "P0()");
     CHECK_TRUE(s(0,0) == 13, "m(i,j)");
-    CHECK_TRUE(s(Posicion{0,1}) == 14, "m(i,j)");
+    CHECK_TRUE(s(Position{0,1}) == 14, "m(i,j)");
     CHECK_TRUE(s(0,2) == 15, "m(i,j)");
     CHECK_TRUE(s(1,0) == 19, "m(i,j)");
     CHECK_TRUE(s(1,1) == 20, "m(i,j)");
@@ -90,15 +90,15 @@ void test_submatrix()
     Submatrix<Matrix> s2;	
     
     //Submatrix<Matrix> s2;
-    s2.de(m, Posicion{2, 1}, Size{2, 3});
-    CHECK_TRUE((s2.P0() == Posicion{2,1} and s2.P1() == Posicion{3,3}),
+    s2.de(m, Position{2, 1}, Size{2, 3});
+    CHECK_TRUE((s2.P0() == Position{2,1} and s2.P1() == Position{3,3}),
                "de()");
     check_equal_containers(s.begin(), s.end(), s2.begin(), s2.end(),
 		    "submatrix.de()");
 
     Submatrix<Matrix> s3;
-    s3.de(m, Posicion{2, 1}, Posicion{3, 3});
-    CHECK_TRUE((s3.P0() == Posicion{2,1} and s3.P1() == Posicion{3,3}),
+    s3.de(m, Position{2, 1}, Position{3, 3});
+    CHECK_TRUE((s3.P0() == Position{2,1} and s3.P1() == Position{3,3}),
                "de()");
 
     CHECK_TRUE(s3.P0() == s2.P0(), "de()");
@@ -128,8 +128,8 @@ void test_submatrix()
 
 
     {
-    auto s = Submatrix{m, Posicion{2,4}, Size{4, 2}};
-    // auto s = Submatrix{m, Posicion{2,4}, Size{4, 2}};
+    auto s = Submatrix{m, Position{2,4}, Size{4, 2}};
+    // auto s = Submatrix{m, Position{2,4}, Size{4, 2}};
 
     vector<int> res = {16,17,22,23,28,29,34,35};
     check_equal_containers(s.begin(), s.end(), res.begin(), res.end(),
@@ -146,14 +146,14 @@ void test_submatrix()
 
     {// version const
     
-    Posicion p0{2,1};
+    Position p0{2,1};
     Size sz{2,3};
 
     auto  s = Submatrix<const Matrix<int>>{m, p0, sz};
 
     CHECK_TRUE((s.P0() == p0), "P0()");
     CHECK_TRUE(s(0,0) == 13, "m(i,j)");
-    CHECK_TRUE(s(Posicion{0,1}) == 14, "m(i,j)");
+    CHECK_TRUE(s(Position{0,1}) == 14, "m(i,j)");
     CHECK_TRUE(s(0,2) == 15, "m(i,j)");
     CHECK_TRUE(s(1,0) == 19, "m(i,j)");
     CHECK_TRUE(s(1,1) == 20, "m(i,j)");

@@ -291,7 +291,7 @@ void test_corners()
     test::interfaz("corners");
 
     using M = alp::Matrix<int>;
-    using Pos = alp::Matrix<int>::Posicion;
+    using Pos = alp::Matrix<int>::Position;
     M m{3,5};
 
     CHECK_TRUE((upper_left_corner(m) == Pos{0,0}), "upper_left_corner");

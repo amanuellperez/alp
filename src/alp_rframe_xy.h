@@ -26,7 +26,7 @@
  *   - COMENTARIOS: 
  *	Puntos en 2D: (realmente son los vectores posición de los puntos)
  *	    (vamos a operar con ellos)
- *	    + Posicion_ij: posición dentro de una matriz (i,j)
+ *	    + Position_ij: posición dentro de una matriz (i,j)
  *	    + Punto_xy: punto en cartesianas (x,y)
  *	    + Punto_rt: punto en polares (r, theta)
  *

@@ -64,9 +64,9 @@ public:
     using Ind	      = difference_type;
 
     // Tipos asociados a la matrix
-    using Posicion  = alp::Vector_ij<Ind>;  // Indice 2D
+    using Position  = alp::Vector_ij<Ind>;  // Indice 2D
     using Size2D    = alp::Size_ij<Ind>;      
-    using Rango2D   = alp::Rango_ij<Ind>;
+    using Range2D   = alp::Range_ij<Ind>;
 
     // Iteradores unidimensionales
     using iterator       = It;
@@ -117,7 +117,7 @@ public:
     Size2D size2D() const {return Size2D{rows(), cols()};}
 
     /// Extensión que ocupa dentro del sistema de referencia (i, j)
-    Rango2D extension() const {return Rango2D{0, rows(), 0, cols()};}
+    Range2D extension() const {return Range2D{0, rows(), 0, cols()};}
 
 
     // -------------------------------------
@@ -142,8 +142,8 @@ public:
     const_reference operator()(Ind i, Ind j) const
     { return *(p0() + indice(i, j)); }
 
-    reference operator()(const Posicion& p) {return (*this)(p.i, p.j);}
-    const_reference operator()(const Posicion& p) const
+    reference operator()(const Position& p) {return (*this)(p.i, p.j);}
+    const_reference operator()(const Position& p) const
     { return (*this)(p.i, p.j); }
 
     // -------------------
@@ -289,7 +289,7 @@ public:
 
     // Tipos que definen los contenedores bidimensionales
     using Ind           = typename Matrix_type::Ind;
-    using Posicion	= typename Matrix_type::Posicion;
+    using Position	= typename Matrix_type::Position;
     using Size2D	= typename Matrix_type::Size2D;
 
     // Propios
@@ -317,11 +317,11 @@ public:
     /// función cualquier acceso usará este nuevo origen.
     void origen_de_coordenadas(Ind i0, Ind j0);
 
-    void origen_de_coordenadas(const Posicion& p0)
+    void origen_de_coordenadas(const Position& p0)
     {origen_de_coordenadas(p0.i, p0.j);}
 
-    Posicion origen_de_coordenadas() const
-    { return Posicion{i0_, j0_};}
+    Position origen_de_coordenadas() const
+    { return Position{i0_, j0_};}
 
     /// Colocamos el origen de coordenadas en el centro de la imagen
     void origen_de_coordenadas_en_el_centro()
@@ -387,11 +387,11 @@ public:
 // Cambio de sistema de referencia
 // -------------------------------
     /// Devuelve la posición (i,j) a la que apunta el punto de coordenadas (x,y)
-    Posicion posicion(Ind x, Ind y) const
+    Position posicion(Ind x, Ind y) const
     { return {i(y), j(x)};}
 
     /// Devuelve la posición (i,j) a la que apunta el punto p
-    Posicion posicion(const Point& p) const
+    Position posicion(const Point& p) const
     {return posicion(p.x, p.y);}
 
 

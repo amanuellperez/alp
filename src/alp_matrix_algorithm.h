@@ -59,7 +59,7 @@ namespace alp{
 template <typename Container2D>
 void copia_dentro  ( const Container2D& m0    // copiamos m0 en
 	    , Container2D& m1		     // la imagen m1
-	    , typename Container2D::Posicion p0)// colocando la esquina SI de m1 en p0 
+	    , typename Container2D::Position p0)// colocando la esquina SI de m1 en p0 
 {
     if (!esta_dentro(m0.extension()).de(m1.extension()))
         throw Error_de_programacion{
@@ -661,8 +661,8 @@ alp::Matrix<I,S> transform2D_alrededor(const alp::Matrix<I,S>& x, const V& x0, F
  *
  */
 template <typename I, typename S>
-inline std::vector<typename Matrix<I, S>::Posicion>
-alrededor(const Matrix<I, S>& m, const typename Matrix<I, S>::Posicion& p)
+inline std::vector<typename Matrix<I, S>::Position>
+alrededor(const Matrix<I, S>& m, const typename Matrix<I, S>::Position& p)
 {
     return alrededor(m.extension(), p);
 }

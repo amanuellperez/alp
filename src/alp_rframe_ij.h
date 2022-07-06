@@ -26,14 +26,14 @@
  *   - COMENTARIOS: Incluimos todo lo que se puede representar en este sistema
  *   de referencia:
  *	+ Size_ij   : dimensiones de un objeto (rows, cols).
- *	+ Rango_i   : intervalo [i0, ie). 
- *	+ Rango_ij  : región del plano [i0, ie) x [j0, je). Es un rectángulo.
- *	+ Rango_acotado_ij: es un Rango_ij dentro de otro rango.
+ *	+ Range_i   : intervalo [i0, ie). 
+ *	+ Range_ij  : región del plano [i0, ie) x [j0, je). Es un rectángulo.
+ *	+ Range_acotado_ij: es un Range_ij dentro de otro rango.
  *	
  *  Tenemos además los siguientes objetos geométricos:
  *	+ Vector_ij	: un vector vulgar y corriente. 
  *	+ Segment_ij	: segmento de 2 puntos {A, B} dados en coordenadas (i,j).
- *	+ Rectangle_ij	: es un sinónimo de Rango_ij. Es la misma clase.
+ *	+ Rectangle_ij	: es un sinónimo de Range_ij. Es la misma clase.
  *
  *
  *   - HISTORIA:
@@ -60,9 +60,9 @@ namespace alp{
  *  TODO: llamarlo Segmento_i
  *
  *  DUDA: ¿Qué otro nombre se podría elegir? 
- *		1. CRango_i???		[i0, i1]
+ *		1. CRange_i???		[i0, i1]
  *		2. Closed_range_i ???	[i0, i1]
- *		3. RangoC_i
+ *		3. RangeC_i
  *
  *	  ¿Merece la pena crear esta clase o dejarlo como funciones sueltas?
  */
@@ -417,7 +417,7 @@ inline std::ostream& operator<<(std::ostream& out, const Size_ij<Int>& s)
  *			    RANGOS DE INDICES
  ***************************************************************************/
 /*!
- *  \brief  Rango unidimensional de índices.
+ *  \brief  Range unidimensional de índices.
  *
  *  Un rango es un intervalo semiabierto [i0, ie).
  *
@@ -426,7 +426,7 @@ inline std::ostream& operator<<(std::ostream& out, const Size_ij<Int>& s)
  *
  */
 template <typename Int>
-struct Rango_i{
+struct Range_i{
     using Ind = Int;
 
     Ind i0, ie;
@@ -444,19 +444,19 @@ struct Rango_i{
 
 
 /*!
- *  \brief  Rango bidimensional de índices: [i0, ie) x [j0, je)
+ *  \brief  Range bidimensional de índices: [i0, ie) x [j0, je)
  *
  *  El rango no garantiza que i0 <= ie. Para garantizarlo suministra
  *  la función ordena_indices (llamarla antes de crear el rango)
  *
- *  Un Rango_ij es lo mismo que un Rectangle_ij.
+ *  Un Range_ij es lo mismo que un Rectangle_ij.
  */
 template <typename Int>
-class Rango_ij{
+class Range_ij{
 public:
 // Types
     using Ind      = Int;
-    using Posicion = Vector_ij<Int>;
+    using Position = Vector_ij<Int>;
     using Size2D   = Size_ij<Int>;
 
 // Data
@@ -465,26 +465,26 @@ public:
 
 // Constructors
     /// Creamos un rango vacío
-    constexpr Rango_ij():Rango_ij{0,0,0,0}{}
+    constexpr Range_ij():Range_ij{0,0,0,0}{}
 
     /// Creamos el rango [i0, ie) x [j0, je)
-    constexpr Rango_ij(Int i00, Int ie0, Int j00, Int je0)
+    constexpr Range_ij(Int i00, Int ie0, Int j00, Int je0)
 	:i0{i00}, ie{ie0}, j0{j00}, je{je0} 
     {
 	ordena_indices();
     }
 
     /// Creamos el rango ri x rj = [i0, ie)  x [j0, je)
-    constexpr Rango_ij(const Rango_i<Int>& ri, const Rango_i<Int>& rj)
-	:Rango_ij{ri.i0, ri.ie, rj.i0, rj.ie} {}
+    constexpr Range_ij(const Range_i<Int>& ri, const Range_i<Int>& rj)
+	:Range_ij{ri.i0, ri.ie, rj.i0, rj.ie} {}
 
-    /// Rango [p0, p1] = [upper_left_corner, bottom_right_corner]
-    constexpr Rango_ij(const Posicion& p0, const Posicion& p1)
-	:Rango_ij{p0.i, p1.i, p0.j, p1.j} { ++ie; ++je;}
+    /// Range [p0, p1] = [upper_left_corner, bottom_right_corner]
+    constexpr Range_ij(const Position& p0, const Position& p1)
+	:Range_ij{p0.i, p1.i, p0.j, p1.j} { ++ie; ++je;}
 
-    /// Rango (p0, sz) = (upper_left_corner, size)
-    constexpr Rango_ij(const Posicion& p0, const Size2D& sz)
-	:Rango_ij{p0.i, p0.i + sz.rows, p0.j, p0.j + sz.cols} {}
+    /// Range (p0, sz) = (upper_left_corner, size)
+    constexpr Range_ij(const Position& p0, const Size2D& sz)
+	:Range_ij{p0.i, p0.i + sz.rows, p0.j, p0.j + sz.cols} {}
 
 
 
@@ -507,16 +507,16 @@ public:
 // --------
     // Solo tienen sentido si el rectángulo no es nulo (empty() != true)
     // Recordar que son coordenadas de matriz: i va hacia abajo!!!
-    constexpr Posicion upper_left_corner() const;
-    constexpr Posicion bottom_right_corner() const;
-    constexpr Posicion upper_right_corner() const;
-    constexpr Posicion bottom_left_corner() const;
+    constexpr Position upper_left_corner() const;
+    constexpr Position bottom_right_corner() const;
+    constexpr Position upper_right_corner() const;
+    constexpr Position bottom_left_corner() const;
 
     /// Definimos la esquina superior izquierda
-    constexpr void upper_left_corner(const Posicion& p);
+    constexpr void upper_left_corner(const Position& p);
 
     /// Definimos la esquina inferior derecha
-    constexpr void bottom_right_corner(const Posicion& p);
+    constexpr void bottom_right_corner(const Position& p);
 
 
     // Varios
@@ -534,42 +534,42 @@ public:
 // Esquinas
 template <typename Int>
 inline constexpr 
-Rango_ij<Int>::Posicion Rango_ij<Int>::upper_left_corner() const
+Range_ij<Int>::Position Range_ij<Int>::upper_left_corner() const
 {
-    return Posicion{i0, j0};
+    return Position{i0, j0};
 }
 
 
 template <typename Int>
 inline constexpr 
-Rango_ij<Int>::Posicion Rango_ij<Int>::bottom_right_corner() const
-{ return Posicion{ie - Ind{1}, je - Ind{1}}; }
+Range_ij<Int>::Position Range_ij<Int>::bottom_right_corner() const
+{ return Position{ie - Ind{1}, je - Ind{1}}; }
 
 template <typename Int>
 inline constexpr 
-Rango_ij<Int>::Posicion Rango_ij<Int>::upper_right_corner() const
-{ return Posicion{i0, je - Ind{1}}; }
+Range_ij<Int>::Position Range_ij<Int>::upper_right_corner() const
+{ return Position{i0, je - Ind{1}}; }
 
 template <typename Int>
 inline constexpr 
-Rango_ij<Int>::Posicion Rango_ij<Int>::bottom_left_corner() const
-{ return Posicion{ie - Ind{1}, j0}; }
+Range_ij<Int>::Position Range_ij<Int>::bottom_left_corner() const
+{ return Position{ie - Ind{1}, j0}; }
 
 template <typename Int>
 inline constexpr 
-void Rango_ij<Int>::upper_left_corner(const Posicion& p)
-{ *this = Rango_ij{p, bottom_right_corner()}; }
+void Range_ij<Int>::upper_left_corner(const Position& p)
+{ *this = Range_ij{p, bottom_right_corner()}; }
 
 template <typename Int>
 inline constexpr 
-void Rango_ij<Int>::bottom_right_corner(const Posicion& p) 
-{ *this = Rango_ij{upper_left_corner(), p}; }
+void Range_ij<Int>::bottom_right_corner(const Position& p) 
+{ *this = Range_ij{upper_left_corner(), p}; }
 
 
 
 // Iostreams
 template <typename Int>
-inline std::ostream& operator<<(std::ostream& out, const Rango_ij<Int>& rg)
+inline std::ostream& operator<<(std::ostream& out, const Range_ij<Int>& rg)
 {
     return out	<< '[' << rg.i0 << ", " << rg.ie << ") x [" 
 		       << rg.j0 << ", " << rg.je << ')';
@@ -583,26 +583,26 @@ inline std::ostream& operator<<(std::ostream& out, const Rango_ij<Int>& rg)
 // Observar que esta es una relación definida entre rangos. Tiene total
 // sentido!!!
 template <typename Int>
-struct Rango_ij_ser_subconjunto_de{
-    using Rango_ij = alp::Rango_ij<Int>;
-    constexpr Rango_ij_ser_subconjunto_de(const Rango_ij& rg10):rg1{rg10}{}
+struct Range_ij_ser_subconjunto_de{
+    using Range_ij = alp::Range_ij<Int>;
+    constexpr Range_ij_ser_subconjunto_de(const Range_ij& rg10):rg1{rg10}{}
 
     // ¿rg1 es subconjunto de rg2?
-    constexpr bool de(const Rango_ij& rg2){
+    constexpr bool de(const Range_ij& rg2){
 	return  (rg2.i0 <= rg1.i0 and rg1.ie <= rg2.ie)
 	    and (rg2.j0 <= rg1.j0 and rg1.je <= rg2.je);
     }
 
-    const Rango_ij& rg1;
+    const Range_ij& rg1;
 };
 
 /// Idioma: if (es_subconjunto(rg1).de(rg2)) ...
 template <typename Int>
-constexpr Rango_ij_ser_subconjunto_de<Int> es_subconjunto(const Rango_ij<Int>& rg)
-{return Rango_ij_ser_subconjunto_de<Int>{rg};}
+constexpr Range_ij_ser_subconjunto_de<Int> es_subconjunto(const Range_ij<Int>& rg)
+{return Range_ij_ser_subconjunto_de<Int>{rg};}
 
 template <typename Int>
-constexpr Rango_ij_ser_subconjunto_de<Int> esta_dentro(const Rango_ij<Int>& rg)
+constexpr Range_ij_ser_subconjunto_de<Int> esta_dentro(const Range_ij<Int>& rg)
 {return es_subconjunto(rg);}
 
 
@@ -610,7 +610,7 @@ constexpr Rango_ij_ser_subconjunto_de<Int> esta_dentro(const Rango_ij<Int>& rg)
 
 
 /*!
- *  \brief  Rango bidimensional acotado por otro rango
+ *  \brief  Range bidimensional acotado por otro rango
  *
  *  Al estar acotado garantizamos que no nos podemos salir del rango.
  *
@@ -619,34 +619,34 @@ constexpr Rango_ij_ser_subconjunto_de<Int> esta_dentro(const Rango_ij<Int>& rg)
  *	Los índices de los rangos están ordenados (i0 <= ie, j0 <= je)
  */
 // No me funciona bien la herencia con templates, asi que no heredo de 
-// Rango_ij (¿por qué? Los iostream funcionan perfectamente!!!)
+// Range_ij (¿por qué? Los iostream funcionan perfectamente!!!)
 template <typename Int>
-struct Rango_acotado_ij{
+struct Range_acotado_ij{
     using Ind      = Int;
-    using Rango2D  = alp::Rango_ij<Int>;
-    using Posicion = alp::Vector_ij<Int>;
+    using Range2D  = alp::Range_ij<Int>;
+    using Position = alp::Vector_ij<Int>;
     using Size2D   = Size_ij<Int>;
 
     Ind i0, ie;	
     Ind j0, je;	
 
-    Rango2D cota;	// cota del rango. Este rango no se saldrá de cota.
+    Range2D cota;	// cota del rango. Este rango no se saldrá de cota.
 
     // Conversión por defecto
-    operator Rango2D() const {return Rango2D{i0, ie, j0, je};}
+    operator Range2D() const {return Range2D{i0, ie, j0, je};}
 
 
     // Construcción
     // ------------
     /// Creamos un rango vacío
-    constexpr Rango_acotado_ij():i0{0}, ie{i0}, j0{0}, je{j0} {}
+    constexpr Range_acotado_ij():i0{0}, ie{i0}, j0{0}, je{j0} {}
 
     /// Creamos un rango rg acotado por cota0.
     /// Esta función garantiza que el rango queda bien creado, con los
     /// índices ordenados. 
     /// En imágenes cuando se selecciona una región los índices no tienen
     /// por qué quedar bien ordenados. Por eso los ordeno aquí.
-    constexpr Rango_acotado_ij(const Rango2D& rg, const Rango2D cota0)
+    constexpr Range_acotado_ij(const Range2D& rg, const Range2D cota0)
 	:cota{cota0} 
     {
 	cota.ordena_indices();
@@ -666,17 +666,17 @@ struct Rango_acotado_ij{
     constexpr Size2D size() const { return {rows(), cols()}; }
 
     /// Esquina superior izquierda
-    constexpr Posicion p0() const {return Posicion{i0, j0};}
+    constexpr Position p0() const {return Position{i0, j0};}
 
     /// Esquina inferior derecha 
     /// Cuidado: para que p1 sea válido, el rango no puede estar vacío
-    constexpr Posicion p1() const {return Posicion{ie - Ind{1}, je - Ind{1}};}
+    constexpr Position p1() const {return Position{ie - Ind{1}, je - Ind{1}};}
 
-    constexpr void p0(const Posicion& p)
-    { extension(Rango2D{p, p1()}); }
+    constexpr void p0(const Position& p)
+    { extension(Range2D{p, p1()}); }
 
-    constexpr void p1(const Posicion& p)
-    { extension(Rango2D{p0(), p}); }
+    constexpr void p1(const Position& p)
+    { extension(Range2D{p0(), p}); }
 
 
     /// ¿Es un rango vacío?
@@ -685,10 +685,10 @@ struct Rango_acotado_ij{
 
     /// Devuelve la extensión del rango. La extensión es el rango 
     /// propiamente dicho
-    Rango2D extension() const { return Rango2D{i0, ie, j0, je}; }
+    Range2D extension() const { return Range2D{i0, ie, j0, je}; }
 
     /// Definimos la extensión que tiene este rango
-    void extension(Rango2D rg)
+    void extension(Range2D rg)
     {
 	rg.ordena_indices();
 	
@@ -699,8 +699,8 @@ struct Rango_acotado_ij{
     }
 
     /// Definimos la extensión que tiene este rango
-    void extension(const Posicion& p0, const Posicion& p1)
-    { extension(Rango2D{p0, p1}); }
+    void extension(const Position& p0, const Position& p1)
+    { extension(Range2D{p0, p1}); }
 
     // Operaciones
     // -----------
@@ -833,11 +833,11 @@ private:
 
     // Devuelve el rango rg dentro de la cota del rango acotado
     // Garantiza que el rango devuelto esté dentro de la cota (del terreno)
-    Rango2D rango_dentro_de_la_cota(Rango2D rg)
+    Range2D rango_dentro_de_la_cota(Range2D rg)
     {
 	if (	rg.i0 > cota.ie or rg.ie < cota.i0
 	    or  rg.j0 > cota.je or rg.je < cota.j0){
-	    std::cerr << "\n\nERROR: Rango_acotado_ij::rango_dentro_de_la_cota: "
+	    std::cerr << "\n\nERROR: Range_acotado_ij::rango_dentro_de_la_cota: "
 			 "el rango está fuera de la cota. Defino el "
 			 "rango a toda la cota\n";
 	    return cota;
@@ -855,7 +855,7 @@ private:
 
 template <typename Int>
 inline std::ostream& operator<<(std::ostream& out,
-                                const Rango_acotado_ij<Int>& rg)
+                                const Range_acotado_ij<Int>& rg)
 {
     return out	<< '[' << rg.i0 << ", " << rg.ie << ") x [" 
 		       << rg.j0 << ", " << rg.je << ')';
@@ -865,14 +865,14 @@ inline std::ostream& operator<<(std::ostream& out,
 /***************************************************************************
  *				RELACIONES
  ***************************************************************************/
-// Relación: Posicion pertenece a ...
+// Relación: Position pertenece a ...
 // Idioma: if (pertence(p).a(rg)) ...
 template <typename Int>
 struct Vector_ij_pertenece_a{
     constexpr Vector_ij_pertenece_a(const Vector_ij<Int>& p0):p{p0}{}
 
     // ¿pertenece p al rango rg?
-    constexpr bool a(const Rango_ij<Int>& rg){
+    constexpr bool a(const Range_ij<Int>& rg){
 	return  (rg.i0 <= p.i  and p.i < rg.ie) 
 	    and (rg.j0 <= p.j  and p.j < rg.je);
     }
@@ -962,7 +962,7 @@ inline bool es_un_punto(const Segment_ij<I>& s)
  *				ALIAS
  ***************************************************************************/
 template <typename Int>
-using Rectangle_ij = Rango_ij<Int>;
+using Rectangle_ij = Range_ij<Int>;
 
 
 /***************************************************************************
@@ -978,12 +978,12 @@ using Rectangle_ij = Rango_ij<Int>;
  *
  */
 template <typename I>
-std::vector<typename Rango_ij<I>::Posicion>
-alrededor(const Rango_ij<I>& rg, const typename Rango_ij<I>::Posicion& p)
+std::vector<typename Range_ij<I>::Position>
+alrededor(const Range_ij<I>& rg, const typename Range_ij<I>::Position& p)
 {
-    using Posicion = typename Rango_ij<I>::Posicion;
+    using Position = typename Range_ij<I>::Position;
 
-    std::vector<Posicion> v;
+    std::vector<Position> v;
     v.reserve(8);
    
     // (i1, j1) valores máximos de los índices
@@ -991,21 +991,21 @@ alrededor(const Rango_ij<I>& rg, const typename Rango_ij<I>::Posicion& p)
     auto i = p.i; auto j = p.j;
 
     if(i-1 >= 0){
-	if(j-1 >= 0)	v.push_back(Posicion{i-1, j-1});
-	v.push_back(Posicion{i-1, j});
-	if(j+1 <= j1)	v.push_back(Posicion{i-1, j+1});
+	if(j-1 >= 0)	v.push_back(Position{i-1, j-1});
+	v.push_back(Position{i-1, j});
+	if(j+1 <= j1)	v.push_back(Position{i-1, j+1});
     }
 
     // i
-    if(j-1 >= 0)    v.push_back(Posicion{i, j-1});
-//		    v.push_back(Posicion{i, j}); <--- este no está alrededor!
-    if(j+1 <= j1)   v.push_back(Posicion{i, j+1});
+    if(j-1 >= 0)    v.push_back(Position{i, j-1});
+//		    v.push_back(Position{i, j}); <--- este no está alrededor!
+    if(j+1 <= j1)   v.push_back(Position{i, j+1});
 
 
     if(i+1 <= i1){
-	if(j-1 >= 0)	v.push_back(Posicion{i+1, j-1});
-	v.push_back(Posicion{i+1, j});
-	if(j+1 <= j1)	v.push_back(Posicion{i+1, j+1});
+	if(j-1 >= 0)	v.push_back(Position{i+1, j-1});
+	v.push_back(Position{i+1, j});
+	if(j+1 <= j1)	v.push_back(Position{i+1, j+1});
     }
 
     return v;
@@ -1016,7 +1016,7 @@ alrededor(const Rango_ij<I>& rg, const typename Rango_ij<I>::Posicion& p)
  *
  */
 template <typename Int>
-inline Rango_ij<Int>::Posicion posicion_del_centro(const Rango_ij<Int>& rg)
+inline Range_ij<Int>::Position posicion_del_centro(const Range_ij<Int>& rg)
 { return {rg.i0 + rg.rows() / 2, rg.j0 + rg.cols() / 2}; }
 
 
@@ -1041,7 +1041,7 @@ public:
 
 
     template <typename I>
-    static Posiciones_bordes_rango_ij begin(const Rango_ij<I>& rg)
+    static Posiciones_bordes_rango_ij begin(const Range_ij<I>& rg)
     {
 	Posiciones_bordes_rango_ij p;
 
@@ -1054,7 +1054,7 @@ public:
     }
 
     template <typename I>
-    static Posiciones_bordes_rango_ij end(const Rango_ij<I>& rg){
+    static Posiciones_bordes_rango_ij end(const Range_ij<I>& rg){
         Posiciones_bordes_rango_ij p;
         p.i = rg.rows();
 	p.j = 0;
@@ -1093,7 +1093,7 @@ inline bool operator!=(const Posiciones_bordes_rango_ij& a,
 
 
 /*!
- *  \brief Posiciones que tiene un Rango_ij
+ *  \brief Posiciones que tiene un Range_ij
  *
  *  Para iterar con índices en un contenedor unidimensional hacemos:
  *	    for (int i = 0; i < v.size(); ++i)
@@ -1115,7 +1115,7 @@ public:
 
 
     template <typename I>
-    static Posiciones_rango_ij begin(const Rango_ij<I>& rg)
+    static Posiciones_rango_ij begin(const Range_ij<I>& rg)
     {
 	Posiciones_rango_ij p;
 
@@ -1127,7 +1127,7 @@ public:
     }
 
     template <typename I>
-    static Posiciones_rango_ij end(const Rango_ij<I>& rg){
+    static Posiciones_rango_ij end(const Range_ij<I>& rg){
         Posiciones_rango_ij p;
         p.i = rg.rows();
 	p.j = 0;

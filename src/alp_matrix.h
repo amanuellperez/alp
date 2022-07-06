@@ -110,10 +110,10 @@ public:
     using Ind	      = Ind_t;	    // indice 
 
     // Tipos asociados a la matrix
-    // using Posicion  = alp::Posicion_ij<Ind>;  // Indice 2D
-    using Posicion  = Vector_ij<Ind>; 
+    // using Position  = alp::Position_ij<Ind>;  // Indice 2D
+    using Position  = Vector_ij<Ind>; 
     using Size2D    = alp::Size_ij<Ind>;      
-    using Rango2D   = alp::Rango_ij<Ind>;
+    using Range2D   = alp::Range_ij<Ind>;
 
     // Iteradores unidimensionales
     using iterator       = T*;
@@ -181,7 +181,7 @@ public:
     Size2D size2D() const {return Size2D{rows(), cols()};}
 
     /// Extensión que ocupa dentro del sistema de referencia local (i, j)
-    Rango2D extension() const {return Rango2D{0, rows(), 0, cols()};}
+    Range2D extension() const {return Range2D{0, rows(), 0, cols()};}
 
 
     // -------------------------------------
@@ -190,17 +190,17 @@ public:
     iterator begin() {return p0();}
     iterator end() {return pe();}
     iterator it(Ind i, Ind j) {return p0() + indice(i, j);}
-    iterator it(const Posicion& p) {return it(p.i, p.j);}
+    iterator it(const Position& p) {return it(p.i, p.j);}
 
     const_iterator begin() const {return p0();}
     const_iterator end() const {return pe();}
     const_iterator it(Ind i, Ind j) const {return p0() + indice(i, j);}
-    const_iterator it(const Posicion& p) const {return it(p.i, p.j);}
+    const_iterator it(const Position& p) const {return it(p.i, p.j);}
 
     const_iterator cbegin() const {return p0();}
     const_iterator cend() const {return pe();}
     const_iterator cit(Ind i, Ind j) const {return p0() + indice(i, j);}
-    const_iterator cit(const Posicion& p) const {return cit(p.i, p.j);}
+    const_iterator cit(const Position& p) const {return cit(p.i, p.j);}
 
 
     // ----------------
@@ -209,8 +209,8 @@ public:
     value_type& operator()(Ind i, Ind j) {return *(p0() + indice(i,j));}
     const value_type& operator()(Ind i, Ind j) const  {return *(p0() + indice(i,j));}
 
-    value_type& operator()(const Posicion& p) {return (*this)(p.i, p.j);}
-    const value_type& operator()(const Posicion& p) const  {return (*this)(p.i, p.j);}
+    value_type& operator()(const Position& p) {return (*this)(p.i, p.j);}
+    const value_type& operator()(const Position& p) const  {return (*this)(p.i, p.j);}
 
 
     // -------------------
@@ -365,20 +365,20 @@ Matrix<T, S>::Matrix(const_row_iterator f0, const_row_iterator fe)
 // Corners (en coordenadas de matriz)
 // ----------------------------------
 template <typename T, typename I>
-Matrix<T,I>::Posicion upper_left_corner(const Matrix<T,I>& m)
+Matrix<T,I>::Position upper_left_corner(const Matrix<T,I>& m)
 {return {0,0};}
 
 
 template <typename T, typename I>
-Matrix<T,I>::Posicion upper_right_corner(const Matrix<T,I>& m)
+Matrix<T,I>::Position upper_right_corner(const Matrix<T,I>& m)
 {return {0, m.cols() - 1};}
 
 template <typename T, typename I>
-Matrix<T,I>::Posicion bottom_left_corner(const Matrix<T,I>& m)
+Matrix<T,I>::Position bottom_left_corner(const Matrix<T,I>& m)
 {return {m.rows() - 1, 0};}
 
 template <typename T, typename I>
-Matrix<T,I>::Posicion bottom_right_corner(const Matrix<T,I>& m)
+Matrix<T,I>::Position bottom_right_corner(const Matrix<T,I>& m)
 {return {m.rows() - 1, m.cols() - 1};}
 
 

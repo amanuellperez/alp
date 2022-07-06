@@ -59,7 +59,7 @@ void test_submatrix_and_matrix_view()
     test::interfaz("Matrix_view and Submatrix");
 
     using Matriz = Matrix<Punto, int>;
-    using Posicion = Matriz::Posicion;
+    using Position = Matriz::Position;
     using Size2D = Matriz::Size2D;
 
     Matrix<Punto, int> m{3, 4};
@@ -79,7 +79,7 @@ void test_submatrix_and_matrix_view()
 	int rows = 2;
 	int cols = 2;
 	int i0 = 0, j0 = 1;
-        Submatrix<Matrix<Punto, int>> sb{m, Posicion{i0,j0}, Size2D{rows,cols}};
+        Submatrix<Matrix<Punto, int>> sb{m, Position{i0,j0}, Size2D{rows,cols}};
 
 	using SB = Submatrix<Matrix<Punto, int>>;
 	static_assert(std::is_same_v<Matrix_view<SB::iterator>::iterator, SB::iterator>,

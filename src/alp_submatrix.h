@@ -143,12 +143,12 @@ public:
 
     // Tipos que definen los contenedores bidimensionales
     using Ind             = typename Container2D::Ind;
-    using Posicion	= typename Container2D::Posicion;
+    using Position	= typename Container2D::Position;
     using Size2D	= typename Container2D::Size2D;
-    using Rango2D	= typename Container2D::Rango2D;
+    using Range2D	= typename Container2D::Range2D;
 
     // interno
-    using Rango2D_acotado = alp::Rango_acotado_ij<Ind>;
+    using Range2D_acotado = alp::Range_acotado_ij<Ind>;
 
     // iterator siempre es iterador unidimensional!!!
     using iterator = std::conditional_t <std::is_const_v<Container2D>,
@@ -176,19 +176,19 @@ public:
 
     /// Creamos una submatrix de la matrix m0, cuya esquina superior
     /// izquierda es p0 y de tamaño Size2D
-    Submatrix(Container2D& m0, const Posicion& p0, const Size2D& sz)
+    Submatrix(Container2D& m0, const Position& p0, const Size2D& sz)
 	:Submatrix{m0, to_rango2D(p0, sz)}
     {}
 
     /// Creamos una submatrix de la matrix m0, cuya esquina superior
     /// izquierda es p0, y la inferior derecha es p1
-    Submatrix(Container2D& m0, const Posicion& p0, const Posicion& p1)
+    Submatrix(Container2D& m0, const Position& p0, const Position& p1)
 	:Submatrix{m0, to_rango2D(p0, p1)}
     {}
 
     /// Creamos una submatrix de la matrix m0. Vemos el rectángulo r.
     /// precondición: r pertenece a la matrix m0
-    Submatrix(Container2D& m0, const Rango2D& rg)
+    Submatrix(Container2D& m0, const Range2D& rg)
 //	:m_{&m0}, rg_{r, extension(m0)}
     {
 	de(m0, rg);  // así es más fácil de mantener
@@ -199,19 +199,19 @@ public:
     // ---------------------------------------------------
     /// Colocamos la submatrix encima de la matrix m0, mostrando la región 
     /// cuya esquina superior izquierda es p0 y tamaño sz.
-    void de(Container2D& m0, const Posicion& p0, const Size2D& sz)
+    void de(Container2D& m0, const Position& p0, const Size2D& sz)
     { de(m0, to_rango2D(p0, sz));}
 
     /// Colocamos la submatrix encima de la matrix m0, mostrando la región 
     /// definida por los puntos [p0, p1] (= rectángulo).
-    void de(Container2D& m0, const Posicion& p0, const Posicion& p1)
+    void de(Container2D& m0, const Position& p0, const Position& p1)
     {de (m0, to_rango2D(p0, p1));}
 
     /// Colocamos la submatrix encima de la matrix m0, mostrando la región r.
-    void de(Container2D& m0, const Rango2D& rg)
+    void de(Container2D& m0, const Range2D& rg)
     {
 	m_ = &m0;
-	rg_ = Rango2D_acotado{rg, m0.extension()};
+	rg_ = Range2D_acotado{rg, m0.extension()};
     }
 
 
@@ -223,21 +223,21 @@ public:
     // dentro del sistema de coordenadas. 
     /// Definimos la nueva extensión de la subimagen
     /// precondición: m_ != nullptr
-    void extension(const Posicion& p0, const Size2D& sz)
+    void extension(const Position& p0, const Size2D& sz)
     {extension(to_rango2D(p0, sz));}
 
     /// Definimos la nueva extensión de la subimagen
     /// precondición: m_ != nullptr
-    void extension(const Posicion& p0, const Posicion& p1)
+    void extension(const Position& p0, const Position& p1)
     { extension(to_rango2D(p0, p1)); }
 
     /// Definimos la nueva extensión de la subimagen
     /// La extensión es el región que ocupa la subimagen dentro de la imagen.
     /// precondición: m_ != nullptr
-    void extension(const Rango2D& rg) { rg_.extension(rg); }
+    void extension(const Range2D& rg) { rg_.extension(rg); }
 
     /// Devuelve la extensión que ocupa la subimagen
-    Rango2D extension() const { return rg_.extension(); }
+    Range2D extension() const { return rg_.extension(); }
 
 
     // -----------
@@ -338,15 +338,15 @@ public:
     const reference operator()(Ind i, Ind j) const 
 	{return (*m_)(I(i),J(j));}
 
-    // El índice de una matrix es Posicion
+    // El índice de una matrix es Position
     // Esta función es la forma natural de acceder
     // a los elementos de una matrix
     /// p = posicón local a la submatrix
-    reference operator()(const Posicion& p)
+    reference operator()(const Position& p)
 	{return (*this)(p.i, p.j);}
 
     /// p = posicón local a la submatrix
-    const reference operator()(const Posicion& p) const 
+    const reference operator()(const Position& p) const 
 	{return (*this)(p.i, p.j);}
 
 
@@ -400,26 +400,26 @@ public:
     // de información de la región
     /// Posición que ocupa la esquina superior izquierda en la matrix
     /// Son coordenadas referentes a la matrix (coordenadas globales)
-    Posicion P0() const {return Posicion{rg_.i0, rg_.j0};}
+    Position P0() const {return Position{rg_.i0, rg_.j0};}
 
     /// Posición que ocupa la esquina inferior derecha en la matrix
     /// Son coordenadas referentes a la matrix (coordenadas globales)
-    Posicion P1() const {return Posicion{rg_.ie - Ind{1}, rg_.je - Ind{1}};}
+    Position P1() const {return Position{rg_.ie - Ind{1}, rg_.je - Ind{1}};}
 
 private:
     Container2D* m_;	// contenedor donde colocamos la máscara
-    Rango2D_acotado rg_; // región que mostramos
+    Range2D_acotado rg_; // región que mostramos
 
     // Convertimos de coordenadas locales a globles: (i,j) --> (I,J)
     Ind I(Ind i) const {return rg_.i0 + i;}
     Ind J(Ind j) const {return rg_.j0 + j;}
 
     // Funciones de ayuda
-    Rango2D to_rango2D(const Posicion& p0, const Posicion& p1)
-    {return Rango2D{p0.i, p1.i + Ind{1}, p0.j, p1.j + Ind{1}};}
+    Range2D to_rango2D(const Position& p0, const Position& p1)
+    {return Range2D{p0.i, p1.i + Ind{1}, p0.j, p1.j + Ind{1}};}
 
-    Rango2D to_rango2D(const Posicion& p0, const Size2D& sz)
-    { return Rango2D{p0.i, p0.i + sz.rows, p0.j, p0.j + sz.cols};}
+    Range2D to_rango2D(const Position& p0, const Size2D& sz)
+    { return Range2D{p0.i, p0.i + sz.rows, p0.j, p0.j + sz.cols};}
 };
 
 

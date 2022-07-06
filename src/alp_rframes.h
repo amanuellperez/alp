@@ -223,7 +223,7 @@ class Reference_frames_xy
 public:
     using Origin = _Reference_frame_xy_origin <Int>;
 
-    // Posiciones del origen respecto del sistema de referencia absoluto.
+    // Positiones del origen respecto del sistema de referencia absoluto.
     inline static Origin origin[num_reference_frames];
 
     template <int N2, int N1>

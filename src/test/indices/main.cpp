@@ -50,17 +50,17 @@ void test_size2D()
 
 void test_posicion()
 {
-    test::interfaz("Posicion_ij");
+    test::interfaz("Position_ij");
 
     {
-    Posicion_ij<int> a;
+    Position_ij<int> a;
     CHECK_TRUE(a.i == 0 and a.j == 0, "a()");
     }
 
-    Posicion_ij<int> a{3,4};
+    Position_ij<int> a{3,4};
     CHECK_TRUE(a.i == 3 and a.j == 4, "a(i,j)");
 
-    Posicion_ij b{5, 10};
+    Position_ij b{5, 10};
 
     a += b;
     CHECK_TRUE(a.i == 8 and a.j == 14, "a += b");
@@ -68,8 +68,8 @@ void test_posicion()
     a -= b;
     CHECK_TRUE(a.i == 3 and a.j == 4, "a(i,j)");
 
-    a = Posicion_ij {1, 1};
-    b = Posicion_ij {3, 3};
+    a = Position_ij {1, 1};
+    b = Position_ij {3, 3};
 
     CHECK_TRUE(!a.esta_a_la_dcha_de(b), "esta_a_la_dcha_de");
     CHECK_TRUE(a.esta_a_la_izda_de(b), "esta_a_la_izda_de");
@@ -79,7 +79,7 @@ void test_posicion()
     a = b;
     CHECK_TRUE(a == b, "==");
 
-    b = Posicion_ij{3,10};
+    b = Position_ij{3,10};
     CHECK_TRUE(a != b, "!=");
 
 
@@ -89,37 +89,37 @@ void test_posicion()
     c = a - b;
     CHECK_TRUE((c.i == a.i - b.i) and (c.j == a.j - b.j), "c = a - b");
 
-    CHECK_TRUE((a_la_dcha_de(a, 1) == a + Posicion_ij{0,1}), "a_la_dcha");
-    CHECK_TRUE((a_la_izda_de(a, 1) == a + Posicion_ij{0,-1}), "a_la_izda");
-    CHECK_TRUE((arriba_de(a, 1) == a + Posicion_ij{-1,0}), "arriba");
-    CHECK_TRUE((abajo_de(a, 1) == a + Posicion_ij{1,0}), "abajo");
+    CHECK_TRUE((a_la_dcha_de(a, 1) == a + Position_ij{0,1}), "a_la_dcha");
+    CHECK_TRUE((a_la_izda_de(a, 1) == a + Position_ij{0,-1}), "a_la_izda");
+    CHECK_TRUE((arriba_de(a, 1) == a + Position_ij{-1,0}), "arriba");
+    CHECK_TRUE((abajo_de(a, 1) == a + Position_ij{1,0}), "abajo");
 
 
-    a = Posicion_ij{1, 1};
-    b = Posicion_ij{5, 7};
+    a = Position_ij{1, 1};
+    b = Position_ij{5, 7};
 
-    CHECK_TRUE((a_la_dcha_de(a, 4, b) == a + Posicion_ij{0, 4}),
+    CHECK_TRUE((a_la_dcha_de(a, 4, b) == a + Position_ij{0, 4}),
                "a_la_dcha_de(ok)");
 
-    CHECK_TRUE((a_la_dcha_de(a, 10, b) == Posicion_ij{1, 7}),
+    CHECK_TRUE((a_la_dcha_de(a, 10, b) == Position_ij{1, 7}),
                "a_la_dcha_de(exceso)");
 
-    CHECK_TRUE((a_la_izda_de(b, 4, a) == b - Posicion_ij{0, 4}),
+    CHECK_TRUE((a_la_izda_de(b, 4, a) == b - Position_ij{0, 4}),
                "a_la_izda(ok)");
 
-    CHECK_TRUE((a_la_izda_de(b, 10, a) ==  Posicion_ij{5, 1}),
+    CHECK_TRUE((a_la_izda_de(b, 10, a) ==  Position_ij{5, 1}),
                "a_la_izda(exceso)");
 
-    a = Posicion_ij{6, 10};
-    b = Posicion_ij{10, 20};
+    a = Position_ij{6, 10};
+    b = Position_ij{10, 20};
 
-    CHECK_TRUE((a_la_dcha_de(a, 2, b) == Posicion_ij{6, 12}),
+    CHECK_TRUE((a_la_dcha_de(a, 2, b) == Position_ij{6, 12}),
                "a_la_dcha_de(ok)");
 
 
 
-    a = Posicion_ij{1, 1};
-    b = Posicion_ij{5, 7};
+    a = Position_ij{1, 1};
+    b = Position_ij{5, 7};
 
     cout << longitud_segmento_h(a,b) << '\n';
     CHECK_TRUE(longitud_segmento_h(a, b) == 7, "longitud_segmento_h");
@@ -132,19 +132,19 @@ void test_posicion()
 void test_rango()
 {
     using Size2D   = Size_ij<int>;
-    using Rango    = Rango_ij<int>;
-    using Posicion = Posicion_ij<int>;
+    using Range    = Range_ij<int>;
+    using Position = Position_ij<int>;
 
     {
-	Rango rg{Posicion{2, 7}, Posicion{4, 10}};
+	Range rg{Position{2, 7}, Position{4, 10}};
 	CHECK_TRUE((rg.i0 == 2 and rg.ie == 5 
-		    and rg.j0 == 7 and rg.je == 11), "Rango_ij()");
+		    and rg.j0 == 7 and rg.je == 11), "Range_ij()");
     }
 
     {
-	Rango rg{Posicion{2, 7}, Size2D{3, 4}};
+	Range rg{Position{2, 7}, Size2D{3, 4}};
 	CHECK_TRUE((rg.i0 == 2 and rg.ie == 5 
-		    and rg.j0 == 7 and rg.je == 11), "Rango_ij()");
+		    and rg.j0 == 7 and rg.je == 11), "Range_ij()");
     }
 
 }
@@ -152,12 +152,12 @@ void test_rango()
 
 void test_rango_acotado()
 {
-    test::interfaz("Rango_acotado_ij");
+    test::interfaz("Range_acotado_ij");
 
-    using Rango         = Rango_acotado_ij<int>::Rango2D;
-    using Rango_acotado = Rango_acotado_ij<int>;
+    using Range         = Range_acotado_ij<int>::Range2D;
+    using Range_acotado = Range_acotado_ij<int>;
 
-    Rango_acotado rg{Rango{3, 6, 3, 8}, Rango{1, 8, 1, 10}};
+    Range_acotado rg{Range{3, 6, 3, 8}, Range{1, 8, 1, 10}};
 
     CHECK_TRUE((rg.i0 == 3 and rg.ie == 6
 		and rg.j0 == 3 and rg.je == 8), "rango ok");
@@ -172,7 +172,7 @@ void test_rango_acotado()
     CHECK_TRUE((sz.rows == rg.rows() and sz.cols == rg.cols()), "size");
 
     {
-	Rango_acotado rg2{rg}; 
+	Range_acotado rg2{rg}; 
 	rg2.muevete_a_la_dcha(-1);
 	CHECK_TRUE((rg2.i0 == 3 and rg2.ie == 6
 		and rg2.j0 == 2 and rg2.je == 7), "muevete_a_la_dcha(-1)");
@@ -182,7 +182,7 @@ void test_rango_acotado()
 		and rg2.j0 == 1 and rg2.je == 6), "muevete_a_la_dcha(-de mas)");
     }
     {
-	Rango_acotado rg2{rg}; 
+	Range_acotado rg2{rg}; 
 	rg2.muevete_arriba(-1);
 	CHECK_TRUE((rg2.i0 == 4 and rg2.ie == 7
 		and rg2.j0 == 3 and rg2.je == 8), "muevete_arriba(-1)");
@@ -195,7 +195,7 @@ void test_rango_acotado()
     }
 
     for (int j = 0; j < 10; ++j){
-	Rango_acotado rg2{rg}; 
+	Range_acotado rg2{rg}; 
 	rg2.muevete_a_la_dcha(j);
 
         CHECK_TRUE((rg2.i0 == rg.i0 and rg2.ie == rg.ie),
@@ -214,7 +214,7 @@ void test_rango_acotado()
  
 
     for (int j = 0; j < 10; ++j){
-	Rango_acotado rg2{rg}; 
+	Range_acotado rg2{rg}; 
 	rg2.muevete_a_la_izda(j);
 
         CHECK_TRUE((rg2.i0 == rg.i0 and rg2.ie == rg.ie),
@@ -239,7 +239,7 @@ void test_rango_acotado()
 
 
     for (int j = 0; j < 10; ++j){
-	Rango_acotado rg2{rg}; 
+	Range_acotado rg2{rg}; 
 	rg2.muevete_abajo(j);
 
         CHECK_TRUE((rg2.j0 == rg.j0 and rg2.je == rg.je),
@@ -258,7 +258,7 @@ void test_rango_acotado()
  
 
     for (int j = 0; j < 10; ++j){
-	Rango_acotado rg2{rg}; 
+	Range_acotado rg2{rg}; 
 	rg2.muevete_arriba(j);
 
         CHECK_TRUE((rg2.j0 == rg.j0 and rg2.je == rg.je),
@@ -277,7 +277,7 @@ void test_rango_acotado()
 
 
     for (int j = 0; j < 10; ++j){
-	Rango_acotado rg2{rg}; 
+	Range_acotado rg2{rg}; 
 	rg2.mueve_lado_dcho_a_la_dcha(j);
 
         CHECK_TRUE((rg2.i0 == rg.i0 and rg2.ie == rg.ie and rg2.j0 == rg.j0),
@@ -294,7 +294,7 @@ void test_rango_acotado()
 
 
     for (int j = 0; j < 10; ++j){
-	Rango_acotado rg2{rg}; 
+	Range_acotado rg2{rg}; 
 	rg2.mueve_lado_dcho_a_la_izda(j);
 
         CHECK_TRUE((rg2.i0 == rg.i0 and rg2.ie == rg.ie and rg2.j0 == rg.j0),
@@ -312,7 +312,7 @@ void test_rango_acotado()
 
 
     for (int j = 0; j < 10; ++j){
-	Rango_acotado rg2{rg}; 
+	Range_acotado rg2{rg}; 
 	rg2.mueve_lado_izdo_a_la_dcha(j);
 
         CHECK_TRUE((rg2.i0 == rg.i0 and rg2.ie == rg.ie and rg2.je == rg.je),
@@ -329,7 +329,7 @@ void test_rango_acotado()
 
 
     for (int j = 0; j < 10; ++j){
-	Rango_acotado rg2{rg}; 
+	Range_acotado rg2{rg}; 
 	rg2.mueve_lado_izdo_a_la_izda(j);
 
         CHECK_TRUE((rg2.i0 == rg.i0 and rg2.ie == rg.ie and rg2.je == rg.je),
@@ -345,18 +345,18 @@ void test_rango_acotado()
     }
 
     {
-	Rango_acotado rg{Rango{5, 3, 7, 4}, Rango{1, 8, 1, 10}};
+	Range_acotado rg{Range{5, 3, 7, 4}, Range{1, 8, 1, 10}};
 
 	CHECK_TRUE((rg.i0 == 3 and rg.ie == 5 and rg.j0 == 4 and rg.je == 7)
 		, "ordena_indices(si)");
 
-	rg = Rango_acotado{Rango{3, 5, 4, 7}, Rango{1, 8, 1, 10}};
+	rg = Range_acotado{Range{3, 5, 4, 7}, Range{1, 8, 1, 10}};
 
 	CHECK_TRUE((rg.i0 == 3 and rg.ie == 5 and rg.j0 == 4 and rg.je == 7)
 		, "ordena_indices(no)");
 
 
-	rg = Rango_acotado{Rango{0, 20, 40, 0}, Rango{1, 8, 2, 10}};
+	rg = Range_acotado{Range{0, 20, 40, 0}, Range{1, 8, 2, 10}};
 
 	cout << rg.i0 << ", " << rg.ie << ", " << rg.j0 << ", " << rg.je << '\n';
 	CHECK_TRUE((rg.i0 == 1 and rg.ie == 8 and rg.j0 == 2 and rg.je == 10)
