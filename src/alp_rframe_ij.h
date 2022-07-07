@@ -865,14 +865,14 @@ inline std::ostream& operator<<(std::ostream& out,
 /***************************************************************************
  *				RELACIONES
  ***************************************************************************/
-// Relación: Position pertenece a ...
-// Idioma: if (pertence(p).a(rg)) ...
+// Relación: Position belongs to ...
+// Idiom: if (belongs(p).to(rg)) ...
 template <typename Int>
-struct Vector_ij_pertenece_a{
-    constexpr Vector_ij_pertenece_a(const Vector_ij<Int>& p0):p{p0}{}
+struct Vector_ij_belongs_to{
+    constexpr Vector_ij_belongs_to(const Vector_ij<Int>& p0):p{p0}{}
 
-    // ¿pertenece p al rango rg?
-    constexpr bool a(const Range_ij<Int>& rg){
+    // p belongs to range rg?
+    constexpr bool to(const Range_ij<Int>& rg){
 	return  (rg.i0 <= p.i  and p.i < rg.ie) 
 	    and (rg.j0 <= p.j  and p.j < rg.je);
     }
@@ -880,10 +880,10 @@ struct Vector_ij_pertenece_a{
     const Vector_ij<Int>& p;
 };
 
-// Idioma: if (pertence(p).a(rg)) ...
+// Idiom: if (belongs(p).to(rg)) ...
 template <typename Int>
-constexpr Vector_ij_pertenece_a<Int> pertenece(const Vector_ij<Int>& p)
-{return Vector_ij_pertenece_a<Int>{p};}
+constexpr Vector_ij_belongs_to<Int> belongs(const Vector_ij<Int>& p)
+{return Vector_ij_belongs_to<Int>{p};}
 
 
 
