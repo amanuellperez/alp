@@ -7,6 +7,7 @@ DIRS = cast 	\
 	exception 	\
 	functional 	\
 	iterator 	\
+	istream		\
 	math 		\
 	matrix 		\
 	rframe_ij	\

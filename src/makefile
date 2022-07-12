@@ -30,6 +30,7 @@ INCS= alp_algorithm.h 	\
 	alp_gen.h 			\
 	alp_getopts.h		\
 	alp_iso88591.h		\
+	alp_istream.h		\
 	alp_iterator.h 		\
 	alp_math_efunc.h 	\
 	alp_math.h 			\
