@@ -2,7 +2,7 @@
 //           mail: <amanuel.lperez@gmail.com>
 //           https://github.com/amanuellperez/mcu
 //
-// This file is part of the MCU++ Library.
+// This file is part of the ALP Library.
 //
 // MCU++ Library is a free library: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
