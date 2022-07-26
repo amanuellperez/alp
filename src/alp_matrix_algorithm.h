@@ -158,7 +158,7 @@ inline void print(const std::string& fname, const M& m)
 // filas y columnas y luego convertirlo en matriz.
 // Por este mismo motivo no podemos definirlo como:
 //	    read(in, matrix); // de qué dimensiones matrix???
-template <typename T, typename I>
+template <typename T, typename I = size_t>
 Matrix<T, I> read_matrix(std::istream& in)
 {
     std::vector<T> file;
