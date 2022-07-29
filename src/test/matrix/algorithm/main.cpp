@@ -258,6 +258,24 @@ void test_transform2D()
 
 }
 
+void test_y_symmetry()
+{
+    test::interfaz("y_symmetry");
+
+    {
+	std::vector<int> vx = {1,2,3,4,5,
+	                       6,7,8,9,0};
+	std::vector<int> res= {5,4,3,2,1,
+	                       0,9,8,7,6};
+
+	alp::Matrix<int> x{2,5};
+	std::copy(vx.begin(), vx.end(), x.begin());
+	x = alp::y_symmetry(x);
+
+	CHECK_EQUAL_CONTAINERS_C(x, res, "y_symmetry");
+    }
+}
+
 
 int main()
 {
@@ -271,6 +289,7 @@ try{
     test_algorithm();
     test_transform1D();
     test_transform2D();
+    test_y_symmetry();
 
 }catch(std::exception& e){
     std::cerr << e.what() << std::endl;

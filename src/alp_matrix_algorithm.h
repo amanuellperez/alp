@@ -34,6 +34,7 @@
  *       16/03/2020 Reestructurado.
  *       26/05/2020 transform1D/2D.
  *       06/12/2020 transform1D_alrededor
+ *       29/07/2022 y_symmetry
  *
  ****************************************************************************/
 
@@ -213,6 +214,22 @@ Output_row_iterator adjacent_difference2D(Input_row_iterator f0,
     return g0;
 }
 
+
+
+// Devuelve la matriz simétrica a m0 , respecto del eje y
+template <typename T, typename I>
+Matrix<T,I> y_symmetry(const Matrix<T,I>& m)
+{
+    using Ind = Matrix<T, I>::Ind;
+
+    Matrix<T,I> res{m.rows(), m.cols()};
+
+    for(Ind i = 0; i < m.rows(); ++i)
+	for(Ind j = 0, jp = m.cols()-1; j < m.cols(); ++j, --jp)
+	    res(i, j) = m(i,jp);
+
+    return res;
+}
 
 /****************************************************************************
  *			ALGORITMOS PARA ITERAR (for_each)
