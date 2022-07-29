@@ -276,6 +276,31 @@ void test_y_symmetry()
     }
 }
 
+void test_rotate()
+{
+    test::interfaz("rotate");
+
+    {
+	std::vector<int> vx = {1,2,3,4,5,
+	                       6,7,8,9,0};
+	std::vector<int> res= {5, 0,
+			       4, 9,
+			       3, 8,
+			       2, 7, 
+			       1, 6};
+
+
+	alp::Matrix<int> x0{2,5};
+	std::copy(vx.begin(), vx.end(), x0.begin());
+	auto x = alp::rotate_plus90(x0);
+
+	CHECK_EQUAL_CONTAINERS_C(x, res, "rotate_plus90");
+	x = alp::rotate_minus90(x);
+	CHECK_EQUAL_CONTAINERS_C(x, x0, "rotate_minus90");
+
+    }
+}
+
 
 int main()
 {
@@ -290,6 +315,7 @@ try{
     test_transform1D();
     test_transform2D();
     test_y_symmetry();
+    test_rotate();
 
 }catch(std::exception& e){
     std::cerr << e.what() << std::endl;

@@ -34,7 +34,7 @@
  *       16/03/2020 Reestructurado.
  *       26/05/2020 transform1D/2D.
  *       06/12/2020 transform1D_alrededor
- *       29/07/2022 y_symmetry
+ *       29/07/2022 y_symmetry, rotate_plus90, rotate_minus90
  *
  ****************************************************************************/
 
@@ -230,6 +230,42 @@ Matrix<T,I> y_symmetry(const Matrix<T,I>& m)
 
     return res;
 }
+
+
+// Rota la imagen +90 grados.
+//
+// Para rotar una matriz: m = rotate_plus90(m);
+template <typename T, typename In>
+Matrix<T, In> rotate_plus90(const Matrix<T,In>& m)
+{
+    Matrix<T,In> res{m.cols(), m.rows()};
+
+    using size_t = Matrix<T,In>::Ind;
+    for(size_t I = 0; I < m.rows(); ++I)
+	for(size_t J = 0, i = res.rows() - 1; J < m.cols(); ++J, --i)
+	    res(i, I) = m(I, J);
+
+    return res;
+}
+
+
+
+// Rota la imagen -90 grados.
+//
+// Para rotar una imagen: m = rotate_minus90(m);
+template <typename T, typename In>
+Matrix<T, In> rotate_minus90(const Matrix<T, In>& m)
+{
+    Matrix<T,In> res{m.cols(), m.rows()};
+    
+    using size_t = Matrix<T,In>::Ind;
+    for(size_t I = 0, j = res.cols() - 1; I < m.rows(); ++I, --j)
+	for(size_t J = 0; J < m.cols(); ++J)
+	    res(J, j) = m(I, J);
+
+    return res;
+}
+
 
 /****************************************************************************
  *			ALGORITMOS PARA ITERAR (for_each)
