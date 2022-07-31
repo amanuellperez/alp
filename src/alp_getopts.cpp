@@ -47,7 +47,7 @@ std::pair<const std::string&, Getopts::vble_option&>
     auto p = str_opts_.find(opt);
     if (p == str_opts_.end())
         throw Getopts_error{help_, alp::as_str()
-                                         << "Opción " << opt << " desconocida"};
+                                         << "Unknown option " << opt};
                                          
 
     return {p->first, p->second};
@@ -60,7 +60,7 @@ std::pair<char, Getopts::vble_option&>
     auto p = char_opts_.find(opt);
     if (p == char_opts_.end())
         throw Getopts_error{help_, alp::as_str()
-                                         << "Opción " << opt << " desconocida"};
+                                         << "Unknown option " << opt};
                                          
     return {p->first, p->second};
 }
@@ -118,7 +118,7 @@ std::vector<std::string>::iterator
 
     else{
 	++a;
-	if (a == args_end or (*a)[0] == '-')
+	if (a == args_end)
 	    throw Getopts_error{help_, alp::as_str()
 					 << "Opción -" << c_opt
 					 << " no tiene argumento"};
@@ -135,6 +135,7 @@ std::vector<std::string>::iterator
 
 	else
 	    *std::get<std::string*>(opt) = *a;
+
 	}catch(std::invalid_argument& e){
             throw Getopts_error{help_,
                                 alp::as_str() << "El argumento de la opción -"
@@ -163,7 +164,7 @@ std::vector<std::string>::iterator
     else{
 	try{
 	++a;
-	if (a == args_end or (*a)[0] == '-')
+	if (a == args_end)
 	    throw Getopts_error{help_, alp::as_str()
 					 << "Opción --" << str_opt
 					 << " no tiene argumento"};
@@ -204,6 +205,7 @@ std::vector<std::string>::iterator
 
     if ((*a)[1] == '-') // --option
 	return parse_string_option(a, args_end);
+
     else    // -option
 	return parse_char_option(a, args_end);
 }
@@ -213,6 +215,7 @@ std::vector<std::string> Getopts::parse(int argc, char* argv[])
 {
     std::vector<std::string> args = cmd_line2vector(argc, argv);
     std::vector<std::string> resto;
+
     auto a = args.begin();
     while (a != args.end()){
 	if ((*a)[0] == '-')
@@ -223,6 +226,7 @@ std::vector<std::string> Getopts::parse(int argc, char* argv[])
 	    ++a;
 	}
     }
+
     if (num_min_args_ != -1 and
 		        (resto.size() < narrow_cast<size_t>(num_min_args_)))
         throw Getopts_error{help_, alp::as_str()

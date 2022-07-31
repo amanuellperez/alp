@@ -182,7 +182,7 @@ Matrix<T, I> read_matrix(std::istream& in)
 
 
 /// Lee una matriz de Ints desde un fichero.
-template <typename T, typename I>
+template <typename T, typename I = size_t>
 inline Matrix<T, I> read_matrix(const std::string& nom_fichero)
 {
     std::ifstream in{nom_fichero};

@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2021 A.Manuel L.Perez <amanuel.lperez@gmail.com>
+// Copyright (C) 2019-2022 A.Manuel L.Perez <amanuel.lperez@gmail.com>
 //
 // This file is part of the ALP Library.
 //
@@ -35,6 +35,9 @@
  *     A.Manuel L.Perez
  *     29/04/2019 Escrito
  *     01/11/2021 Soporte para unsigned int
+ *     31/07/2022 Bug: no admitía números negativos. Corregido.
+ *		  OJO: ahora los argumentos pueden empezar por '-' y es 
+ *		  argumento, no opción.
  *
  ****************************************************************************/
 #include <vector>
@@ -89,8 +92,7 @@ public:
     /// Como mínimo esperamos num_min_args de argumentos.
     Getopts(int num_min_args, const std::string& help)
         : num_min_args_{num_min_args}, help_{help}
-    {
-    }
+    { }
 
     // Opciones de caracter: -c
     // ------------------------
@@ -147,20 +149,20 @@ public:
     std::vector<std::string> parse(int argc, char* argv[]);
 
 
-    /// Devuelve un puntero de argv a la primera posición donde comienza 
-    /// el resto de argumentos (los que no corresponden a opciones).
-    // DUDA: ¿necesito esto? 
-    // En principio lo necesito para interaccionar con funciones de C, lo 
-    // que es poco probable.
-    // Si se usase mucho, un mejor diseño sería que parse devolviera un índice
-    // a la posición de argv donde comienza el resto de los argumentos.
-    static char** args2pointer_in_argv( const std::vector<std::string>& args,
-				int argc, char* argv[])
-    { return &argv[argc - args.size() + 1]; }
+// 31/07/2022 - Lo comento. Nunca lo he usado.
+//    /// Devuelve un puntero de argv a la primera posición donde comienza 
+//    /// el resto de argumentos (los que no corresponden a opciones).
+//    // DUDA: ¿necesito esto? 
+//    // En principio lo necesito para interaccionar con funciones de C, lo 
+//    // que es poco probable.
+//    // Si se usase mucho, un mejor diseño sería que parse devolviera un índice
+//    // a la posición de argv donde comienza el resto de los argumentos.
+//    static char** args2pointer_in_argv( const std::vector<std::string>& args,
+//				int argc, char* argv[])
+//    { return &argv[argc - args.size() + 1]; }
 
 private:
-	
-    // Datos
+// Data
     int num_min_args_;	    // número mínimo de argumentos. si -1 se ignora
     const std::string help_;
 
@@ -173,7 +175,7 @@ private:
     std::map<std::string, vble_option> str_opts_;
     std::map<char, vble_option> char_opts_;
     
-    // Funciones de ayuda
+// Helper functions
     // Convierte los argumentos (argc, argv) en un vector de strings
     // (más cómodos de manejar). Excluye argv[0], que es el nombre del
     // programa.

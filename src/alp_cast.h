@@ -55,8 +55,8 @@ Target narrow_cast_int(Source v)
     auto r = static_cast<Target>(v);
 
     if (static_cast<Source>(r) != v){
-	throw Fail_cast("narrow_cast_int", 
-		    as_str() << "[" << v << "] -> [" << r << "]");
+	throw std::logic_error(
+	    as_str() << "narrow_cast_int: Can't cast [" << v << "] to [" << r << "]");
     }
 
     return v;

@@ -103,7 +103,7 @@ void test_matrix()
 	for (size_t j = 0; j < f.size(); ++j)
 	    CHECK_TRUE(f[j] == m1(i,j), "row[]");
 
-	size_t j = 0;
+	int j = 0;
 	for (auto x: f){
 	    CHECK_TRUE(x == m1(i,j), "for range");
 	    ++j;
@@ -113,7 +113,7 @@ void test_matrix()
 
     for(size_t i = 0; i < m2.rows(); ++i){
 	auto f = m2.row(i); // versión const
-	size_t j = 0;
+	int j = 0;
 	for(auto p = f.begin(); p != f.end(); ++p, ++j)
 	    CHECK_TRUE(m2(i,j) == *p, "row");
     }
@@ -121,7 +121,7 @@ void test_matrix()
 
     {// row_begin/row_end
 	auto f0 = m1.row_begin();
-	size_t j = 0;
+	int j = 0;
 	for(auto p = f0->begin(); p != f0->end(); ++p, ++j)
 	    CHECK_TRUE(m1(0,j) == *p, "row_begin()");
 
@@ -133,7 +133,7 @@ void test_matrix()
 
     {
 	auto f0 = m1.row_begin();
-	size_t j = 0;
+	int j = 0;
 	for(auto p = f0->begin(); p != f0->end(); ++p, ++j)
 	    CHECK_TRUE(m1(0,j) == *p, "row_begin()");
 
@@ -153,7 +153,7 @@ void test_matrix()
 
     size_t i = 0;
     for(auto f = m1.row_begin(); f != m1.row_end(); ++f, ++i){
-	size_t j = 0;
+	int j = 0;
 	for(auto p = f->begin(); p != f->end(); ++p, ++j){
 	    CHECK_TRUE(*p == m1(i,j), "");
 	}

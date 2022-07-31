@@ -40,9 +40,12 @@ try{
     bool b2 = false;
     bool help = false;
 
+    bool str = false;
+    int number = 0;
+
     Getopts args{1,
                  "Forma de uso: xx [-o output] [-i input] [-t time] [-n num] "
-                 "[-u unum] [-k] file [file2...]"};
+                 "[-u unum] [-k] [-1] [-2] [--str] [--number n] file [file2...]"};
 
     args.add_option('o', output);
     args.add_option('i', input);
@@ -52,6 +55,9 @@ try{
     args.add_option('k', ok);
     args.add_option('1', b1);
     args.add_option('2', b2);
+    args.add_option("str", str);
+    args.add_option("number", number);
+
 
     // TODO: añadir -help (se le puede añadir en la función parse. Se mira si
     // tiene esta opción, si no la tiene, se toma por defecto -help).
@@ -62,14 +68,16 @@ try{
 	return 1;
     }
 
-    std::cout << "n " << num << "\n";
-    std::cout << "u " << unum << "\n";
-    std::cout << "time " << time << "\n";
-    std::cout << "i " << input << "\n";
-    std::cout << "o " << output << "\n";
-    std::cout << "k " << ok << "\n";
-    std::cout << "1 " << b1 << "\n";
-    std::cout << "2 " << b2 << "\n";
+    std::cout << "n " << num << '\n';
+    std::cout << "u " << unum << '\n';
+    std::cout << "time " << time << '\n';
+    std::cout << "i " << input << '\n';
+    std::cout << "o " << output << '\n';
+    std::cout << "k " << ok << '\n';
+    std::cout << "1 " << b1 << '\n';
+    std::cout << "2 " << b2 << '\n';
+    std::cout << "str " << str << '\n';
+    std::cout << "number " << number << '\n';
 
     for (auto x: resto)
 	std::cout << "resto " << x << "\n";
