@@ -59,6 +59,8 @@ void test_matrix()
 	for (size_t j = 0; j < m1.cols(); ++j)
 	    m1(i,j) = i*m1.cols() + j;
 
+    std::cout << "Testing 'const Matrix' as parameter of a function\n";
+    print(m1);
 
     for (size_t i = 0; i < m1.rows(); ++i){
 	for (size_t j = 0; j < m1.cols(); ++j){

@@ -33,7 +33,9 @@ void test_read_matrix()
     {// flujo
     std::stringstream file;
     file << "1 2 3\n"
-	    "4 5 6\n";
+	    "4 5 6\n"
+	    "\n"
+	    "Esto ya no lo lee";
 
     std::vector<int> res = {1,2,3,4,5,6};
     auto m = alp::read_matrix<int, size_t>(file);

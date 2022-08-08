@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
+// Copyright (C) 2019-2022 A.Manuel L.Perez <amanuel.lperez@gmail.com>
 //
 // This file is part of the ALP Library.
 //
@@ -153,6 +153,11 @@ inline void print(const std::string& fname, const M& m)
 
 
 /// Lee una matriz de Ints desde un flujo.
+/// Lee hasta encontrar una línea vacía o EOF.
+// TODO: De momento no es nada robusta la función: da por supuesto que el fichero
+//contiene una matriz. No valida que todas las líneas tengan el mismo número
+//de columnas, y creo que si metes una línea de palabras en medio simplemente
+//la ignora (debería de dar error). 
 // El problema es que cuando vamos a leer una matriz de un flujo a priori
 // no conocemos sus dimensiones. 
 // Solución 1: cargar todo el fichero en un vector calculando el número de
@@ -168,6 +173,9 @@ Matrix<T, I> read_matrix(std::istream& in)
 
     std::string line;
     while (std::getline(in, line)){
+	if (line.empty())
+	    break;
+
 	++rows;
 	std::istringstream str{line};
 	T tmp;
