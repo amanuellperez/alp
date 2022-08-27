@@ -35,6 +35,7 @@
  *       26/05/2020 transform1D/2D.
  *       06/12/2020 transform1D_alrededor
  *       29/07/2022 y_symmetry, rotate_plus90, rotate_minus90
+ *	 27/08/2022 h_differences
  *
  ****************************************************************************/
 
@@ -222,6 +223,37 @@ Output_row_iterator adjacent_difference2D(Input_row_iterator f0,
     return g0;
 }
 
+
+// Devuelve la matriz de diferencias horizontales.
+// Ej:
+//	x = 100 90 70       y = -10 -20
+//	     20 30 30  -->      +10  0
+//
+// Sería mas "standard" llamarlo adjacent_difference, pero no me gusta el
+// nombre. Además, en matrices siempre tengo dos tipos de diferencias:
+// horizontales y verticales (h_differences and v_differences)
+template <typename T, typename I>
+Matrix<T,I> h_differences(const Matrix<T,I>& x)
+{
+    if (x.cols() < 2)
+	return x;
+
+    Matrix<T, I> y{x.rows(), x.cols() - 1};
+
+    auto f = x.row_begin();
+    auto g = y.row_begin();
+    
+    for (; f != x.row_end(); ++f, ++g){
+	auto p0 = f->begin();
+	auto p1 = std::next(p0);
+	auto q = g->begin();
+
+	for (; p1 != f->end(); ++p0, ++p1, ++q)
+	    *q = ((*p1) - (*p0));
+    }
+
+    return y;
+}
 
 
 // Devuelve la matriz simétrica a m0 , respecto del eje y

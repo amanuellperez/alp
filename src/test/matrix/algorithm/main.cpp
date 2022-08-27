@@ -304,6 +304,48 @@ void test_rotate()
 }
 
 
+void test_differences()
+{
+    test::interfaz("h_differences");
+
+{// basico
+    std::vector<int> vx = {100, 90, 70,
+			   20, 30, 30};
+    std::vector<int> res= {-10, -20,
+			   +10, 0};
+
+
+    alp::Matrix<int> x{2,3};
+    std::copy(vx.begin(), vx.end(), x.begin());
+    auto y = alp::h_differences(x);
+
+//    print(std::cout, y);
+    CHECK_TRUE(y.rows() == x.rows() 
+	    and y.cols() == (x.cols() - 1), "size");
+    CHECK_EQUAL_CONTAINERS_C(y, res, "h_differences");
+
+}
+
+{// una linea
+    std::vector<int> vx = {1, 2, 4, 7, 11};
+    std::vector<int> res= {1, 2, 3, 4};
+
+
+    alp::Matrix<int> x{1,5};
+    std::copy(vx.begin(), vx.end(), x.begin());
+    auto y = alp::h_differences(x);
+
+//    print(std::cout, y);
+    CHECK_TRUE(y.rows() == x.rows() 
+	    and y.cols() == (x.cols() - 1), "size");
+    CHECK_EQUAL_CONTAINERS_C(y, res, "h_differences");
+}
+
+
+
+}
+
+
 int main()
 {
 try{
@@ -318,6 +360,7 @@ try{
     test_transform2D();
     test_y_symmetry();
     test_rotate();
+    test_differences();
 
 }catch(std::exception& e){
     std::cerr << e.what() << std::endl;

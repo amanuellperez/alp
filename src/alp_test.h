@@ -216,10 +216,11 @@ inline void check_equal_containers(It1 p0, It1 pe,
 {
     print_prueba(prueba);
 
-    for(; p0 != pe and q0 != qe; ++p0, ++q0)
+    int i = 0;
+    for(; p0 != pe and q0 != qe; ++p0, ++q0, ++i)
         if (*p0 != *q0) {
 	    std::ostringstream out;
-	    out << "*p = [" << *p0 << "] != q = [" << *q0 << "]\n";
+	    out << "p[" << i << "] = [" << *p0 << "] != q = [" << *q0 << "]\n";
 
 	    throw Error{prueba, out.str()};
         }
