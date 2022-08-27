@@ -340,9 +340,42 @@ void test_differences()
 	    and y.cols() == (x.cols() - 1), "size");
     CHECK_EQUAL_CONTAINERS_C(y, res, "h_differences");
 }
+}
 
 
+void test_operations()
+{
+    test::interfaz("operations");
 
+{// basic +
+    std::vector<int> va = {1, 2, 3, 
+			   4, 5, 6};
+    std::vector<int> vb = {10, 20, 30,
+			   40, 50, 60};
+
+    std::vector<int> res = {11, 22, 33,
+			   44, 55, 66};
+
+    auto a = alp::vector2matrix(va, 2);
+    auto b = alp::vector2matrix(vb, 2);
+    alp::Matrix<int, int> c = a + b;
+    CHECK_EQUAL_CONTAINERS_C(c, res, "operator+");
+}
+
+{// basic -
+    std::vector<int> va = {1, 2, 3, 
+			   4, 5, 6};
+    std::vector<int> vb = {10, 20, 30,
+			   40, 50, 60};
+
+    std::vector<int> res = {9, 18, 27,
+			    36, 45, 54};
+
+    auto a = alp::vector2matrix(va, 2);
+    auto b = alp::vector2matrix(vb, 2);
+    alp::Matrix<int, int> c = b - a;
+    CHECK_EQUAL_CONTAINERS_C(c, res, "operator-");
+}
 }
 
 
@@ -361,6 +394,7 @@ try{
     test_y_symmetry();
     test_rotate();
     test_differences();
+    test_operations();
 
 }catch(std::exception& e){
     std::cerr << e.what() << std::endl;

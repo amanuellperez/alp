@@ -35,7 +35,7 @@
  *       26/05/2020 transform1D/2D.
  *       06/12/2020 transform1D_alrededor
  *       29/07/2022 y_symmetry, rotate_plus90, rotate_minus90
- *	 27/08/2022 h_differences
+ *	 27/08/2022 h_differences, operator+ (a+b), operator- (a-b)
  *
  ****************************************************************************/
 
@@ -79,7 +79,7 @@ void copia_dentro  ( const Container2D& m0    // copiamos m0 en
 /// Convierte un vector 'v' en una Matrix de 'rows x cols' dimensiones.
 /// Precondicion: v.size() = rows * cols;
 template <typename T, typename I>
-Matrix<T, I> vector2matrix(std::vector<T>& v, I rows)
+Matrix<T, I> vector2matrix(const std::vector<T>& v, I rows)
 {
     Matrix<T, I> m{rows, narrow_cast<I>(v.size())/rows};
 
@@ -253,6 +253,52 @@ Matrix<T,I> h_differences(const Matrix<T,I>& x)
     }
 
     return y;
+}
+
+
+template <typename T, typename I>
+Matrix<T,I> operator+(const Matrix<T,I>& a, const Matrix<T,I>& b)
+{
+    if (a.size2D() != b.size2D())
+	throw std::logic_error{"Can't add matrix of different size"};
+
+    Matrix<T, I> res{a.rows(), a.cols()};
+
+    auto pa = a.begin();
+    auto pb = b.begin();
+    auto q  = res.begin();
+
+    while (pa != a.end()){
+	*q = (*pa + *pb); //  == (*q++ = *pa++ + *pb++) ??? @_@ xD
+	++pa;
+	++pb;
+	++q;
+    }
+
+    return res;
+}
+
+
+template <typename T, typename I>
+Matrix<T,I> operator-(const Matrix<T,I>& a, const Matrix<T,I>& b)
+{
+    if (a.size2D() != b.size2D())
+	throw std::logic_error{"Can't subtract matrix of different size"};
+
+    Matrix<T, I> res{a.rows(), a.cols()};
+
+    auto pa = a.begin();
+    auto pb = b.begin();
+    auto q  = res.begin();
+
+    while (pa != a.end()){
+	*q = (*pa - *pb); //  == (*q++ = *pa++ + *pb++) ??? @_@ xD
+	++pa;
+	++pb;
+	++q;
+    }
+
+    return res;
 }
 
 
