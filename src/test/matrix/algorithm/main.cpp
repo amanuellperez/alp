@@ -292,13 +292,21 @@ void test_rotate()
 			       1, 6};
 
 
-	alp::Matrix<int> x0{2,5};
-	std::copy(vx.begin(), vx.end(), x0.begin());
+	auto x0 = alp::vector2matrix(vx, 2);
 	auto x = alp::rotate_plus90(x0);
 
 	CHECK_EQUAL_CONTAINERS_C(x, res, "rotate_plus90");
 	x = alp::rotate_minus90(x);
 	CHECK_EQUAL_CONTAINERS_C(x, x0, "rotate_minus90");
+
+	// rotate_180 = 2 rotate_90
+	auto x180 = alp::rotate_180(x);
+	auto x90 = alp::rotate_plus90(x);
+	x90 = alp::rotate_plus90(x90);
+
+	CHECK_TRUE(x180.rows() == x.rows() 
+		and x180.cols() == x.cols(), "size");
+	CHECK_EQUAL_CONTAINERS_C(x180, x90, "rotate_180");
 
     }
 }

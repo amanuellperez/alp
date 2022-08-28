@@ -36,6 +36,7 @@
  *       06/12/2020 transform1D_alrededor
  *       29/07/2022 y_symmetry, rotate_plus90, rotate_minus90
  *	 27/08/2022 h_differences, operator+ (a+b), operator- (a-b)
+ *	 28/08/2022 rotate_180
  *
  ****************************************************************************/
 
@@ -351,6 +352,25 @@ Matrix<T, In> rotate_minus90(const Matrix<T, In>& m)
 
     return res;
 }
+
+
+// Rota la imagen +180 grados. Es equivalente a rotarla dos veces 90 grados.
+//
+// Para rotar una matriz: m = rotate_180(m);
+template <typename T, typename In>
+Matrix<T, In> rotate_180(const Matrix<T,In>& m)
+{
+    using size_t = Matrix<T,In>::Ind;
+
+    Matrix<T,In> res{m.rows(), m.cols()};
+
+    for(size_t I = 0; I < m.rows(); ++I)
+	for(size_t J = 0; J < m.cols(); ++J)
+	    res(m.rows() - 1 - I, m.cols() - 1 - J) = m(I, J);
+
+    return res;
+}
+
 
 
 /****************************************************************************
