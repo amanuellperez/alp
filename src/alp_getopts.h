@@ -44,11 +44,13 @@
 #include <string>
 #include <variant>
 #include <map>
+#include <stdexcept>
 
 namespace alp{
 
 /// En caso de que se produzca algún error en Getopts se lanza esta excepción
-struct Getopts_error : public std::runtime_error{
+class Getopts_error : public std::runtime_error{
+public:
     Getopts_error(const std::string& help, const std::string& msg);
 };
 
