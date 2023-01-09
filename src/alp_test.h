@@ -31,19 +31,20 @@
  *    10/05/2020 CHECK_EXCEPTION
  *    30/07/2020 CHECK_DONT_COMPILE
  *    23/07/2021 CHECK_PRINT
+ *    09/01/2023 Experimentando con std::source_location. Elimino macros.
  *
  ****************************************************************************/
 #include <string>
 #include <iostream>
 #include <sstream>
 #include <iomanip>
+#include <source_location>
 
 #include "alp_exception.h"
 
 namespace test{
 
-
-struct Datos{
+struct Data{
     static std::string archivo_cabecera;    // que probamos
     static std::string interfaz;    // interfaz que estamos probando
     constexpr static int ancho_msg_prueba = 30;
@@ -57,7 +58,7 @@ inline void print_prueba(const std::string& prueba)
     auto flags0 = std::cout.flags();
 
     std::cout << std::left << std::setfill('.') 
-	      << std::setw(Datos::ancho_msg_prueba) << prueba;
+	      << std::setw(Data::ancho_msg_prueba) << prueba;
 
     std::cout.flags(flags0);	
 }
@@ -71,11 +72,11 @@ public:
 	msg_error << "\n\n-------------------------------------------\n"
 		"ERROR ";
 
-	if (!Datos::file_error.empty())
-		msg_error << Datos::file_error << '[' << Datos::line_error << "]\n";
+	if (!Data::file_error.empty())
+		msg_error << Data::file_error << '[' << Data::line_error << "]\n";
 
-	if (!Datos::interfaz.empty())
-	    msg_error << "Función: " << Datos::interfaz << "\n";
+	if (!Data::interfaz.empty())
+	    msg_error << "Función: " << Data::interfaz << "\n";
 	
 	msg_error <<  "Prueba: " << prueba << "\n";
 	
@@ -91,18 +92,18 @@ public:
 
 inline void header(const std::string& archivo_cabecera)
 { 
-    Datos::archivo_cabecera = archivo_cabecera; 
+    Data::archivo_cabecera = archivo_cabecera; 
 
     std::cout << "\n\n=================================\n"
-	      << "Archivo: " << archivo_cabecera << '\n'
+	      << "Header: " << archivo_cabecera << '\n'
 	      << "=================================\n";
 }
 
 inline void interfaz(const std::string& interfaz)
 { 
-    Datos::interfaz = interfaz; 
+    Data::interfaz = interfaz; 
     std::cout << "\n\n---------------------------------\n"
-	      << "Interfaz: " << interfaz << '\n'
+	      << "Interface: " << interfaz << '\n'
 	      << "---------------------------------\n";
 }
 
@@ -117,47 +118,78 @@ inline void interface(const std::string& str)
 /// \code
 ///	test::check_bool(a == 3, true, "operator==");
 /// \endcode
-inline void check_bool(bool condicion, bool resultado
-					, const std::string& prueba)
+inline void check_bool	( bool condicion
+			, bool resultado
+			, const std::string& prueba
+			, const std::source_location loc = std::source_location::current())
 {
     std::cout << prueba;
 
     if(condicion == resultado)
 	std::cout << " OK\n";
-    else
+    else{
+	test::Data::file_error = loc.file_name(); 
+	test::Data::line_error = loc.line(); 
 	throw Error{prueba};
+    }
 }
 
 
-/// Comprueba que la condicion pasada es true.
-/// Ejemplo:
-/// \code
-///	test::check_bool(a == 3, "operator==");
-/// \endcode
-inline void check_true(bool condicion, const std::string& prueba)
-{ check_bool(condicion, true, prueba); }
+///// Comprueba que la condicion pasada es true.
+///// Ejemplo:
+///// \code
+/////	test::check_bool(a == 3, "operator==");
+///// \endcode
+//inline void check_true(  bool condicion
+//		       , const std::string& prueba
+//		       , const std::source_location loc = std::source_location::current())
+//{ check_bool(condicion, true, prueba, loc); }
+//
+///// Comprueba que la condicion pasada es false.
+//inline void check_false	( bool condicion
+//			, const std::string& prueba
+//		        , const std::source_location loc = std::source_location::current())
+//{ check_bool(condicion, false, prueba, loc); }
+//
 
-/// Comprueba que la condicion pasada es false.
-inline void check_false(bool condicion, const std::string& prueba)
-{ check_bool(condicion, false, prueba); }
+// Para hacer pruebas me gusta mas usar las letras CHECK_TRUE en mayúsculas.
+// De esa forma se ve claramente la diferencia entre la prueba y el check.
+inline void CHECK_TRUE(bool condition, 
+		const std::string& test_name,
+		const std::source_location loc = std::source_location::current())
+{ check_bool(condition, true, test_name, loc); }
+
+inline void CHECK_FALSE(bool condition, 
+		const std::string& test_name,
+		const std::source_location loc = std::source_location::current())
+{ check_bool(condition, false, test_name, loc); }
 
 
+
+/*
 #define CHECK_TRUE(condicion, prueba) \
-	    {test::Datos::file_error = __FILE__; \
-	    test::Datos::line_error = __LINE__; \
+	    {test::Data::file_error = __FILE__; \
+	    test::Data::line_error = __LINE__; \
 	    test::check_true((condicion), (prueba));}
 
 #define CHECK_FALSE(condicion, prueba) \
-	    {test::Datos::file_error = __FILE__; \
-	    test::Datos::line_error = __LINE__; \
+	    {test::Data::file_error = __FILE__; \
+	    test::Data::line_error = __LINE__; \
 	    test::check_false((condicion), (prueba));}
 
+*/
 
 // Algunas prueba no sé cómo hacerlas automáticamente. Lo que hago es las
 // imprimo en pantalla mostrando el resultado que tendría que tener y con un
 // script hacemos la comprobación.
-#define CHECK_STDOUT(res, res_ok) \
-	(std::cout << "check[" << __FILE__ << '-' << __LINE__ <<"]: " << res << " =? " << res_ok << '\n')
+template <typename T0, typename T1>
+inline void CHECK_STDOUT(const T0& res, const T1& res_ok
+		  , const std::source_location loc = std::source_location::current())
+{
+    std::cout	<< "check[" 
+		<< loc.file_name() << '-' << loc.line() <<"]: " 
+		<< res << " =? " << res_ok << '\n';
+}
 
 
 #define CHECK_PRINT(print, res_ok) \
@@ -210,10 +242,15 @@ void check_for_each_condicion(It p0,
 
 template <typename It1, typename It2>
 // requires forward_iterator(It1) and forward_iterator(It2)
-inline void check_equal_containers(It1 p0, It1 pe,
-                                   It2 q0, It2 qe,
-                                   const std::string& prueba)
+void CHECK_EQUAL_CONTAINERS(It1 p0, It1 pe,
+                            It2 q0, It2 qe,
+                            const std::string& prueba
+			    , const std::source_location loc = 
+						std::source_location::current())
 {
+    test::Data::file_error = loc.file_name();
+    test::Data::line_error = loc.line();
+
     print_prueba(prueba);
 
     int i = 0;
@@ -235,25 +272,39 @@ inline void check_equal_containers(It1 p0, It1 pe,
 
 template <typename Cont1, typename Cont2>
 // requires Cont1, Cont2 containers
-inline void check_equal_containers(const Cont1& c1,
+inline void CHECK_EQUAL_CONTAINERS(const Cont1& c1,
                                    const Cont2& c2,
-                                   const std::string& prueba)
+                                   const std::string& prueba
+			    , const std::source_location loc = 
+						std::source_location::current())
 {
-    check_equal_containers(c1.begin(), c1.end(), c2.begin(), c2.end(), prueba);
+    CHECK_EQUAL_CONTAINERS(c1.begin(), c1.end(), c2.begin(), c2.end(), prueba);
 }
 
+// TODO: eliminar CHECK_EQUAL_CONTAINERS_C. La necesitaba al usar macros, pero
+// ahora puedo usar directamente CHECK_EQUAL_CONTAINERS.
+template <typename Cont1, typename Cont2>
+// requires Cont1, Cont2 containers
+inline void CHECK_EQUAL_CONTAINERS_C(const Cont1& c1,
+                                   const Cont2& c2,
+                                   const std::string& prueba
+			    , const std::source_location loc = 
+						std::source_location::current())
+{ return CHECK_EQUAL_CONTAINERS(c1, c2, prueba, loc); }
 
+/*
 #define CHECK_EQUAL_CONTAINERS(in0, ine, out0, oute, prueba) \
-	    {test::Datos::file_error = __FILE__; \
-	    test::Datos::line_error = __LINE__; \
+	    {test::Data::file_error = __FILE__; \
+	    test::Data::line_error = __LINE__; \
 	    test::check_equal_containers((in0), (ine), (out0), (oute), (prueba));}
 
 
 #define CHECK_EQUAL_CONTAINERS_C(cont1, cont2,  prueba) \
-	    {test::Datos::file_error = __FILE__; \
-	    test::Datos::line_error = __LINE__; \
+	    {test::Data::file_error = __FILE__; \
+	    test::Data::line_error = __LINE__; \
 	    test::check_equal_containers((cont1), (cont2), (prueba));}
 
+*/
 
 /// Comprueba que la órbita de f es igual a [p0, pe).
 /// Ejemplo:

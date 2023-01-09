@@ -24,6 +24,7 @@
 #include <iostream>
 #include <vector>
 
+using namespace test;
 
 void test_abs()
 {
@@ -256,10 +257,10 @@ void test_angles()
     {// angle equality
 	alp::Degree d{180};
 	alp::Radian r{alp::pi};
-	CHECK_TRUE(d == r, "degree == radian")
-	CHECK_TRUE(r == d, "degree == radian")
-	CHECK_TRUE(!(d != r), "degree != radian")
-	CHECK_TRUE(!(r != d), "degree != radian")
+	CHECK_TRUE(d == r, "degree == radian");
+	CHECK_TRUE(r == d, "degree == radian");
+	CHECK_TRUE(!(d != r), "degree != radian");
+	CHECK_TRUE(!(r != d), "degree != radian");
     }
 
 

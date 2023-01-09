@@ -21,6 +21,7 @@
 
 #include <iostream>
 
+using namespace test;
 
 void test_vector_ij()
 {

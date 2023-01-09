@@ -25,6 +25,7 @@
 #include <iterator>
 
 
+using namespace test;
 
 void test_read_matrix()
 {

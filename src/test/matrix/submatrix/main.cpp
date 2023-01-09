@@ -78,7 +78,7 @@ void test_submatrix()
 
 
     vector<int> res = {13,14,15,19,20,21};
-    check_equal_containers(s.begin(), s.end(), res.begin(), res.end(),
+    CHECK_EQUAL_CONTAINERS(s.begin(), s.end(), res.begin(), res.end(),
 		    "submatrix (en medio de la matrix)");
 
 
@@ -93,7 +93,7 @@ void test_submatrix()
     s2.de(m, Position{2, 1}, Size{2, 3});
     CHECK_TRUE((s2.P0() == Position{2,1} and s2.P1() == Position{3,3}),
                "de()");
-    check_equal_containers(s.begin(), s.end(), s2.begin(), s2.end(),
+    CHECK_EQUAL_CONTAINERS(s.begin(), s.end(), s2.begin(), s2.end(),
 		    "submatrix.de()");
 
     Submatrix<Matrix> s3;
@@ -106,7 +106,7 @@ void test_submatrix()
     CHECK_TRUE(s3.rows() == s2.rows(), "de()");
     CHECK_TRUE(s3.cols() == s2.cols(), "de()");
 
-    check_equal_containers(s3.begin(), s3.end(), s2.begin(), s2.end(),
+    CHECK_EQUAL_CONTAINERS(s3.begin(), s3.end(), s2.begin(), s2.end(),
 		    "submatrix.de()");
     {
 	Matrix res{s.size2D()};
@@ -118,7 +118,7 @@ void test_submatrix()
     }
 
     auto copia = clone(s);
-    check_equal_containers(copia.begin(), copia.end(), res.begin(), res.end(),
+    CHECK_EQUAL_CONTAINERS(copia.begin(), copia.end(), res.begin(), res.end(),
 		    "clone(submatrix)");
 
 
@@ -132,7 +132,7 @@ void test_submatrix()
     // auto s = Submatrix{m, Position{2,4}, Size{4, 2}};
 
     vector<int> res = {16,17,22,23,28,29,34,35};
-    check_equal_containers(s.begin(), s.end(), res.begin(), res.end(),
+    CHECK_EQUAL_CONTAINERS(s.begin(), s.end(), res.begin(), res.end(),
 		    "submatrix (pegando a la esquina de la matrix)");
     
     auto p0 = s.begin();
@@ -160,7 +160,7 @@ void test_submatrix()
     CHECK_TRUE(s(1,2) == 21, "m(i,j)");
 
     vector<int> res = {13,14,15,19,20,21};
-    check_equal_containers(s.begin(), s.end(), res.begin(), res.end(),
+    CHECK_EQUAL_CONTAINERS(s.begin(), s.end(), res.begin(), res.end(),
 		    "const_submatrix (en medio de la matrix)");
 
 
@@ -169,7 +169,7 @@ void test_submatrix()
                "const_extension()");
 
     auto copia = clone(s);
-    check_equal_containers(copia.begin(), copia.end(), res.begin(), res.end(),
+    CHECK_EQUAL_CONTAINERS(copia.begin(), copia.end(), res.begin(), res.end(),
 		    "clone(const_submatrix)");
     }
 

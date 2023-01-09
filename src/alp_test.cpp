@@ -19,9 +19,9 @@
 
 
 namespace test{
-std::string Datos::archivo_cabecera;    // que probamos
-std::string Datos::interfaz;    // interfaz que estamos probando
-std::string Datos::file_error;  // fichero donde se produce el error = __FILE__
-int Datos::line_error;  // línea donde se produce el error == __LINE__
+std::string Data::archivo_cabecera;    // que probamos
+std::string Data::interfaz;    // interfaz que estamos probando
+std::string Data::file_error;  // fichero donde se produce el error = __FILE__
+int Data::line_error;  // línea donde se produce el error == __LINE__
 
 }// namespace

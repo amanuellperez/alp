@@ -25,6 +25,8 @@
 #include <vector>
 
 
+using namespace test;
+
 void test_vector_xyz()
 {
     test::interfaz("Vector_xyz");

@@ -21,6 +21,8 @@
 #include <iostream>
 
 
+using namespace test;
+
 template <typename V>
 void test_vector()
 {

@@ -22,6 +22,8 @@
 
 #include <iostream>
 
+using namespace test;
+
 void test_median(int a, int b, int c, int res)
 {
     CHECK_TRUE(alp::median(a, b, c) == res,

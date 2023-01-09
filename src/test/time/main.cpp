@@ -25,6 +25,7 @@
 
 using namespace std;
 using namespace alp;
+using namespace test;
 
 void f() 
 {
@@ -67,7 +68,7 @@ void test_es_bisiesto()
     }
     
 //    cout << "\n\nn = " << n << "\n";
-    test::check_true(n == 97, "es_bisiesto()");
+    CHECK_TRUE(n == 97, "es_bisiesto()");
 }
 
 

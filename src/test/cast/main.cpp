@@ -32,7 +32,7 @@ void test_narrow_cast()
     unsigned int ui = 10u;
     int si = 10;
     CHECK_TRUE(narrow_cast<int>(ui) == si, "narrow_cast<int>");
-    CHECK_TRUE((narrow_cast<int, int>(si) == si), "narrow_cast<int=int>");
+    CHECK_TRUE(narrow_cast<int, int>(si) == si, "narrow_cast<int=int>");
 }
 
 

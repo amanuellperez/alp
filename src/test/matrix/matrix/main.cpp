@@ -22,6 +22,7 @@
 #include <iostream>
 #include <numeric>
 
+using namespace test;
 
 // Crea una matriz de dimensiones rows x cols, donde los números secuenciales
 // a partir de n0
