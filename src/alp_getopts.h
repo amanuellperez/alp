@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2022 A.Manuel L.Perez <amanuel.lperez@gmail.com>
+// Copyright (C) 2019-2022 Manuel Perez <manuel2perez@proton.me>
 //
 // This file is part of the ALP Library.
 //
@@ -32,7 +32,7 @@
  *   
  *
  *   - HISTORIA:
- *     A.Manuel L.Perez
+ *     Manuel Perez
  *     29/04/2019 Escrito
  *     01/11/2021 Soporte para unsigned int
  *     31/07/2022 Bug: no admitía números negativos. Corregido.

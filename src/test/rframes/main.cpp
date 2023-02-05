@@ -1,4 +1,4 @@
-// Copyright (C) 2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
+// Copyright (C) 2020 Manuel Perez <manuel2perez@proton.me>
 //
 // This file is part of the ALP Library.
 //

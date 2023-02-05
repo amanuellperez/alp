@@ -1,4 +1,4 @@
-// Copyright (C) 2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
+// Copyright (C) 2020 Manuel Perez <manuel2perez@proton.me>
 //
 // This file is part of the ALP Library.
 //
@@ -31,7 +31,7 @@
  *	sea una clase muy simple ya que se espera de ella que sea básica).
  *
  *  - HISTORIA:
- *    A.Manuel L.Perez
+ *    Manuel Perez
  *    29/07/2020 v0.0
  *
  ****************************************************************************/

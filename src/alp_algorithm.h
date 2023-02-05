@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
+// Copyright (C) 2019-2020 Manuel Perez <manuel2perez@proton.me>
 //
 // This file is part of the ALP Library.
 //
@@ -24,7 +24,7 @@
  * - DESCRIPCION: Ampliación de <algorithm>
  *
  * - HISTORIA:
- *     A.Manuel L.Perez 
+ *     Manuel Perez 
  *       17/02/2019 Escrito
  *       16/05/2020 Reestructuro. 
  *

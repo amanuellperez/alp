@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
+// Copyright (C) 2019-2020 Manuel Perez <manuel2perez@proton.me>
 //
 // This file is part of the ALP Library.
 //
@@ -50,7 +50,7 @@
  *	   inverso.
  *
  *   - HISTORIA:
- *    A.Manuel L.Perez
+ *    Manuel Perez
  *	13/10/2017 Escrito. Basado en xp1.
  *	28/02/2018 Reestructurado y ampliado.
  *	16/02/2019 Traigo los finds de visar. 

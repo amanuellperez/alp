@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
+// Copyright (C) 2019-2020 Manuel Perez <manuel2perez@proton.me>
 //
 // This file is part of the ALP Library.
 //
@@ -23,7 +23,7 @@
  *   - DESCRIPCION: View de una matriz.
  *
  *   - HISTORIA:
- *    A.Manuel L.Perez
+ *    Manuel Perez
  *       23/03/2019 Escrito
  *       28/11/2020 Migro Matrix_xy de Imagen_xy y añado sentido de ejes.
  *

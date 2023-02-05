@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
+// Copyright (C) 2019-2020 Manuel Perez <manuel2perez@proton.me>
 //
 // This file is part of the ALP Library.
 //
@@ -47,7 +47,7 @@
  *	    http://www.fileformat.info/info/unicode/utf8.htm
  *
  *   - HISTORIA:
- *           A.Manuel L.Perez- 30/04/2019 Escrito
+ *           Manuel Perez- 30/04/2019 Escrito
  *
  ****************************************************************************/
 

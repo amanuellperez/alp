@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2022 A.Manuel L.Perez <amanuel.lperez@gmail.com>
+// Copyright (C) 2019-2022 Manuel Perez <manuel2perez@proton.me>
 //
 // This file is part of the ALP Library.
 //
@@ -29,7 +29,7 @@
  *	matrices.
  *
  *  - HISTORIA:
- *    A.Manuel L.Perez
+ *    Manuel Perez
  *       28/09/2017 Escrito
  *       16/03/2020 Reestructurado.
  *       26/05/2020 transform1D/2D.

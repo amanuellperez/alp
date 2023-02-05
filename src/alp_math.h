@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2020 A.Manuel L.Perez <amanuel.lperez@gmail.com>
+// Copyright (C) 2019-2020 Manuel Perez <manuel2perez@proton.me>
 //
 // This file is part of the ALP Library.
 //
@@ -24,7 +24,7 @@
  *   - DESCRIPCION: Funciones matemáticas
  *
  *   - HISTORIA:
- *    A.Manuel L.Perez
+ *    Manuel Perez
  *      12/03/2017 Escrito
  *      28/05/2020 Aproximado
  *      27/07/2020 Degree/Radian
