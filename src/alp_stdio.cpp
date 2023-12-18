@@ -27,7 +27,7 @@ char tty()
 {
     static std::ifstream tty{"/dev/tty"};
     if (!tty)
-	throw std::runtime_error{"Error en /dev/tty"};
+	throw std::runtime_error{"Error: can't open /dev/tty"};
 
     char c;
     if(tty.get(c))

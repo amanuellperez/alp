@@ -27,7 +27,6 @@ INCS= alp_algorithm.h 	\
 	alp_filesystem.h 	\
 	alp_find.h 			\
 	alp_functional.h	\
-	alp_gen.h 			\
 	alp_getopts.h		\
 	alp_iso88591.h		\
 	alp_istream.h		\
