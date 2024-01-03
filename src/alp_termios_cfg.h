@@ -227,11 +227,28 @@ public:
     // Ver man termios para el significado de (min, time)
     void noncanonical_mode(int min, int time) noexcept;
 
+    /// Imprime la configuración
+    void print(std::ostream& out) const;
+
+    void print_input_modes(std::ostream& out) const {print_iflag(out);}
+    void print_output_modes(std::ostream& out) const {print_oflag(out);}
+    void print_control_modes(std::ostream& out) const {print_cflag(out);}
+    void print_local_modes(std::ostream& out) const {print_lflag(out);}
+    void print_special_characters(std::ostream& out) const {print_ccflag(out);}
+
 private:
+// Data
     termios cfg_;   // configuración de la conexión
 
+// Helpers
     template <int bauds>
     constexpr static int baud_rate_constant() noexcept;
+
+    void print_iflag(std::ostream& out) const;
+    void print_oflag(std::ostream& out) const;
+    void print_cflag(std::ostream& out) const;
+    void print_lflag(std::ostream& out) const;
+    void print_ccflag(std::ostream& out) const;
 
 };
 
@@ -289,6 +306,8 @@ void Termios_cfg::baud_rate()  noexcept
     output_baud_rate<bauds>();
     input_baud_rate <bauds>();
 }
+
+
 
 
 }// namespace

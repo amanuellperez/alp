@@ -68,6 +68,9 @@ void test_termios_iostream()
     alp::Termios_iostream usb{usb_port, usb_cfg};
     cfg_cin();
 
+    usb_cfg.print(std::cout);
+
+
     // Observar la forma de hacer el polling. No puedo usar los operadores >>
     // ya que bloquean. Necesitamos llamar a read directamente.
     while (1){

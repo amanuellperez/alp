@@ -47,8 +47,8 @@ namespace alp{
  */
 class FILE_streambuf_unbuffered : public std::streambuf{
 public:
-    // tipos
-    // -----
+// Types
+// -----
     using char_type = std::streambuf::char_type;
     using traits_type = std::streambuf::traits_type;
     using int_type = std::streambuf::int_type;
@@ -222,6 +222,7 @@ public:
 
     /// Devuelve el flujo asociado.
     int fd() const {return sb_.fd();}
+    
 private:
     FILE_streambuf_unbuffered sb_;
 };
