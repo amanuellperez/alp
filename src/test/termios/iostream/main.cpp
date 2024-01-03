@@ -17,10 +17,9 @@
 
 // Programa básico equivalente a screen. Probarlo con el test de uart.
 #include "../../../alp_termios_iostream.h"
-#include "../../../alp_termios_avr.h"
+#include "../alp_termios_avr.h"
 #include "../../../alp_exception.h"
 #include "../../../alp_string.h"
-#include "../../../alp_cerror.h"
 #include "../../../alp_time.h"
 
 #include <atd_ascii.h>
@@ -43,7 +42,7 @@ void cfg_cin()
 {
     /* Make sure stdin is a terminal. */
     if (!::isatty (STDIN_FILENO))
-	throw alp::Perror{"cfg_cin"};
+	throw std::runtime_error{"cfg_cin"};
 
     /* Save the terminal attributes so we can restore them later. */
     old_cin_cfg.copy_cfg_from(STDIN_FILENO);
@@ -55,7 +54,7 @@ void cfg_cin()
 
     cfg.noncanonical_polling_read();
     if (cfg.apply_cfg_now(STDIN_FILENO) == -1)
-	throw alp::Perror("cfg_cin::apply_cfg_now");
+	throw std::runtime_error("cfg_cin::apply_cfg_now");
 }
 
 

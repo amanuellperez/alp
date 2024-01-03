@@ -19,7 +19,7 @@
 // Termios_iostream.operator<<.
 // En el avr poner un lcd y que vaya mostrando lo que le vamos enviando.
 #include "../../../alp_termios_iostream.h"
-#include "../../../alp_termios_avr.h"
+#include "../alp_termios_avr.h"
 #include "../../../alp_exception.h"
 #include "../../../alp_string.h"
 #include "../../../alp_cerror.h"

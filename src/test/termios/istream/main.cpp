@@ -18,7 +18,7 @@
 // Programa que recibe un fichero desde el avr.
 // Probamos Termios_iostream.operator>>
 #include "../../../alp_termios_iostream.h"
-#include "../../../alp_termios_avr.h"
+#include "../alp_termios_avr.h"
 #include "../../../alp_exception.h"
 #include "../../../alp_string.h"
 #include "../../../alp_cerror.h"

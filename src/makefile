@@ -8,7 +8,6 @@ SOURCES=alp_cast.cpp 	\
 	alp_rframe_ij.cpp 	\
 	alp_stdio.cpp 		\
 	alp_string.cpp		\
-	alp_termios_avr.cpp 		\
 	alp_termios_cfg.cpp 	\
 	alp_termios_iostream.cpp 	\
 	alp_time.cpp 		\
@@ -47,7 +46,6 @@ INCS= alp_algorithm.h 	\
 	alp_string.h 		\
 	alp_subcontainer.h 	\
 	alp_test.h 			\
-	alp_termios_avr.h 		\
 	alp_termios_cfg.h 		\
 	alp_termios_iostream.h 		\
 	alp_time.h 			\
