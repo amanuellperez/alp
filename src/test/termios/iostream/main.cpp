@@ -55,6 +55,10 @@ void cfg_cin()
     cfg.noncanonical_polling_read();
     if (cfg.apply_cfg_now(STDIN_FILENO) == -1)
 	throw std::runtime_error("cfg_cin::apply_cfg_now");
+
+    cfg.no_echo();
+    cfg.print_local_modes(std::cout);
+    std::cout << "---------------------------\n\n";
 }
 
 
@@ -82,15 +86,16 @@ void test_termios_iostream()
 	    if (c == '\n')
 		usb << '\r';
 	    else
+//		::write(usb.fd(), &c, 1);
 		usb << c;
 	}
 
 	if (!std::cin){
-	    std::cerr << "Error en stdin!!!\n";
+	    perror("Error en stdin!");
 	    return;
 	}
 	if (!usb){
-	    std::cerr << "Error en la conexión usb\n";
+	    perror("Error en la conexión usb");
 	    return;
 	}
     }

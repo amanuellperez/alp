@@ -151,7 +151,7 @@ protected:
     // value to indicate success (typically returns c to indicate success, 
     // salvo cuando c == traits::eof() en cuyo caso devuelve traits::not_eof(c))
     virtual int_type overflow(int_type c = traits_type::eof()) override
-    { return write_byte(c);}
+    { return write_byte(c); }
 
     // Writes up to n characters to the output sequence as if by repeated
     // calls to sputc(c).
@@ -163,9 +163,12 @@ private:
     int fd_;
 
 
+    // CUIDADO: `write_byte` como su nombre indica escribe 1 byte.
+    // Pasarle a `::write` 1 explícitamente (al principio le pasaba sizeof(c)
+    // que era 4, generando un error)
     int_type write_byte(int_type c) 
     { // DUDA: ¿qué pasa si devuelve 0?
-	return ::write(fd_, &c, sizeof(c)); 
+	return ::write(fd_, &c, 1); 
     }
 
 
@@ -183,7 +186,6 @@ private:
 	return traits_type::to_int_type(c);
     }
 
-private:
     // Le pongo un buffer de un caracter.
     // El flujo streambuf está pensado para tener un buffer. Sin el buffer no
     // funciona. De hecho me he tirado 2 horas depurando por intentar
