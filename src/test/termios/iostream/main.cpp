@@ -28,9 +28,11 @@
 #include <iostream>
 #include <string.h>
 
-//constexpr uint32_t baud_rate = 9'600;
+constexpr uint32_t baud_rate = 9'600;
 //constexpr uint32_t baud_rate = 19'200;
-constexpr uint32_t baud_rate = 57'600;
+//constexpr uint32_t baud_rate = 57'600;
+//constexpr uint32_t baud_rate = 500'000;	    // Funciona 
+//constexpr uint32_t baud_rate = 1'000'000; // no puedo probarlo con el atmega
 
 
 /* Use this variable to remember original terminal attributes. */

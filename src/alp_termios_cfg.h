@@ -50,6 +50,9 @@
 #include <fcntl.h>
 
 #include <string>
+#include <exception>
+
+#include "alp_string.h"	// as_str()
 
 namespace alp{
 /*!
@@ -88,6 +91,19 @@ public:
     /// Define el baud_rate de salida a bauds.
     template <int bauds>
     void output_baud_rate() noexcept;
+
+    /// Define el baud_rate a bauds, tanto de entrada como de salida.
+    /// Lanza excepción en caso de no soportar bauds como baud rate.
+    void baud_rate(int bauds);
+
+    /// Define el baud_rate de entrada a bauds.
+    /// Lanza excepción en caso de no soportar bauds como baud rate.
+    void input_baud_rate(int bauds);
+
+    /// Define el baud_rate de salida a bauds.
+    /// Lanza excepción en caso de no soportar bauds como baud rate.
+    void output_baud_rate(int bauds);
+
 
     // número de data bits (5, 6, 7 ó 8)
     void character_size_bits_5()  noexcept {cfg_.c_cflag |= CS5;}
@@ -243,8 +259,7 @@ private:
     termios cfg_;   // configuración de la conexión
 
 // Helpers
-    template <int bauds>
-    constexpr static int baud_rate_constant() noexcept;
+    constexpr static int baud_rate_constant(int bauds) noexcept;
 
     void print_iflag(std::ostream& out) const;
     void print_oflag(std::ostream& out) const;
@@ -263,59 +278,65 @@ inline void Termios_cfg::noncanonical_mode(int min, int time) noexcept
 }
 
 
-template <int bauds>
-constexpr inline int Termios_cfg::baud_rate_constant() noexcept
+// Se limita a traducir el baud rate a la constante correspondiente
+// Devuelve -1 en caso de error
+constexpr inline int Termios_cfg::baud_rate_constant(int bauds) noexcept
 {
-    if	    constexpr (bauds == 0)	return B0;
-    else if constexpr (bauds == 50)	return B50;
-    else if constexpr (bauds == 75)	return B75;
-    else if constexpr (bauds == 110)	return B110;
-    else if constexpr (bauds == 134)	return B134;
-    else if constexpr (bauds == 150)	return B150;
-    else if constexpr (bauds == 200)	return B200;
-    else if constexpr (bauds == 300)	return B300;
-    else if constexpr (bauds == 600)	return B600;
-    else if constexpr (bauds == 1200)	return B1200;
-    else if constexpr (bauds == 1800)	return B1800;
-    else if constexpr (bauds == 2400)	return B2400;
-    else if constexpr (bauds == 4800)	return B4800;
-    else if constexpr (bauds == 9600)	return B9600;
-    else if constexpr (bauds == 19200)	return B19200;
-    else if constexpr (bauds == 38400)	return B38400;
-    else if constexpr (bauds == 57600)	return B57600;
-    else if constexpr (bauds == 115'200)	return B115200;
-    else if constexpr (bauds == 230'400)	return B230400;
+    if	    (bauds == 0)	return B0;
+    else if (bauds == 50)	return B50;
+    else if (bauds == 75)	return B75;
+    else if (bauds == 110)	return B110;
+    else if (bauds == 134)	return B134;
+    else if (bauds == 150)	return B150;
+    else if (bauds == 200)	return B200;
+    else if (bauds == 300)	return B300;
+    else if (bauds == 600)	return B600;
+    else if (bauds == 1200)	return B1200;
+    else if (bauds == 1800)	return B1800;
+    else if (bauds == 2400)	return B2400;
+    else if (bauds == 4800)	return B4800;
+    else if (bauds == 9600)	return B9600;
+    else if (bauds == 19200)	return B19200;
+    else if (bauds == 38400)	return B38400;
+    else if (bauds == 57600)	return B57600;
+    else if (bauds == 115'200)	return B115200;
+    else if (bauds == 230'400)	return B230400;
 
 // Los siguientes bauds rates los saco directamente del fichero
 // termios-baud.h. De momento no he encontrado la forma estandar
 // de hacer esto, ni siquiera la documentación de linux sobre el tema.
-    else if constexpr (bauds == 460'800) return B460800;
-    else if constexpr (bauds == 500'000) return B500000;
-    else if constexpr (bauds == 576'000) return B576000;
-    else if constexpr (bauds == 921'600) return B921600;
-    else if constexpr (bauds == 1'000'000) return B1000000;
-    else if constexpr (bauds == 1'152'000) return B1152000;
-    else if constexpr (bauds == 1'500'000) return B1500000;
-    else if constexpr (bauds == 2'000'000) return B2000000;
-    else if constexpr (bauds == 2'500'000) return B2500000;
-    else if constexpr (bauds == 3'000'000) return B3000000;
-    else if constexpr (bauds == 3'500'000) return B3500000;
-    else if constexpr (bauds == 4'000'000) return B4000000;
+    else if (bauds == 460'800) return B460800;
+    else if (bauds == 500'000) return B500000;
+    else if (bauds == 576'000) return B576000;
+    else if (bauds == 921'600) return B921600;
+    else if (bauds == 1'000'000) return B1000000;
+    else if (bauds == 1'152'000) return B1152000;
+    else if (bauds == 1'500'000) return B1500000;
+    else if (bauds == 2'000'000) return B2000000;
+    else if (bauds == 2'500'000) return B2500000;
+    else if (bauds == 3'000'000) return B3000000;
+    else if (bauds == 3'500'000) return B3500000;
+    else if (bauds == 4'000'000) return B4000000;
 
+    return -1;
 }
 
 
+// Versiones static.
+// Me gustan más estas versiones ya que generan un error en tiempo de
+// compilación en caso de pasar un baud rate incorrecto.
+// Esta versión es cuando el programador elige el baud rate.
 template<int bauds>
 inline void Termios_cfg::input_baud_rate()  noexcept
 {
-    cfsetispeed(&cfg_,baud_rate_constant<bauds>());   
+    cfsetispeed(&cfg_,baud_rate_constant(bauds));   
 }
 
 
 template<int bauds>
 inline void Termios_cfg::output_baud_rate()  noexcept
 {
-    cfsetospeed(&cfg_, baud_rate_constant<bauds>());
+    cfsetospeed(&cfg_, baud_rate_constant(bauds));
 }
 
 template<int bauds>
@@ -326,6 +347,35 @@ void Termios_cfg::baud_rate()  noexcept
 }
 
 
+// Versiones dinámicas
+// Lanzan una excepción en caso de que se quiera un baud rate incorrecto.
+// Usar mejor la versión static. 
+// Esta versión la necesito si quiero darle al usuario del programa
+// la capacidad de elegir el baud rate.
+inline void Termios_cfg::input_baud_rate(int bauds)
+{
+    int br = baud_rate_constant(bauds);
+    if (br == -1)
+	throw std::runtime_error{as_str() << "Can't support baud rate " << bauds};
+
+    cfsetispeed(&cfg_, br);
+}
+
+
+inline void Termios_cfg::output_baud_rate(int bauds)
+{
+    int br = baud_rate_constant(bauds);
+    if (br == -1)
+	throw std::runtime_error{as_str() << "Can't support baud rate " << bauds};
+
+    cfsetospeed(&cfg_, br);
+}
+
+inline void Termios_cfg::baud_rate(int bauds)
+{
+    output_baud_rate(bauds);
+    input_baud_rate (bauds);
+}
 
 
 }// namespace
