@@ -28,6 +28,10 @@
 #include <iostream>
 #include <string.h>
 
+//constexpr uint32_t baud_rate = 9'600;
+//constexpr uint32_t baud_rate = 19'200;
+constexpr uint32_t baud_rate = 57'600;
+
 
 /* Use this variable to remember original terminal attributes. */
 static alp::Termios_cfg old_cin_cfg;
@@ -56,18 +60,18 @@ void cfg_cin()
     if (cfg.apply_cfg_now(STDIN_FILENO) == -1)
 	throw std::runtime_error("cfg_cin::apply_cfg_now");
 
-    cfg.no_echo(); // TODO: no funciona
+    cfg.no_echo(); // TODO: El flag se cambia, pero no se modifica el comportamiento ???
     cfg.print_local_modes(std::cout);
+//    cfg.print_as_hex(std::cout);
     std::cout << "---------------------------\n\n";
 }
 
 
 void test_termios_iostream()
 {
-
     std::string usb_port = "/dev/ttyUSB0";
     alp::Termios_cfg usb_cfg;
-    alp::cfg_avr_uart_polling_read(usb_cfg); 
+    alp::cfg_avr_uart_polling_read<baud_rate>(usb_cfg); 
 
     alp::Termios_iostream usb{usb_port, usb_cfg};
     cfg_cin();
@@ -79,12 +83,11 @@ void test_termios_iostream()
     // ya que bloquean. Necesitamos llamar a read directamente.
     while (1){
 	char c;
-	if (::read(usb.fd(), &c, 1))
+	if (alp::read(usb, c))
 	    std::cout << c << std::flush;
 
-	if (::read(STDIN_FILENO, &c, 1)){
+	if (alp::cin_read(c))
 	    usb << c;
-	}
 
 	if (!std::cin){
 	    perror("stdin error");

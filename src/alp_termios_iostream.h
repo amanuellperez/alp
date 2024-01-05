@@ -30,6 +30,7 @@
  *  - HISTORIA:
  *    Manuel Perez
  *	25/11/2019 v0.0 Probando.
+ *	05/01/2024 Mejorando cosas.
  *
  ****************************************************************************/
 #include "alp_termios_cfg.h"
@@ -228,6 +229,16 @@ public:
 private:
     FILE_streambuf_unbuffered sb_;
 };
+
+
+
+// Lee 1 caracter sin bloquear (si termios está configurado para no bloquear)
+inline ssize_t read(Termios_iostream& in, char& c)
+{ return ::read(in.fd(), &c, 1); }
+
+// Por comodidad defino 
+inline ssize_t cin_read(char& c)
+{ return ::read(STDIN_FILENO, &c, 1); }
 
 } // namespace
 

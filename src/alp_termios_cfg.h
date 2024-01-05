@@ -41,6 +41,7 @@
  *	Manuel Perez
  *	    05/01/2019 Escrito
  *	    25/11/2019 Reescrito como cfg.
+ *	    04/01/2024 Mejorándolo.
  *		
  *
  ****************************************************************************/
@@ -229,6 +230,7 @@ public:
 
     /// Imprime la configuración
     void print(std::ostream& out) const;
+    void print_as_hex(std::ostream& out) const;
 
     void print_input_modes(std::ostream& out) const {print_iflag(out);}
     void print_output_modes(std::ostream& out) const {print_oflag(out);}
@@ -281,8 +283,24 @@ constexpr inline int Termios_cfg::baud_rate_constant() noexcept
     else if constexpr (bauds == 19200)	return B19200;
     else if constexpr (bauds == 38400)	return B38400;
     else if constexpr (bauds == 57600)	return B57600;
-    else if constexpr (bauds == 115200)	return B115200;
-    else if constexpr (bauds == 230400)	return B230400;
+    else if constexpr (bauds == 115'200)	return B115200;
+    else if constexpr (bauds == 230'400)	return B230400;
+
+// Los siguientes bauds rates los saco directamente del fichero
+// termios-baud.h. De momento no he encontrado la forma estandar
+// de hacer esto, ni siquiera la documentación de linux sobre el tema.
+    else if constexpr (bauds == 460'800) return B460800;
+    else if constexpr (bauds == 500'000) return B500000;
+    else if constexpr (bauds == 576'000) return B576000;
+    else if constexpr (bauds == 921'600) return B921600;
+    else if constexpr (bauds == 1'000'000) return B1000000;
+    else if constexpr (bauds == 1'152'000) return B1152000;
+    else if constexpr (bauds == 1'500'000) return B1500000;
+    else if constexpr (bauds == 2'000'000) return B2000000;
+    else if constexpr (bauds == 2'500'000) return B2500000;
+    else if constexpr (bauds == 3'000'000) return B3000000;
+    else if constexpr (bauds == 3'500'000) return B3500000;
+    else if constexpr (bauds == 4'000'000) return B4000000;
 
 }
 
