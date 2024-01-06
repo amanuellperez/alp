@@ -23,6 +23,8 @@
 #include <atd_ostream.h>
 
 #include <iostream>
+#include <limits>
+#include <cctype>   // isprint
 
 
 /* Use this variable to remember original terminal attributes. */
@@ -55,6 +57,15 @@ void cfg_cin()
 }
 
 
+// std::isprint no considera printable: \n, \r
+inline bool isprint(char c)
+{
+    return std::isprint(c) or 
+	    (c == '\n')	or
+	    (c == '\r');
+}
+
+
 int main(int argc, char* argv[])
 {
 try{
@@ -62,8 +73,16 @@ try{
 
     char c;
     while(1){
-	if (::read(STDIN_FILENO, &c, 1))
-	    std::cout << "\nEscribes [" << c << "]\n" << std::flush;
+	if (::read(STDIN_FILENO, &c, 1)){
+	    std::cout << "\nEscribes [";
+
+	    if (isprint(c))
+		std::cout << c;
+	    else
+		atd::print_int_as_hex(std::cout, static_cast<uint8_t>(c));
+
+	    std::cout << "]\n" << std::flush;
+	}
     }
 
 }catch(const std::exception& e)
