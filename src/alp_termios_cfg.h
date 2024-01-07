@@ -129,13 +129,13 @@ public:
     // Configuramos local modes
     // ------------------------
     /// Enable canonical mode.
-    /// Input is made available line by line.	An  input  line  is  available
-    /// when  one  of	the line delimiters is typed (NL, EOL, EOL2; or EOF at
+    /// Input is made available line by line. An  input  line  is  available
+    /// when  one  of the line delimiters is typed (NL, EOL, EOL2; or EOF at
     /// the start of line).  Except in the case of EOF, the line delimiter is
     /// included in the buffer returned by read(2).
     void canonical_mode() noexcept { cfg_.c_lflag |= ICANON; }
 
-    /// If  data	is  available,	read(2)  returns immediately, with the
+    /// If data is  available, read(2)  returns immediately, with the
     /// lesser of the number of bytes available, or the number of  bytes
     /// requested.  If no data is available, read(2) returns 0.
     void noncanonical_polling_read() noexcept
@@ -143,37 +143,36 @@ public:
 
     /// read(2)  blocks until MIN bytes are available, and returns up to
     /// the number of bytes requested.
-    void noncanonical_blocking_read(int num_bytes) noexcept
-    { noncanonical_mode(num_bytes, 0); }
+    void noncanonical_blocking_read(int nbytes) noexcept
+    { noncanonical_mode(nbytes, 0); }
 
 
     /// TIME specifies the limit for a timer in tenths of a second.  The
     /// timer is started when read(2) is called.	read(2) returns either
     /// when at least one byte of data is available, or when  the  timer
-    /// expires.	If the timer expires without any input becoming avail‐
-    /// able, read(2) returns 0.	If data is already  available  at  the
+    /// expires. If the timer expires without any input becoming avail‐
+    /// able, read(2) returns 0. If data is already  available  at  the
     /// time of the call to read(2), the call behaves as though the data
     /// was received immediately after the call.
     /// El tutorial de termios desaconseja usar este modo, mejor el polling
     /// read.
     void
-    noncanoncial_mode_read_with_timeout(int time_in_tenths_of_a_second) noexcept
+    noncanonical_with_timeout(int time_in_tenths_of_a_second) noexcept
     { noncanonical_mode(0, time_in_tenths_of_a_second); }
 
 
-    // 'time' specifies the limit for a timer  in	tenths	of  a  second.
-    // Once  an	initial  byte of input becomes available, the timer is
+    // 'time' specifies the limit for a timer in tenths of a second.
+    // Once an initial  byte of input becomes available, the timer is
     // restarted after each further byte is received.  read(2)  returns
     // when any of the following conditions is met:
-    // *  'num_bytes' bytes have been received.
+    // *  'nbytes' bytes have been received.
     // *  The interbyte timer expires.
     // *  The  number  of bytes requested by read(2) has been received.
     // (POSIX does not specify this termination  condition,  and  on
     // some  other  implementations  read(2) does not return in this
     // case.)
-    void noncanonical_read_with_interbyte_timeout(int num_bytes,
-                                                  int time) noexcept
-    { noncanonical_mode(num_bytes, time); }
+    void noncanonical_with_timeout(int nbytes, int time) noexcept
+    { noncanonical_mode(nbytes, time); }
 
 
     // Configuramos la entrada (lo que leemos)
