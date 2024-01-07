@@ -1,4 +1,4 @@
-// Copyright (C) 2019-2020 Manuel Perez <manuel2perez@proton.me>
+// Copyright (C) 2019-2024 Manuel Perez <manuel2perez@proton.me>
 //
 // This file is part of the ALP Library.
 //
@@ -26,6 +26,7 @@
 #include <limits>
 #include <cctype>   // isprint
 
+#include <poll.h>
 
 /* Use this variable to remember original terminal attributes. */
 static alp::Termios_cfg old_cin_cfg;
@@ -75,14 +76,15 @@ inline bool isprint(char c)
 	    (c == '\r');
 }
 
-
-int main(int argc, char* argv[])
+void hello()
 {
-try{
-// menu
     std::cout << "stdin test\n"
-	         "----------\n"
-		 "Choose cfg:\n"
+	         "----------\n";
+}
+
+void menu_cfg(bool& polling, bool& show_point)
+{
+    std::cout << "Choose cfg:\n"
 		 "1. Polling read (uses too much of % CPU)\n"
 		 "2. Blocking read\n"
 		 "3. With timeout\n";
@@ -90,12 +92,25 @@ try{
     char type{};
     std::cin >> type;
 
-    bool show_point = true;
-    std::cout << "Show dot? (y/n) ";
     char opt;
+    std::cout << "Polling? (y/n) ";
     std::cin >> opt;
-    if (opt == 'n' or opt == 'N')
-	show_point = false;
+    if (opt == 'n' or opt == 'N'){
+	polling = false;
+
+	std::cout << "Show dot? (y/n) ";
+	std::cin >> opt;
+	if (opt == 'n' or opt == 'N')
+	    show_point = false;
+	else
+	    show_point = true;
+    }
+    else{
+	polling = true;
+	show_point = false; // en polling nunca se mostrara el punto
+    }
+
+
 
     switch(type){ // Despues de todas las llamadas a std::cin 
 	break; case '1': cfg_cin(cin_type::polling_read);
@@ -105,12 +120,29 @@ try{
     }
 
 
+}
 
-// run
+void run(bool polling, bool show_point)
+{
+    pollfd pfds;
+    int nfds = 1;
+
+    pfds.fd	= STDIN_FILENO;
+    pfds.events = POLLIN;
+
+    std::cout << "Write something (Ctrl+C to end)\n";
     char c;
     while(1){
+	if (polling) { // wait_for_event
+	    if (poll(&pfds, nfds, -1) == -1){ // esperamos a que se escriba
+		perror("poll");
+		throw std::runtime_error{"poll error"};
+	    }
+	}
+
+	// print
 	if (::read(STDIN_FILENO, &c, 1)){
-	    std::cout << "\nEscribes [";
+	    std::cout << "Written [";
 
 	    if (isprint(c))
 		std::cout << c;
@@ -124,6 +156,18 @@ try{
 		std::cout << '.' << std::flush;
 	}
     }
+}
+
+
+int main(int argc, char* argv[])
+{
+try{
+    hello();
+
+    bool polling, show_point;
+    menu_cfg(polling, show_point);
+
+    run(polling, show_point);
 
 }catch(const std::exception& e)
 {

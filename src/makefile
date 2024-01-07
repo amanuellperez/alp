@@ -46,6 +46,7 @@ INCS= alp_algorithm.h 	\
 	alp_string.h 		\
 	alp_subcontainer.h 	\
 	alp_test.h 			\
+	alp_termios.h		\
 	alp_termios_cfg.h 		\
 	alp_termios_iostream.h 		\
 	alp_time.h 			\
