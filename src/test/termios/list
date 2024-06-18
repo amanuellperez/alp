@@ -1,0 +1,10 @@
+termios_cfg: probamos Termios_cfg
+read_from_cin: La configuración por defecto de stdin es leer de línea en
+línea. Aquí pruebo a leer cada tecla pulsada.
+
+programa_para_avr: programas a cargar en el avr que van con los siguientes
+clientes:
+
+istream: probamos las funciones de lectura de Termios_iostream.
+ostream: probamos las funciones de escritura de Termios_iostream.
+iostream: probamos ambas. 

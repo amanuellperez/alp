@@ -1,0 +1,25 @@
+# Prerequisites
+*.d
+
+# Object files
+*.o
+
+
+# Dynamic libraries
+*.so
+
+# Static libraries
+*.a
+
+# my tests
+xx
+*.hex
+*.map
+*.elf
+
+# tags
+tags
+
+# vim files
+*.swp
+.clang-format
