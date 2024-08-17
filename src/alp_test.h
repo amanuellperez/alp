@@ -99,7 +99,7 @@ inline void header(const std::string& archivo_cabecera)
 	      << "=================================\n";
 }
 
-inline void interfaz(const std::string& interfaz)
+inline void interface(const std::string& interfaz)
 { 
     Data::interfaz = interfaz; 
     std::cout << "\n\n---------------------------------\n"
@@ -108,8 +108,8 @@ inline void interfaz(const std::string& interfaz)
 }
 
 // migrando a ingles
-inline void interface(const std::string& str)
-{ interfaz(str); }
+inline void interfaz(const std::string& str)
+{ interface(str); }
 
 
 /// El parámetro pasado tiene que ser true.
@@ -135,23 +135,6 @@ inline void check_bool	( bool condicion
 }
 
 
-///// Comprueba que la condicion pasada es true.
-///// Ejemplo:
-///// \code
-/////	test::check_bool(a == 3, "operator==");
-///// \endcode
-//inline void check_true(  bool condicion
-//		       , const std::string& prueba
-//		       , const std::source_location loc = std::source_location::current())
-//{ check_bool(condicion, true, prueba, loc); }
-//
-///// Comprueba que la condicion pasada es false.
-//inline void check_false	( bool condicion
-//			, const std::string& prueba
-//		        , const std::source_location loc = std::source_location::current())
-//{ check_bool(condicion, false, prueba, loc); }
-//
-
 // Para hacer pruebas me gusta mas usar las letras CHECK_TRUE en mayúsculas.
 // De esa forma se ve claramente la diferencia entre la prueba y el check.
 inline void CHECK_TRUE(bool condition, 
@@ -165,19 +148,6 @@ inline void CHECK_FALSE(bool condition,
 { check_bool(condition, false, test_name, loc); }
 
 
-
-/*
-#define CHECK_TRUE(condicion, prueba) \
-	    {test::Data::file_error = __FILE__; \
-	    test::Data::line_error = __LINE__; \
-	    test::check_true((condicion), (prueba));}
-
-#define CHECK_FALSE(condicion, prueba) \
-	    {test::Data::file_error = __FILE__; \
-	    test::Data::line_error = __LINE__; \
-	    test::check_false((condicion), (prueba));}
-
-*/
 
 // Algunas prueba no sé cómo hacerlas automáticamente. Lo que hago es las
 // imprimo en pantalla mostrando el resultado que tendría que tener y con un

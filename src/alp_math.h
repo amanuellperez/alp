@@ -22,6 +22,8 @@
 /****************************************************************************
  *
  *   - DESCRIPCION: Funciones matemáticas
+ *  
+ *  TODO: Esta creada la clase atd::Angle. Eliminar de aquí Degree/Radian
  *
  *   - HISTORIA:
  *    Manuel Perez
